@@ -1,21 +1,36 @@
 import React from "react";
-import { Navbar, Nav, Button, Form, FormControl } from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import bullMarketIcon from '../images/bullMarketIcon.png'
+import { Navbar, Nav } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+import bullMarketIcon from "../images/bullMarketIcon.png";
+import {NavLink} from "react-router-dom";
 
 function NavigationBar() {
   return (
-    <div style={{ marginBottom: '70px'}}>
+    <div style={{ marginBottom: "70px" }}>
       <Navbar bg="dark" variant="dark">
-    <Navbar.Brand href="#home"> <img src={bullMarketIcon} alt='Bull Market'/> </Navbar.Brand>
-    <Nav className="mr-auto">
-      <Nav.Link href="#home">Home</Nav.Link>
-      <Nav.Link href="#portfolio">Portfolio</Nav.Link>
-      <Nav.Link href="#stockSearch">Stock Search</Nav.Link>
-    </Nav>
-    <Nav.Link style={{ color: 'gray'}} href='#login'> Login/Register </Nav.Link>
-  </Navbar>
-  </div>
+        <Navbar.Brand href="/">
+          {" "}
+          <img src={bullMarketIcon} alt="Bull Market" />{" "}
+        </Navbar.Brand>
+        <Nav className="mr-auto">
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly'}}>
+          <NavLink style={{ color: "gray" }} to="/" href="home">
+            Home|
+          </NavLink>
+          <NavLink style={{ color: "gray" }} to="/report" href="reportPage">
+           Report|  
+          </NavLink>
+          <NavLink style={{ color: "gray" }} to="/summary" href="summaryPage">
+            Summary
+          </NavLink>
+          </div>
+        </Nav>
+        <NavLink to='/' style={{ color: "gray" }} href="#login">
+          {" "}
+          Login/Register{" "}
+        </NavLink>
+      </Navbar>
+    </div>
   );
 }
 
