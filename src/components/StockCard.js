@@ -10,13 +10,16 @@ function StockCard() {
             color: "black",
             fontWeight: "bold",
             display: "flex",
-            justifyContent: "left",
+            justifyContent: 'space-between',
             height: "3rem",
             fontSize: "16px",
             textDecoration: "underline",
           }}
         >
+            <p>
           TSLA
+          </p>
+          <p type='button'>Trade</p>
         </Card.Header>
         <Card.Body>
           <Card.Text
