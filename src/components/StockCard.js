@@ -51,7 +51,7 @@ function StockCard() {
                 Price{" "}
               </Card.Text>
               <Card.Text
-                style={{ fontSize: "12px", fontWeight: "bold", color: "gray" }}
+                style={{ fontSize: "12px", color: "gray" }}
               >
                 {" "}
                 Day's change
