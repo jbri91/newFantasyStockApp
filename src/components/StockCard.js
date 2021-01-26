@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 function StockCard() {
   return (
     <div>
-      <Card style={{ width: "18rem" }}>
+      <Card style={{ width: "18rem", height: '11rem' }}>
         <Card.Header
           style={{
             color: "black",
@@ -62,6 +62,7 @@ function StockCard() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                marginBottom: '10px'
               }}
             >
               <Card.Text
@@ -84,6 +85,7 @@ function StockCard() {
               </Card.Text>
             </div>
           </div>
+          <Card.Text style={{ fontSize: "12px", fontWeight: "bold", color: "gray", display: 'flex'}}> 04:00:00pm ET 01/25/21 </Card.Text>
         </Card.Body>
       </Card>
     </div>
