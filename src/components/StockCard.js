@@ -11,14 +11,79 @@ function StockCard() {
             fontWeight: "bold",
             display: "flex",
             justifyContent: "left",
-            height: "4rem",
+            height: "3rem",
+            fontSize: "16px",
+            textDecoration: "underline",
           }}
         >
           TSLA
         </Card.Header>
-        <Card.Body style={{ display: 'flex', justifyContent: 'left'}}>
-          <Card.Text style={{ fontSize: '12px', color: 'gray'}}> Tesla Inc. - Common Stock</Card.Text>
-          <Card.Text></Card.Text>
+        <Card.Body>
+          <Card.Text
+            style={{
+              fontSize: "12px",
+              color: "gray",
+              textDecoration: "underline",
+              display: "flex",
+              justifyContent: "left",
+            }}
+          >
+            {" "}
+            Tesla Inc. - Common Stock
+          </Card.Text>
+          <div style={{ display: "grid", justifyContent: "left" }}>
+            <div
+              style={{
+                color: "gray",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Card.Text
+                style={{
+                  display: "flex",
+                  fontSize: "12px",
+                  marginBottom: "0px",
+                }}
+              >
+                {" "}
+                Price{" "}
+              </Card.Text>
+              <Card.Text
+                style={{ fontSize: "12px", fontWeight: "bold", color: "gray" }}
+              >
+                {" "}
+                Day's change
+              </Card.Text>
+            </div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+              }}
+            >
+              <Card.Text
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  color: "black",
+                  marginRight: "15px",
+                  marginBottom: "0px",
+                }}
+              >
+                {" "}
+                $880.80{" "}
+              </Card.Text>
+              <Card.Text
+                style={{ fontSize: "12px", fontWeight: "bold", color: "green" }}
+              >
+                {" "}
+                34.16 (4.03%){" "}
+              </Card.Text>
+            </div>
+          </div>
         </Card.Body>
       </Card>
     </div>
