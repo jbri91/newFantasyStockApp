@@ -3,8 +3,11 @@ import StockCard from './StockCard'
 
 function SummaryPage() {
     return(
-        <div>
-            Summary Page
+        <div style ={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <StockCard />
+            <StockCard />
+            <StockCard />
+            <StockCard />
             <StockCard />
         </div>
     )

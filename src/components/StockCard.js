@@ -4,7 +4,7 @@ import { Card } from "react-bootstrap";
 function StockCard() {
   return (
     <div>
-      <Card style={{ width: "18rem", height: '11rem' }}>
+      <Card style={{ width: "18rem", height: '11rem', margin: '20px' }}>
         <Card.Header
           style={{
             color: "black",
