@@ -4,11 +4,11 @@ import StockCard from "./StockCard";
 function ReportPage() {
   return (
     <div className="App">
-      <h1> Current Balance: $100,000</h1>
-      <h2>Market Snapshot</h2>
-      <header
-        className="App-header"
-        style={{ display: "flex", justifyContent: "center" }}
+      <h1  style={{ fontWeight: 'bolder' }}> Current Balance: $100,000</h1>
+      <br/>
+      <h2 style={{ color: 'gray', fontWeight: 'bolder'}}>Market Snapshot</h2>
+      <div
+        style={{ display: "flex", justifyContent: "space-around", borderStyle: 'solid' }}
       >
         <StockCard
           symbol="$DJI"
@@ -31,7 +31,7 @@ function ReportPage() {
           dayChange="-98.85 (-2.57%)"
           time="04:53:00pm ET 01/27/21"
         />
-      </header>
+      </div>
     </div>
   );
 }
