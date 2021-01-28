@@ -5,6 +5,7 @@ function ReportPage() {
   return (
     <div className="App">
       <h1> Current Balance: $100,000</h1>
+      <h2>Market Snapshot</h2>
       <header
         className="App-header"
         style={{ display: "flex", justifyContent: "center" }}
@@ -17,11 +18,11 @@ function ReportPage() {
           time="04:53:58pm ET 01/27/21"
         />
         <StockCard
-          symbol="NDAQ"
-          stockName="Nasdaq Inc.-Common Stock"
-          price="$141.20"
-          dayChange="0.07 (0.05%)"
-          time="04:00:00pm ET 01/27/21"
+          symbol="$COMPX"
+          stockName="NASDAQ Composite"
+          price="$13,271"
+          dayChange="-355.47 (-2.61%)"
+          time="05:16:00pm ET 01/27/21"
         />
          <StockCard
           symbol='$SPX.X'
