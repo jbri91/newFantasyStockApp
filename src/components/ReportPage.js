@@ -4,6 +4,7 @@ import StockCard from "./StockCard";
 function ReportPage() {
   return (
     <div className="App">
+      <h1> Current Balance: $100,000</h1>
       <header
         className="App-header"
         style={{ display: "flex", justifyContent: "center" }}
