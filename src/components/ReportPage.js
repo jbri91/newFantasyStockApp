@@ -22,6 +22,13 @@ function ReportPage() {
           dayChange="0.07 (0.05%)"
           time="04:00:00pm ET 01/27/21"
         />
+         <StockCard
+          symbol='$SPX.X'
+          stockName="S&P 500"
+          price="$3,750.77"
+          dayChange="-98.85 (-2.57%)"
+          time="04:53:00pm ET 01/27/21"
+        />
       </header>
     </div>
   );
