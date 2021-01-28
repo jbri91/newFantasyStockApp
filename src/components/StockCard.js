@@ -1,7 +1,8 @@
 import React from "react";
 import { Card } from "react-bootstrap";
 
-function StockCard() {
+function StockCard(props) {
+  console.log(props)
   return (
     <div>
       <Card style={{ width: "18rem", height: '11rem', margin: '20px' }}>
@@ -17,7 +18,7 @@ function StockCard() {
           }}
         >
             <p>
-          TSLA
+          {props.symbol}
           </p>
           <p type='button'>Trade</p>
         </Card.Header>
@@ -32,7 +33,7 @@ function StockCard() {
             }}
           >
             {" "}
-            Tesla Inc. - Common Stock
+            {props.stockName}
           </Card.Text>
           <div style={{ display: "grid", justifyContent: "left" }}>
             <div
@@ -78,13 +79,13 @@ function StockCard() {
                 }}
               >
                 {" "}
-                $880.80{" "}
+                {props.price}{" "}
               </Card.Text>
               <Card.Text
                 style={{ fontSize: "12px", fontWeight: "bold", color: "green" }}
               >
                 {" "}
-                34.16 (4.03%){" "}
+                {props.dayChange}{" "}
               </Card.Text>
             </div>
           </div>
