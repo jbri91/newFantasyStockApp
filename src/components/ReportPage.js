@@ -14,7 +14,7 @@ function ReportPage() {
           symbol="$DJI"
           stockName="DOW JONES 30 INDUSTRIALS"
           price="$30,303.17"
-          dayChange="30,303.17 (-2.05)"
+          dayChange="-633.86 (-2.05)"
           time="04:53:58pm ET 01/27/21"
         />
         <StockCard
@@ -32,6 +32,7 @@ function ReportPage() {
           time="04:53:00pm ET 01/27/21"
         />
       </div>
+      
     </div>
   );
 }
