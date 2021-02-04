@@ -25,7 +25,7 @@ function NavigationBar() {
           </NavLink>
           </div>
         </Nav>
-        <NavLink to='/' style={{ color: "gray" }} href="#login">
+        <NavLink to='/login' style={{ color: "gray" }} href="#login">
           {" "}
           Login/Register{" "}
         </NavLink>
