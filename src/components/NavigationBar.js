@@ -52,13 +52,13 @@ function NavigationBar() {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title"> Login</h4>
+              <h4 className="modal-title"> Login to your account</h4>
               <button type="button" className="close" data-dismiss="modal">
                 &times;
               </button>
             </div>
             <div className="modal-body">
-              <div stylw={{ display: "flex", flexDirection: "column" }}>
+              <div>
                 <input placeholder="User ID" />
                 <input placeholder="Password" type="password" />
               </div>
