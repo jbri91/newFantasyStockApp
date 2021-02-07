@@ -6,7 +6,7 @@ import HomePage from "./components/HomePage";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import ReportPage from "./components/ReportPage";
 import SummaryPage from "./components/SummaryPage";
-import LoginRegister from './components/LoginRegister'
+import CreateAccount from "./components/CreateAccount";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
             <Route path="/" component={HomePage} exact />
             <Route path="/report" component={ReportPage} />
             <Route path="/summary" component={SummaryPage} />
-            <Route path='/login' component={LoginRegister}/>
+            <Route path='/createAccount' component={CreateAccount} />
           </Switch>
         </BrowserRouter>
         </header>

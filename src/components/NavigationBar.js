@@ -67,7 +67,14 @@ function NavigationBar() {
               className="modal-footer"
               style={{ display: "flex", justifyContent: "space-between" }}
             >
-              <button className="btn btn-link"> Create Account </button>
+              <NavLink
+                to="/createAccount"
+                href="createAccount"
+                className="btn btn-link"
+              >
+                {" "}
+                Create Account{" "}
+              </NavLink>
               <button
                 type="button"
                 className="btn btn-default"
