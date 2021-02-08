@@ -1,4 +1,5 @@
 import React from "react";
+import ReviewOrder from "./ReviewOrder";
 
 function StockModal() {
   return (
@@ -23,9 +24,9 @@ function StockModal() {
             <div>
               <p style={{ marginBottom: "0px" }}>Action</p>
               <select name="trade" id="trade">
-                <option value="buy"> --Select-- </option>
+                <option > --Select-- </option>
                 <option value="buy"> Buy </option>
-                <option value="buy"> Sell </option>
+                <option value="sell"> Sell </option>
               </select>
             </div>
             <div>
@@ -37,6 +38,8 @@ function StockModal() {
             type="button"
             className="btn btn-info"
             style={{ color: "black", fontWeight: "bolder" }}
+            data-toggle="modal"
+            data-target="#reviewModal"
           >
             Review Order
           </button>
@@ -54,6 +57,7 @@ function StockModal() {
           </div>
         </div>
       </div>
+      <ReviewOrder />
     </div>
   );
 }
