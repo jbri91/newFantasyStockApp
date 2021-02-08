@@ -26,6 +26,7 @@ function ReviewOrder() {
                   Buy 2 shares of SI ((Silvergate Capital Corporation Class A
                   Common Stock)
                 </p>
+                <p> Limit at $132</p>
                 <p>Estimated Total: -$268</p>
                 <p> Remaining Buy Power: $100,000</p>
               </div>
