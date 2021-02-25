@@ -14,6 +14,10 @@ print(response.json())
 # def hello_world():
 #     return 'Hello World'
     
+class Stock(Resource):
+    def get(self, stockInfo):
+        return response.json()
 
+api.add_resource(Stock, '/stock')
 
 app.run(debug=True)
