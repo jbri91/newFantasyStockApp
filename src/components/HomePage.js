@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import homepageCoinImage from "../images/homepageCoinImage.jpg";
 
 function HomePage() {
 
-  fetch('/stock')
-  .then(response => response.json())
-  .then(data => console.log(data))
+  const [stock, setStock] = useState([])
+
+  useEffect(() => {
+    fetch('/stock')
+    .then(response => setStock(response.date)
+    )
+  })
   
   return (
     <div className="App">
@@ -20,7 +24,7 @@ function HomePage() {
             }}
           >
             Welcome to where you can practice how to invest in the stock market
-            before you risk your hard earned cash.
+            before you risk your hard earned cash. 
           </h4>
           <img
             style={{ borderRadius: "50%", margin: "40px" }}

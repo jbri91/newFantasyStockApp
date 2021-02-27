@@ -7,16 +7,18 @@ from flask_restful import Api, Resource, reqparse
 app = Flask(__name__)
 api = Api(app)
 
-response = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=Tpk_b6429f1574564a01b54d614f88e0f93f')
-print(response.json())
+stock = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=Tpk_b6429f1574564a01b54d614f88e0f93f').json()
+
 
 # @app.route('/hello')
+ 
 # def hello_world():
 #     return 'Hello World'
     
 class Stock(Resource):
-    def get(self, stockInfo):
-        return response.json()
+    def get(self):
+        return jsonify(stock)
+
 
 api.add_resource(Stock, '/stock')
 
