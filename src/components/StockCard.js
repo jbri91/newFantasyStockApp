@@ -3,7 +3,6 @@ import { Card } from "react-bootstrap";
 import StockModal from "./StockModal";
 
 function StockCard(props) {
-  console.log(props)
   return (
     <div>
       <Card style={{ width: "18rem", height: '11rem', margin: '20px' }}>
