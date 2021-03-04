@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 
 function SummaryPage() {
+  const [stock, setStock] = useState([]);
+
+  useEffect(() => {
+    fetch("/stock")
+      .then((res) => res.json())
+      .then((data) => setStock(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div>
       <input placeholder="Search" />
@@ -13,69 +22,82 @@ function SummaryPage() {
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
         <StockCard
-          symbol="TSLA"
-          stockName="Tesla Inc. - Common Stock"
-          price="$880.80"
-          dayChange="34.16 (4.03%)"
-          time="04:00:00pm ET 01/25/21"
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
         />
         <StockCard
-          symbol="TSLA"
-          stockName="Tesla Inc. - Common Stock"
-          price="$880.80"
-          dayChange="34.16 (4.03%)"
-          time="04:00:00pm ET 01/25/21"
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
         />
         <StockCard
-          symbol="TSLA"
-          stockName="Tesla Inc. - Common Stock"
-          price="$880.80"
-          dayChange="34.16 (4.03%)"
-          time="04:00:00pm ET 01/25/21"
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
         />
         <StockCard
-          symbol="TSLA"
-          stockName="Tesla Inc. - Common Stock"
-          price="$880.80"
-          dayChange="34.16 (4.03%)"
-          time="04:00:00pm ET 01/25/21"
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
         />
         <StockCard
-          symbol="TSLA"
-          stockName="Tesla Inc. - Common Stock"
-          price="$880.80"
-          dayChange="34.16 (4.03%)"
-          time="04:00:00pm ET 01/25/21"
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
         />
       </header>
       <h1 style={{ fontSize: "30px", marginTop: "15px" }}> Popular Stocks </h1>
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        <StockCard 
-        symbol="AAPL"
-        stockName="Apple"
-        price="$880.80"
-        dayChange="34.16 (4.03%)"
-        time="04:00:00pm ET 01/25/21"/>
         <StockCard
-        symbol="AMZN"
-        stockName="Amazon"
-        price="$880.80"
-        dayChange="34.16 (4.03%)"
-        time="04:00:00pm ET 01/25/21" />
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
+        />
         <StockCard
-        symbol="MSFT"
-        stockName="Microsoft"
-        price="$880.80"
-        dayChange="34.16 (4.03%)"
-        time="04:00:00pm ET 01/25/21" />
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
+        />
         <StockCard
-        symbol="NVDA"
-        stockName="Nvidia"
-        price="$880.80"
-        dayChange="34.16 (4.03%)"
-        time="04:00:00pm ET 01/25/21" />
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
+        />
+        <StockCard
+          symbol={stock.symbol}
+          stockName={stock.companyName}
+          price={stock.latestPrice}
+          dayChange={stock.change}
+          percentChange={stock.changePercent}
+          time={stock.latestTime}
+        />
       </div>
     </div>
   );
