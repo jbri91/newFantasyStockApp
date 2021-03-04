@@ -7,11 +7,10 @@ function HomePage() {
 
   useEffect(() => {
     fetch('/stock')
-    .then(response => setStock(response)
-    )
+    .then(res => res.json())
+    .then(data => setStock(data))
+    .catch(error => console.log(error))
   }, [])
-
-  console.log(stock)
   
   return (
     <div className="App">
