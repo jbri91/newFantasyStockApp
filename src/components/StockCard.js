@@ -81,17 +81,17 @@ function StockCard(props) {
                 }}
               >
                 {" "}
-                {props.price}{" "}
+                ${props.price}{" "}
               </Card.Text>
               <Card.Text
                 style={{ fontSize: "12px", fontWeight: "bold", color: "green" }}
               >
                 {" "}
-                {props.dayChange}{" "}
+                {props.dayChange} ({props.percentChange}%){" "}
               </Card.Text>
             </div>
           </div>
-          <Card.Text style={{ fontSize: "12px", fontWeight: "bold", color: "gray", display: 'flex'}}> 04:00:00pm ET 01/25/21 </Card.Text>
+          <Card.Text style={{ fontSize: "12px", fontWeight: "bold", color: "gray", display: 'flex'}}> {props.time} </Card.Text>
         </Card.Body>
       </Card>
      <StockModal />

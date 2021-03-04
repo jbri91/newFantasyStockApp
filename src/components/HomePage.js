@@ -1,17 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import homepageCoinImage from "../images/homepageCoinImage.jpg";
 
 function HomePage() {
-
-  const [stock, setStock] = useState([])
-
-  useEffect(() => {
-    fetch('/stock')
-    .then(res => res.json())
-    .then(data => setStock(data))
-    .catch(error => console.log(error))
-  }, [])
-  
   return (
     <div className="App">
       <header className="App-header">
