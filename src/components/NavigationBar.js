@@ -78,9 +78,9 @@ function NavigationBar() {
               <button
                 type="button"
                 className="btn btn-default"
-                data-dismiss="modal"
+                style={{backgroundColor:'lightblue', border:'solid', borderColor:'skyblue'}}
               >
-                Close
+                Submit
               </button>
             </div>
           </div>
