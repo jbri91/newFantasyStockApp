@@ -2,7 +2,7 @@ from flask  import Flask, request
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from json import dumps
-from flask.ext.jsonify import jsonify
+from flask.ext.jsonpify import jsonify
 
 db_connect = create_engine('sqlite:///chinook.db')
 app = Flask(__name__)
