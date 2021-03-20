@@ -1,4 +1,3 @@
-#!/usr/bin/python3
 from flask import Flask, request, jsonify
 from flask_restful import Resource, Api
 from sqlalchemy import create_engine
@@ -13,7 +12,7 @@ class Employees(Resource):
     def get(self):
         conn = db_connect.connect() # connect to database
         query = conn.execute("select * from employees") # This line performs query and returns json result
-        return {'employees': [i[5] for i in query.cursor.fetchall()]} # Fetches first column that is Employee ID
+        return {'employees': [i[0] for i in query.cursor.fetchall()]} # Fetches first column that is Employee ID
     
     # def post(self):
     #     conn = db_connect.connect()
@@ -44,7 +43,7 @@ class Employees(Resource):
 class Tracks(Resource):
     def get(self):
         conn = db_connect.connect()
-        query = conn.execute("select trackid, name, composer, unitprice from tracks;")
+        query = conn.execute("select trackid, name, composer, unitprice from tracks")
         result = {'data': [dict(zip(tuple (query.keys()) ,i)) for i in query.cursor]}
         return jsonify(result)
 
