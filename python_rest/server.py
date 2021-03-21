@@ -3,26 +3,25 @@ from flask_restful import Resource, Api
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from flask_sqlalchemy import SQLAlchemy
+import psycopg2
 
-Base = declarative_base()
+conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
 
+cur = conn.cursor()
+
+# cur.execute('SELECT * FROM user_credentials;')
+cur.execute('SELECT * FROM purchased_stock;')
+
+print(cur.fetchall())
+
+conn.commit()
+cur.close()
+conn.close()
 
 app = Flask(__name__)
 api = Api(app)
 
-def connect(user, password, db, host='postgres', port=5432):
-    url = 'postgresql://{}:{}@{}:{}/{}'
-    url = url.format(user, password, host, port, db)
-    
-    con = SQLAlchemy.create_engine(url, client_encoding='utf8')
-
-    meta = SQLAlchemy.MetaData(bind=con, reflect=True)
-
-    return con, meta
-con, meta = connect('postgres', 'databasePassword', 'stock_application')
-
-print(con)
-print(meta)
+Base = declarative_base()
 
 
 if __name__ == '__main__':
