@@ -7,6 +7,8 @@ db_connect = create_engine('sqlite:///chinook.db')
 app = Flask(__name__)
 api = Api(app)
 
+SELECT * FROM user_credentials;
+SELECT * FROM purchased_stock;
 
 class Employees(Resource):
     def get(self):
