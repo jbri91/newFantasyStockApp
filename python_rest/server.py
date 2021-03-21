@@ -19,7 +19,7 @@ def connect(user, password, db, host='postgres', port=5432):
     meta = SQLAlchemy.MetaData(bind=con, reflect=True)
 
     return con, meta
-con, meta = connect('postgres', 'databasePassword', 'purchased_stocks')
+con, meta = connect('postgres', 'databasePassword', 'stock_application')
 
 print(con)
 print(meta)
