@@ -5,12 +5,13 @@ function SummaryPage() {
   const [stock, setStock] = useState([]);
 
   useEffect(() => {
-    fetch("/stock")
+    fetch("/purchased")
       .then((res) => res.json())
       .then((data) => setStock(data))
       .catch((error) => console.log(error));
   }, []);
 
+console.log(stock)
   return (
     <div>
       <input placeholder="Search" />
