@@ -2,7 +2,8 @@ from flask import Flask, jsonify
 import requests
 from flask_restful import Api, Resource, reqparse
 import psycopg2
-
+import json
+import decimal
 
 app = Flask(__name__)
 api = Api(app)
@@ -40,7 +41,11 @@ class PurchasedStock(Resource):
         return jsonify(purchasedStock)
 
 
-
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            return str(o)
+        return super(DecimalEncoder, self).default(o)
 
 
 api.add_resource(Stock, '/stock')
