@@ -10,7 +10,7 @@ function NavigationBar() {
   const handleChange = event => setUserAuthentication(event.target.value);
 
   useEffect(() => {
-    fetch("/userCredentials")
+    fetch("/api/userCredentials")
       .then((res) => res.json())
       .then((data) => setUserAuthentication(data))
       .catch((error) => console.log(error));

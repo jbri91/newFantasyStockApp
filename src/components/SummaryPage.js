@@ -3,9 +3,17 @@ import StockCard from "./StockCard";
 
 function SummaryPage() {
   const [stock, setStock] = useState([]);
+  const [popularStocks, setPopularStocks] =  useState([]);
 
   useEffect(() => {
-    fetch("/purchased")
+    fetch('/api/popularstocks')
+    .then((res) => res.json())
+    .then((data) => setPopularStocks(data))
+    .catch((error) => console.log(error));
+  }, []);
+
+  useEffect(() => {
+    fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => setStock(data))
       .catch((error) => console.log(error));
@@ -23,7 +31,7 @@ function SummaryPage() {
   time={stock[i][6]}
 />)}
 
-console.log(stock)
+
   return (
     <div>
       <input placeholder="Search" />
@@ -41,12 +49,12 @@ console.log(stock)
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
         <StockCard
-          symbol={stock.symbol}
-          stockName={stock.companyName}
-          price={stock.latestPrice}
-          dayChange={stock.change}
-          percentChange={stock.changePercent}
-          time={stock.latestTime}
+          symbol={popularStocks.symbol}
+          stockName={popularStocks.companyName}
+          price={popularStocks.latestPrice}
+          dayChange={popularStocks.change}
+          percentChange={popularStocks.changePercent}
+          time={popularStocks.latestTime}
         />
         <StockCard
           symbol={stock.symbol}
