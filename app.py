@@ -11,8 +11,8 @@ api = Api(app)
 # Connecting with Trial Stock API
 stock = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=Tpk_b6429f1574564a01b54d614f88e0f93f').json()
 
-headers = {'Authorization': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
-iexCloud = requests.get('https://cloud.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10', headers=headers)
+headers = {'token': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
+iexCloud = requests.get('https://cloud.iexapis.com/stable/stock/IBM/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
 print(iexCloud)
 
 class SearchStock(Resource):
