@@ -7,6 +7,7 @@ import { NavLink } from "react-router-dom";
 
 function NavigationBar() {
   const [userAuthentication, setUserAuthentication] = useState([]);
+  const handleChange = event => setUserAuthentication(event.target.value);
 
   useEffect(() => {
     fetch("/userCredentials")
@@ -68,7 +69,7 @@ function NavigationBar() {
             </div>
             <div className="modal-body">
               <div>
-                <input placeholder="User ID" />
+                <input placeholder="User ID"  onChange={handleChange} />
                 <input placeholder="Password" type="password" />
               </div>
             </div>
