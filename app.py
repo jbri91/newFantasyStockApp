@@ -22,9 +22,24 @@ class SearchStock(Resource):
         print(searchStock)
         return jsonify(searchStock)
 
-class PopularStocks(Resource):
+class Tesla(Resource):
     def get(self):
         popular = requests.get('https://cloud.iexapis.com/stable/stock/TSLA/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
+        return jsonify(popular)
+
+class Apple(Resource):
+    def get(self):
+        popular = requests.get('https://cloud.iexapis.com/stable/stock/AAPL/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
+        return jsonify(popular)
+
+class Amazon(Resource):
+    def get(self):
+        popular = requests.get('https://cloud.iexapis.com/stable/stock/AMZN/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
+        return jsonify(popular)
+
+class Microsoft(Resource):
+    def get(self):
+        popular = requests.get('https://cloud.iexapis.com/stable/stock/MSFT/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
         return jsonify(popular)
 
 # Connecting with Database
@@ -64,7 +79,10 @@ class UserCredentials(Resource):
         conn.close()
         return jsonify(userCredentials)
         
-api.add_resource(PopularStocks, '/api/popularstocks')
+api.add_resource(Tesla, '/api/tesla')
+api.add_resource(Apple, '/api/apple')
+api.add_resource(Amazon, '/api/amazon')
+api.add_resource(Microsoft, '/api/microsoft')
 api.add_resource(SearchStock, '/api/searchStock')
 api.add_resource(UserCredentials, '/api/userCredentials')
 api.add_resource(Stock, '/api/stock')
