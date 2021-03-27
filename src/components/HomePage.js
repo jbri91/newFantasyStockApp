@@ -26,6 +26,7 @@ function HomePage() {
             “Remember that the stock market is a manic depressive.” - Warren
             Buffet
           </h5>
+          <a style={{color: 'black', fontSize: '20px'}} href="https://iexcloud.io">Data provided by IEX Cloud</a>
         </div>
       </header>
     </div>

@@ -11,6 +11,7 @@ api = Api(app)
 # Connecting with Trial Stock API
 stock = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=Tpk_b6429f1574564a01b54d614f88e0f93f').json()
 
+iexCloud = requests.get('https://cloud.iexapis.com/stable/')
 
 # Connecting with Database
 conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
