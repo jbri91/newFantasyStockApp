@@ -1,16 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink } from "react-router-dom";
 
+
 function NavigationBar() {
+  const [userAuthentication, setUserAuthentication] = useState([]);
+
+  useEffect(() => {
+    fetch("/userCredentials")
+      .then((res) => res.json())
+      .then((data) => setUserAuthentication(data))
+      .catch((error) => console.log(error));
+  }, []);
+
   return (
     <div style={{ marginBottom: "70px" }}>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/">
-          {" "}
-          <img src={bullMarketIcon} alt="Bull Market" />{" "}
+          
+          <img src={bullMarketIcon} alt="Bull Market" />
         </Navbar.Brand>
         <Nav className="mr-auto">
           <div
@@ -38,8 +48,7 @@ function NavigationBar() {
           data-target="#myModal"
           href="#login"
         >
-          {" "}
-          Login/Register{" "}
+          Login/Register
         </button>
       </Navbar>
 
@@ -72,13 +81,17 @@ function NavigationBar() {
                 href="createAccount"
                 className="btn btn-link"
               >
-                {" "}
-                Create Account{" "}
+                Create Account
               </NavLink>
               <button
                 type="button"
                 className="btn btn-default"
-                style={{backgroundColor:'lightblue', border:'solid', borderColor:'skyblue'}}
+                style={{
+                  backgroundColor: "lightblue",
+                  border: "solid",
+                  borderColor: "skyblue",
+                }}
+                onClick={() => console.log(userAuthentication)}
               >
                 Submit
               </button>

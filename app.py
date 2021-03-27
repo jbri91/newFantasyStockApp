@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 import requests
 from flask_restful import Api, Resource, reqparse
 import psycopg2
-import json
+import simplejson as json
 import decimal
 
 app = Flask(__name__)
@@ -40,14 +40,20 @@ class PurchasedStock(Resource):
         conn.close()
         return jsonify(purchasedStock)
 
+class UserCredentials(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+        cur = conn.cursor()
+        cur.execute('SELECT * FROM user_credentials;')
+        userCredentials = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(userCredentials)
+        
 
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            return str(o)
-        return super(DecimalEncoder, self).default(o)
 
-
+api.add_resource(UserCredentials, '/userCredentials')
 api.add_resource(Stock, '/stock')
 api.add_resource(PurchasedStock, '/purchased')
 
