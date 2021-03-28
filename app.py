@@ -17,7 +17,7 @@ stock = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=T
 
 class SearchStock(Resource):
     def get(self, stock):
-        headers = {'Authorization': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
+        headers = {'token': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
         searchStock = requests.get('https://cloud.iexapis.com/stable/stock/aapl/batch?types=quote,news,chart&range=1m&last=10', headers = headers).json()
         print(searchStock)
         return jsonify(searchStock)
@@ -85,7 +85,6 @@ api.add_resource(Amazon, '/api/amazon')
 api.add_resource(Microsoft, '/api/microsoft')
 api.add_resource(SearchStock, '/api/searchStock')
 api.add_resource(UserCredentials, '/api/userCredentials')
-api.add_resource(Stock, '/api/stock')
 api.add_resource(PurchasedStock, '/api/purchased')
 
 app.run(debug=True)

@@ -9,12 +9,12 @@ function NavigationBar() {
   const [userAuthentication, setUserAuthentication] = useState([]);
   const handleChange = event => setUserAuthentication(event.target.value);
 
-  useEffect(() => {
-    fetch("/api/userCredentials")
-      .then((res) => res.json())
-      .then((data) => setUserAuthentication(data))
-      .catch((error) => console.log(error));
-  }, []);
+  // useEffect(() => {
+  //   fetch("/api/userCredentials")
+  //     .then((res) => res.json())
+  //     .then((data) => setUserAuthentication(data))
+  //     .catch((error) => console.log(error));
+  // }, []);
 
   return (
     <div style={{ marginBottom: "70px" }}>

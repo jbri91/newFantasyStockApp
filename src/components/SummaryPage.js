@@ -2,7 +2,12 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 
 function SummaryPage() {
-  const [stock, setStock] = useState([]);
+
+  const [balance, setBalance] = useState(100000);
+
+
+  const [purchasedStocks, setPurchasedStocks] = useState([]);
+  
   const [tesla, setTesla] =  useState([]);
   const [apple, setApple] = useState([]);
   const [amazon, setAmazon] = useState([]);
@@ -42,20 +47,20 @@ function SummaryPage() {
   useEffect(() => {
     fetch("/api/purchased")
       .then((res) => res.json())
-      .then((data) => setStock(data))
+      .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
   }, []);
 
   let stocksPurchased = []
 
-  for(let i = 0; i < stock.length; i++){stocksPurchased.push(<StockCard
-  key = {stock[i][0]}
-  symbol={stock[i][1]}
-  stockName={stock[i][2]}
-  price={stock[i][3]}
-  dayChange={stock[i][4]}
-  percentChange={stock[i][5]}
-  time={stock[i][6]}
+  for(let i = 0; i < purchasedStocks.length; i++){stocksPurchased.push(<StockCard
+  key = {purchasedStocks[i][0]}
+  symbol={purchasedStocks[i][1]}
+  stockName={purchasedStocks[i][2]}
+  price={purchasedStocks[i][3]}
+  dayChange={purchasedStocks[i][4]}
+  percentChange={purchasedStocks[i][5]}
+  time={purchasedStocks[i][6]}
 />)}
 
   return (

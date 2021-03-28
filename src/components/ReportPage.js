@@ -3,20 +3,20 @@ import StockCard from "./StockCard";
 
 function ReportPage() {
 
-  const [stock, setStock] = useState([])
+  const [stock, setStock] = useState(100000)
 
-  useEffect(() => {
-    fetch('/stock')
-    .then(res => res.json())
-    .then(data => setStock(data))
-    .catch(error => console.log(error))
-  }, [])
 
-  console.log(stock)
+  // useEffect(() => {
+  //   fetch('/stock')
+  //   .then(res => res.json())
+  //   .then(data => setStock(data))
+  //   .catch(error => console.log(error))
+  // }, [])
+
 
   return (
     <div className="App">
-      <h1  style={{ fontWeight: 'bolder' }}> Current Balance: $100,000</h1>
+      <h1  style={{ fontWeight: 'bolder' }}> Current Balance: ${stock}</h1>
       <br/>
       <h2 style={{ color: 'gray', fontWeight: 'bolder'}}>Market Snapshot</h2>
       <div

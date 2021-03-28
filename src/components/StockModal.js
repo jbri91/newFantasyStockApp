@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
 function StockModal() {
+
+
   return (
     <div
       id="stockModal"
@@ -24,7 +26,7 @@ function StockModal() {
             <div>
               <p style={{ marginBottom: "0px" }}>Action</p>
               <select name="trade" id="trade">
-                <option > --Select-- </option>
+                <option> --Select-- </option>
                 <option value="buy"> Buy </option>
                 <option value="sell"> Sell </option>
               </select>
