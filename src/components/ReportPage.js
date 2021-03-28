@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 
 function ReportPage() {
 
-  const [stock, setStock] = useState(100000)
+  const [ stock ] = useState(100000)
 
 
   // useEffect(() => {
