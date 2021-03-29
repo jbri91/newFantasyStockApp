@@ -3,40 +3,40 @@ import { Card } from "react-bootstrap";
 import StockModal from "./StockModal";
 
 function StockCard(props) {
-
-  const [ stockPrice, setStockPrice ] = useState([]);
+  const [stockPrice, setStockPrice] = useState([]);
 
   function handleTrade(e) {
-  let stock = e.target.parentElement.innerText.replace('Trade', '')
-  fetch(`/api/searchStock/${stock}`)
-  .then((res) => res.json())
-  .then((data) => setStockPrice(data.latestPrice))
-  .catch(ERROR => console.log(ERROR))
+    let stock = e.target.parentElement.innerText.replace("Trade", "");
+    fetch(`/api/searchStock/${stock}`)
+      .then((res) => res.json())
+      .then((data) => setStockPrice(data.latestPrice))
+      .catch((ERROR) => console.log(ERROR));
   }
-
-console.log(stockPrice)
+     console.log(stockPrice)
 
   return (
     <div>
-      <Card style={{ width: "18rem", height: '11rem', margin: '20px' }}>
+      <Card style={{ width: "18rem", height: "11rem", margin: "20px" }}>
         <Card.Header
           style={{
             color: "black",
             fontWeight: "bold",
             display: "flex",
-            justifyContent: 'space-between',
+            justifyContent: "space-between",
             height: "3rem",
             fontSize: "16px",
             textDecoration: "underline",
           }}
         >
-            <p>
-          {props.symbol}
+          <p>{props.symbol}</p>
+          <p
+            type="button"
+            data-toggle="modal"
+            data-target="#stockModal"
+            onClick={handleTrade}
+          >
+            Trade
           </p>
-          <p type='button'
-          data-toggle='modal'
-          data-target='#stockModal'
-          onClick={handleTrade}>Trade</p>
         </Card.Header>
         <Card.Body>
           <Card.Text
@@ -70,9 +70,7 @@ console.log(stockPrice)
                 {" "}
                 Price{" "}
               </Card.Text>
-              <Card.Text
-                style={{ fontSize: "12px", color: "gray" }}
-              >
+              <Card.Text style={{ fontSize: "12px", color: "gray" }}>
                 {" "}
                 Day's change
               </Card.Text>
@@ -82,7 +80,7 @@ console.log(stockPrice)
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                marginBottom: '10px'
+                marginBottom: "10px",
               }}
             >
               <Card.Text
@@ -105,10 +103,20 @@ console.log(stockPrice)
               </Card.Text>
             </div>
           </div>
-          <Card.Text style={{ fontSize: "12px", fontWeight: "bold", color: "gray", display: 'flex'}}> {props.time} </Card.Text>
+          <Card.Text
+            style={{
+              fontSize: "12px",
+              fontWeight: "bold",
+              color: "gray",
+              display: "flex",
+            }}
+          >
+            {" "}
+            {props.time}{" "}
+          </Card.Text>
         </Card.Body>
       </Card>
-     <StockModal stockPrice={stockPrice}/>
+      <StockModal stockPrice={stockPrice} />
     </div>
   );
 }

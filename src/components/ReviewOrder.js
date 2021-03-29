@@ -1,6 +1,9 @@
 import React from "react";
 
-function ReviewOrder() {
+function ReviewOrder(props) {
+  
+  console.log(props.stockPrice)
+
   return (
     <div>
       <div
@@ -26,8 +29,8 @@ function ReviewOrder() {
                   Buy 2 shares of SI ((Silvergate Capital Corporation Class A
                   Common Stock)
                 </p>
-                <p> Limit at $132</p>
-                <p>Estimated Total: -$268</p>
+                <p> Limit at ${props.stockPrice}</p>
+                <p>Estimated Total: ${props.stockSum}</p>
                 <p> Remaining Buy Power: $100,000</p>
               </div>
             </div>

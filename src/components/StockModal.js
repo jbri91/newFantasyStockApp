@@ -2,30 +2,23 @@ import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
 function StockModal(props) {
-const [ selected, setSelected ] = useState([]);
-const [ quantity, setQuantity ] = useState([]);
-const [ stockSum, setStockSum ] = useState([]);
+  const [selected, setSelected] = useState('');
+  const [quantity, setQuantity] = useState([]);
+  const [stockSum, setStockSum] = useState([]);
 
+  function handleStockSum() {
+    let price = props.stockPrice;
+    setStockSum(price * quantity);
+  }
+  console.log(stockSum);
 
+  function handleSelectChange(e) {
+    setSelected(e.target.value);
+  }
 
-
-function handleStockSum() {
-  let price = props.stockPrice
-  setStockSum(price * quantity)
-}
-console.log(stockSum)
-
-function handleSelectChange(e) {
-  setSelected(e.target.value)
-}
-// console.log(selected)
-
-function handleQuantityChange(e) {
-  setQuantity(e.target.value)
-}
-// console.log(quantity)
-
-
+  function handleQuantityChange(e) {
+    setQuantity(e.target.value);
+  }
 
   return (
     <div
@@ -48,15 +41,24 @@ function handleQuantityChange(e) {
           >
             <div>
               <p style={{ marginBottom: "0px" }}>Action</p>
-              <select name="trade" id="trade" value={selected} onChange={handleSelectChange} >
-                <option value='select'> --Select-- </option>
-                <option value="buy" > Buy </option>
+              <select
+                name="trade"
+                id="trade"
+                value={selected}
+                onChange={handleSelectChange}
+              >
+                <option value="select"> --Select-- </option>
+                <option value="buy"> Buy </option>
                 <option value="sell"> Sell </option>
               </select>
             </div>
             <div>
               <p style={{ marginBottom: "0px" }}>Quanity</p>
-              <input type="number" style={{ width: "100px", height: "32px" }} onChange={handleQuantityChange} />
+              <input
+                type="number"
+                style={{ width: "100px", height: "32px" }}
+                onChange={handleQuantityChange}
+              />
             </div>
           </div>
           <button
@@ -83,7 +85,10 @@ function handleQuantityChange(e) {
           </div>
         </div>
       </div>
-      <ReviewOrder />
+      <ReviewOrder 
+      stockSum={stockSum}
+      stockPrice={props.stockPrice}
+      />
     </div>
   );
 }
