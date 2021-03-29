@@ -3,14 +3,15 @@ import ReviewOrder from "./ReviewOrder";
 
 function StockModal(props) {
   const [selected, setSelected] = useState('');
-  const [quantity, setQuantity] = useState([]);
-  const [stockSum, setStockSum] = useState([]);
+  const [quantity, setQuantity] = useState('');
+  const [stockSum, setStockSum] = useState('');
+
 
   function handleStockSum() {
     let price = props.stockPrice;
     setStockSum(price * quantity);
   }
-  console.log(stockSum);
+  console.log(stockSum)
 
   function handleSelectChange(e) {
     setSelected(e.target.value);
@@ -19,6 +20,10 @@ function StockModal(props) {
   function handleQuantityChange(e) {
     setQuantity(e.target.value);
   }
+
+//   console.log(props.stockPrice)
+// console.log(quantity)
+// console.log(props.stockPrice * quantity)
 
   return (
     <div

@@ -1,8 +1,7 @@
 import React from "react";
 
 function ReviewOrder(props) {
-  
-  console.log(props.stockPrice)
+console.log(props.stockPrice)
 
   return (
     <div>

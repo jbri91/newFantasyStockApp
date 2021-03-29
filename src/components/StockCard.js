@@ -5,14 +5,14 @@ import StockModal from "./StockModal";
 function StockCard(props) {
   const [stockPrice, setStockPrice] = useState([]);
 
-  function handleTrade(e) {
+  
+  function getStockPrice(e) {
     let stock = e.target.parentElement.innerText.replace("Trade", "");
     fetch(`/api/searchStock/${stock}`)
       .then((res) => res.json())
       .then((data) => setStockPrice(data.latestPrice))
       .catch((ERROR) => console.log(ERROR));
   }
-     console.log(stockPrice)
 
   return (
     <div>
@@ -33,7 +33,7 @@ function StockCard(props) {
             type="button"
             data-toggle="modal"
             data-target="#stockModal"
-            onClick={handleTrade}
+            onClick={getStockPrice}
           >
             Trade
           </p>
