@@ -62,7 +62,7 @@ function SummaryPage() {
   percentChange={purchasedStocks[i][5]}
   time={purchasedStocks[i][6]}
 />)}
-console.log(purchasedStocks)
+
   return (
     <div>
       <input placeholder="Search" />
