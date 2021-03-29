@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
-function StockModal() {
+function StockModal(props) {
 const [ selected, setSelected ] = useState([]);
 const [ quantity, setQuantity ] = useState([]);
 const [ stockSum, setStockSum ] = useState([]);
@@ -10,9 +10,10 @@ const [ stockSum, setStockSum ] = useState([]);
 
 
 function handleStockSum() {
-  setStockSum(5 * quantity)
+  let price = props.stockPrice
+  setStockSum(price * quantity)
 }
-// console.log(stockSum)
+console.log(stockSum)
 
 function handleSelectChange(e) {
   setSelected(e.target.value)

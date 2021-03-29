@@ -3,7 +3,7 @@ import { Card } from "react-bootstrap";
 import StockModal from "./StockModal";
 
 function StockCard(props) {
-  
+
   const [ stockPrice, setStockPrice ] = useState([]);
 
   function handleTrade(e) {
@@ -108,7 +108,7 @@ console.log(stockPrice)
           <Card.Text style={{ fontSize: "12px", fontWeight: "bold", color: "gray", display: 'flex'}}> {props.time} </Card.Text>
         </Card.Body>
       </Card>
-     <StockModal />
+     <StockModal stockPrice={stockPrice}/>
     </div>
   );
 }
