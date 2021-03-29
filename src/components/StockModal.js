@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
 function StockModal() {
-const [ practice, setPractice ] = useState([]);
+const [ selected, setSelected ] = useState([]);
 const [quantity, setQuantity ] = useState([]);
+const [ stockSum, setStockSum ] = useState([]);
+
+function handleStockSum() {
+  setStockSum(5 * quantity)
+}
+console.log(stockSum)
 
 function handleSelectChange(e) {
-  setPractice(e.target.value)
+  setSelected(e.target.value)
 }
-console.log(practice)
+console.log(selected)
 
 function handleQuantityChange(e) {
   setQuantity(e.target.value)
 }
 console.log(quantity)
+
+
 
   return (
     <div
@@ -36,7 +44,7 @@ console.log(quantity)
           >
             <div>
               <p style={{ marginBottom: "0px" }}>Action</p>
-              <select name="trade" id="trade" value={practice} onChange={handleSelectChange} >
+              <select name="trade" id="trade" value={selected} onChange={handleSelectChange} >
                 <option value='select'> --Select-- </option>
                 <option value="buy" > Buy </option>
                 <option value="sell"> Sell </option>
@@ -53,6 +61,7 @@ console.log(quantity)
             style={{ color: "black", fontWeight: "bolder" }}
             data-toggle="modal"
             data-target="#reviewModal"
+            onClick={handleStockSum}
           >
             Review Order
           </button>

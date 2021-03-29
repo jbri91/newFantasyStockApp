@@ -3,6 +3,11 @@ import { Card } from "react-bootstrap";
 import StockModal from "./StockModal";
 
 function StockCard(props) {
+
+  function handleTrade(e) {
+    console.log(e)
+  }
+
   return (
     <div>
       <Card style={{ width: "18rem", height: '11rem', margin: '20px' }}>
@@ -22,7 +27,8 @@ function StockCard(props) {
           </p>
           <p type='button'
           data-toggle='modal'
-          data-target='#stockModal'>Trade</p>
+          data-target='#stockModal'
+          onClick={handleTrade}>Trade</p>
         </Card.Header>
         <Card.Body>
           <Card.Text
