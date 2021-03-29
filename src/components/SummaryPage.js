@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 
 function SummaryPage() {
 
-  const [balance, setBalance] = useState(100000);
+  // const [balance, setBalance] = useState(100000);
 
 
   const [purchasedStocks, setPurchasedStocks] = useState([]);

@@ -1,7 +1,7 @@
 import React from "react";
 
 function ReviewOrder(props) {
-console.log(props.stockPrice)
+
 
   return (
     <div>
@@ -25,7 +25,7 @@ console.log(props.stockPrice)
             >
               <div style={{ fontSize: "20px", }}>
                 <p>
-                  Buy 2 shares of SI ((Silvergate Capital Corporation Class A
+                  {props.selected} {props.quantity} shares of SI ((Silvergate Capital Corporation Class A
                   Common Stock)
                 </p>
                 <p> Limit at ${props.stockPrice}</p>

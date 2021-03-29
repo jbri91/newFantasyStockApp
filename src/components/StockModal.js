@@ -53,8 +53,8 @@ function StockModal(props) {
                 onChange={handleSelectChange}
               >
                 <option value="select"> --Select-- </option>
-                <option value="buy"> Buy </option>
-                <option value="sell"> Sell </option>
+                <option value="Buy"> Buy </option>
+                <option value="Sell"> Sell </option>
               </select>
             </div>
             <div>
@@ -93,6 +93,8 @@ function StockModal(props) {
       <ReviewOrder 
       stockSum={stockSum}
       stockPrice={props.stockPrice}
+      quantity={quantity}
+      selected={selected}
       />
     </div>
   );
