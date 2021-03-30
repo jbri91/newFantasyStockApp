@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
+import StockModal from './StockModal';
 
 function SummaryPage() {
-
-  // const [balance, setBalance] = useState(100000);
-
-
-  const [purchasedStocks, setPurchasedStocks] = useState([]);
   
-  const [tesla, setTesla] =  useState([]);
-  const [apple, setApple] = useState([]);
-  const [amazon, setAmazon] = useState([]);
-  const [microsoft, setMicrosoft] =useState([]);
+    const [balance, setBalance] = useState(100000);
+    const [purchasedStocks, setPurchasedStocks] = useState([]);
+    const [tesla, setTesla] =  useState([]);
+    const [apple, setApple] = useState([]);
+    const [amazon, setAmazon] = useState([]);
+    const [microsoft, setMicrosoft] =useState([]);
+    const [stockPrice, setStockPrice] = useState(0);
+  
+
 
   useEffect(() => {
     fetch('/api/tesla')
@@ -61,6 +62,7 @@ function SummaryPage() {
   dayChange={purchasedStocks[i][4]}
   percentChange={purchasedStocks[i][5]}
   time={purchasedStocks[i][6]}
+  setPrice={setStockPrice}
 />)}
 
   return (
@@ -86,6 +88,7 @@ function SummaryPage() {
           dayChange={tesla.change}
           percentChange={tesla.changePercent}
           time={tesla.latestTime}
+          setPrice={setStockPrice}
         />
         <StockCard
           symbol={amazon.symbol}
@@ -94,6 +97,7 @@ function SummaryPage() {
           dayChange={amazon.change}
           percentChange={amazon.changePercent}
           time={amazon.latestTime}
+          setPrice={setStockPrice}
         />
         <StockCard
           symbol={apple.symbol}
@@ -102,6 +106,7 @@ function SummaryPage() {
           dayChange={apple.change}
           percentChange={apple.changePercent}
           time={apple.latestTime}
+          setPrice={setStockPrice}
         />
         <StockCard
           symbol={microsoft.symbol}
@@ -110,7 +115,9 @@ function SummaryPage() {
           dayChange={microsoft.change}
           percentChange={microsoft.changePercent}
           time={microsoft.latestTime}
+          setPrice={setStockPrice}
         />
+        <StockModal stockPrice={stockPrice} />
       </div>
     </div>
   );

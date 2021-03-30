@@ -5,7 +5,7 @@ function StockModal(props) {
   const [selected, setSelected] = useState('');
   const [quantity, setQuantity] = useState([]);
   const [stockSum, setStockSum] = useState([]);
-
+  
 
   function handleStockSum() {
     let price = props.stockPrice;
@@ -16,14 +16,13 @@ function StockModal(props) {
   function handleSelectChange(e) {
     setSelected(e.target.value);
   }
-
+  
   function handleQuantityChange(e) {
     setQuantity(e.target.value);
   }
 
-//   console.log(props.stockPrice)
-// console.log(quantity)
-// console.log(props.stockPrice * quantity)
+  console.log('StockModal stockPrice: ', props.stockPrice);
+  console.log(quantity);
 
   return (
     <div

@@ -1,17 +1,11 @@
 import React, { useState } from "react";
 import { Card } from "react-bootstrap";
-import StockModal from "./StockModal";
 
 function StockCard(props) {
-  const [stockPrice, setStockPrice] = useState([]);
+  const {price} = props;
 
-  
-  function getStockPrice(e) {
-    let stock = e.target.parentElement.innerText.replace("Trade", "");
-    fetch(`/api/searchStock/${stock}`)
-      .then((res) => res.json())
-      .then((data) => setStockPrice(data.latestPrice))
-      .catch((ERROR) => console.log(ERROR));
+  function handleClick() {
+    props.setPrice(price);
   }
 
   return (
@@ -33,7 +27,7 @@ function StockCard(props) {
             type="button"
             data-toggle="modal"
             data-target="#stockModal"
-            onClick={getStockPrice}
+            onClick={handleClick}
           >
             Trade
           </p>
@@ -115,8 +109,7 @@ function StockCard(props) {
             {props.time}{" "}
           </Card.Text>
         </Card.Body>
-      </Card>
-      <StockModal stockPrice={stockPrice} />
+      </Card> 
     </div>
   );
 }
