@@ -4,7 +4,7 @@ import StockModal from './StockModal';
 
 function SummaryPage() {
   
-    const [balance, setBalance] = useState(100000);
+    // const [balance, setBalance] = useState(100000);
     const [purchasedStocks, setPurchasedStocks] = useState([]);
     const [tesla, setTesla] =  useState([]);
     const [apple, setApple] = useState([]);
