@@ -109,7 +109,7 @@ function StockCard(props) {
               display: "flex",
             }}
           >
-            {props.cost == undefined ? null : 'Cost: '+ props.cost} {props.time}
+            {props.time}
           </Card.Text>
         </Card.Body>
       </Card> 
