@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
 function SummaryPage() {
-  // const [balance, setBalance] = useState(100000);
+  const [balance, setBalance] = useState(20000);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -82,6 +82,11 @@ function SummaryPage() {
 
   return (
     <div>
+      <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>
+      <h3>Buying Power: $</h3>
+      <h3>Account Value: $</h3>
+      <h3>Profit/Debt: $</h3>
+      </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>

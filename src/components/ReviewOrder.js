@@ -28,7 +28,7 @@ function ReviewOrder(props) {
                 </p>
                 <p> Limit at ${props.stockPrice}</p>
                 <p>Estimated Total: ${props.stockSum}</p>
-                <p> Remaining Buy Power: $100,000</p>
+                <p> Remaining Buy Power: $20,000</p>
               </div>
             </div>
             <button
