@@ -25,7 +25,7 @@ console.log('Review Order ', props)
             >
               <div style={{ fontSize: "20px", }}>
                 <p>
-                  {props.selected} {props.quantity} shares of SI ({props.stockName})
+                  {props.selected} {props.quantity} shares of {props.symbol} ({props.stockName})
                 </p>
                 <p> Limit at ${props.stockPrice}</p>
                 <p>Estimated Total: ${props.stockSum}</p>

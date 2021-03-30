@@ -93,6 +93,7 @@ function StockModal(props) {
       stockSum={stockSum}
       stockPrice={props.stockPrice}
       stockName={props.stockName}
+      symbol={props.symbol}
       quantity={quantity}
       selected={selected}
       />

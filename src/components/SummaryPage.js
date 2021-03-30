@@ -12,6 +12,7 @@ function SummaryPage() {
     const [microsoft, setMicrosoft] =useState([]);
     const [stockPrice, setStockPrice] = useState(0);
     const [stockName, setStockName] = useState('');
+    const [symbol, setSymbol] = useState('');
 
 
   useEffect(() => {
@@ -64,6 +65,7 @@ function SummaryPage() {
   time={purchasedStocks[i][6]}
   setPrice={setStockPrice}
   setStockName={setStockName}
+  setSymbol={setSymbol}
 />)}
 
   return (
@@ -90,6 +92,8 @@ function SummaryPage() {
           percentChange={tesla.changePercent}
           time={tesla.latestTime}
           setPrice={setStockPrice}
+          setStockName={setStockName}
+          setSymbol={setSymbol}
         />
         <StockCard
           symbol={amazon.symbol}
@@ -99,6 +103,8 @@ function SummaryPage() {
           percentChange={amazon.changePercent}
           time={amazon.latestTime}
           setPrice={setStockPrice}
+          setStockName={setStockName}
+          setSymbol={setSymbol}
         />
         <StockCard
           symbol={apple.symbol}
@@ -108,6 +114,8 @@ function SummaryPage() {
           percentChange={apple.changePercent}
           time={apple.latestTime}
           setPrice={setStockPrice}
+          setStockName={setStockName}
+          setSymbol={setSymbol}
         />
         <StockCard
           symbol={microsoft.symbol}
@@ -117,9 +125,12 @@ function SummaryPage() {
           percentChange={microsoft.changePercent}
           time={microsoft.latestTime}
           setPrice={setStockPrice}
+          setStockName={setStockName}
+          setSymbol={setSymbol}
         />
         <StockModal stockPrice={stockPrice}
-        stockName={stockName} />
+        stockName={stockName}
+        symbol={symbol} />
       </div>
     </div>
   );
