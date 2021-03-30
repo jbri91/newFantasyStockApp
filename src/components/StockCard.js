@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card } from "react-bootstrap";
 
 function StockCard(props) {
   const {price} = props;
+  const {stockName} = props;
 
   function handleClick() {
     props.setPrice(price);
+    props.setStockName(stockName);
   }
 
   return (

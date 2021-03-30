@@ -11,7 +11,7 @@ function SummaryPage() {
     const [amazon, setAmazon] = useState([]);
     const [microsoft, setMicrosoft] =useState([]);
     const [stockPrice, setStockPrice] = useState(0);
-  
+    const [stockName, setStockName] = useState('');
 
 
   useEffect(() => {
@@ -63,6 +63,7 @@ function SummaryPage() {
   percentChange={purchasedStocks[i][5]}
   time={purchasedStocks[i][6]}
   setPrice={setStockPrice}
+  setStockName={setStockName}
 />)}
 
   return (
@@ -117,7 +118,8 @@ function SummaryPage() {
           time={microsoft.latestTime}
           setPrice={setStockPrice}
         />
-        <StockModal stockPrice={stockPrice} />
+        <StockModal stockPrice={stockPrice}
+        stockName={stockName} />
       </div>
     </div>
   );
