@@ -13,6 +13,7 @@ function SummaryPage() {
     const [stockPrice, setStockPrice] = useState(0);
     const [stockName, setStockName] = useState('');
     const [symbol, setSymbol] = useState('');
+    const [searchStock, setSearchStock] = useState('');
 
 
   useEffect(() => {
@@ -53,6 +54,29 @@ function SummaryPage() {
       .catch((error) => console.log(error));
   }, []);
 
+  
+  // const searchForStock = () => {
+  //   fetch('/api/searchStock/AMC')
+  //   .then(res => res.json())
+  //   .then(data => setSearchStock(data))
+  //   .catch(error => console.log(error))
+  // }
+
+  function handleSearch(e) {
+    console.log(e.target.value)
+    setSearchStock(e.target.value)
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    console.log('handleSubmit ', searchStock)
+    fetch(`/api/searchStock/${searchStock}`)
+    .then(res => res.json())
+    .then(data => setSearchStock(data))
+    .catch(error => console.log(error))
+  }
+    console.log(searchStock)
+    
   let stocksPurchased = []
 
   for(let i = 0; i < purchasedStocks.length; i++){stocksPurchased.push(<StockCard
@@ -70,7 +94,9 @@ function SummaryPage() {
 
   return (
     <div>
-      <input placeholder="Search" />
+      <form onSubmit={handleSubmit}>
+      <input  onChange={handleSearch} placeholder="Search" />
+      </form>
       <h1 style={{ fontSize: "30px", marginTop: "15px" }}>
         {" "}
         Positions Cards{" "}
