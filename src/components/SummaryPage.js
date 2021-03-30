@@ -61,16 +61,14 @@ function SummaryPage() {
       .then((data) => setSearchStock(data))
       .catch((error) => console.log(error));
   }
-  console.log(searchStock);
 
   let stocksPurchased = [];
-
   for (let i = 0; i < purchasedStocks.length; i++) {
     stocksPurchased.push(
       <StockCard
         key={purchasedStocks[i][0]}
         symbol={purchasedStocks[i][1]}
-        stockName={purchasedStocks[i][2]}
+        stockName={purchasedStocks[i][2]} 
         price={purchasedStocks[i][3]}
         dayChange={purchasedStocks[i][4]}
         percentChange={purchasedStocks[i][5]}

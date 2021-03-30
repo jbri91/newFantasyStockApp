@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 
 function ReportPage() {
 
-  const [ stock ] = useState(100000)
+  const [ stock ] = useState(20000)
 
 
   // useEffect(() => {
@@ -16,38 +16,9 @@ function ReportPage() {
 
   return (
     <div className="App">
-      <h1  style={{ fontWeight: 'bolder' }}> Current Balance: ${stock}</h1>
-      <br/>
-      <h2 style={{ color: 'gray', fontWeight: 'bolder'}}>Market Snapshot</h2>
-      <div
-        style={{ display: "flex", justifyContent: "space-around", borderStyle: 'solid' }}
-      >
-        <StockCard
-          symbol={stock.symbol}
-          stockName={stock.companyName}
-          price={stock.latestPrice}
-          dayChange={stock.change} 
-          percentChange={stock.changePercent}
-          time={stock.latestTime}
-        />
-        <StockCard
-           symbol={stock.symbol}
-           stockName={stock.companyName}
-           price={stock.latestPrice}
-           dayChange={stock.change} 
-           percentChange={stock.changePercent}
-           time={stock.latestTime}
-        />
-         <StockCard
-          symbol={stock.symbol}
-          stockName={stock.companyName}
-          price={stock.latestPrice}
-          dayChange={stock.change} 
-          percentChange={stock.changePercent}
-          time={stock.latestTime}
-        />
-      </div>
-      
+      <h1  style={{ fontWeight: 'bolder' }}> Buying Power: ${stock}</h1>
+      <h1 style={{ fontWeight: 'bolder' }}>Account Value: $22000</h1>
+      <h1 style={{ fontWeight: 'bolder' }}>Profit/Debt $2000</h1>
     </div>
   );
 }
