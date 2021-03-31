@@ -14,23 +14,24 @@ function SummaryPage() {
   const [symbol, setSymbol] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-  const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0)
+  const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-  useEffect(()=> {
-    setAccountValue(buyingPower + parseFloat(sumofPurchasedStocks))
-  })
+  useEffect(() => {
+    setAccountValue(
+      buyingPower - sumofPurchasedStocks + parseFloat(sumofPurchasedStocks)
+    );
+  });
 
   useEffect(() => {
-    setProfitDebt((accountValue - buyingPower).toFixed(2))
-  })
+    setProfitDebt((accountValue - buyingPower).toFixed(2));
+  });
 
-
-useEffect(() => {
-  fetch('/api/sum')
-  .then(res => res.json())
-  .then(data => setSumofPurchasedStocks(data))
-})
+  useEffect(() => {
+    fetch("/api/sum")
+      .then((res) => res.json())
+      .then((data) => setSumofPurchasedStocks(data));
+  });
 
   useEffect(() => {
     fetch("/api/tesla")
@@ -66,29 +67,26 @@ useEffect(() => {
       .catch((error) => console.log(error));
   }, []);
 
-
   function handleSearch(e) {
     console.log(e.target.value);
     setSearchStock(e.target.value);
   }
 
   function handleSubmit(e) {
-    e.preventDefault(); 
+    e.preventDefault();
     fetch(`/api/searchStock/${searchStock}`)
       .then((res) => res.json())
       .then((data) => setSearchStock(data))
       .catch((error) => console.log(error));
   }
 
-
-
   let stocksPurchased = [];
-  for (let i = 0; i < purchasedStocks.length; i++) { 
+  for (let i = 0; i < purchasedStocks.length; i++) {
     stocksPurchased.push(
       <StockCard
         key={purchasedStocks[i][0]}
         symbol={purchasedStocks[i][1]}
-        stockName={purchasedStocks[i][2]} 
+        stockName={purchasedStocks[i][2]}
         price={purchasedStocks[i][3]}
         dayChange={purchasedStocks[i][4]}
         percentChange={purchasedStocks[i][5]}
@@ -99,33 +97,42 @@ useEffect(() => {
       />
     );
   }
-  
-
-
-
 
   return (
     <div>
-      <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>
-      <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
-      <h3>Account Value: ${accountValue}</h3>
-      <h3>Profit/Debt: ${profitDebt}</h3>
+      <div
+        style={{
+          display: "grid",
+          justifyContent: "flex-start",
+          marginLeft: "10px",
+          borderStyle: "solid",
+          width: "400px",
+          position: "relative",
+          top: "-70px",
+          left: "-10px",
+        }}
+      >
+        <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
+        <h3>Account Value: ${accountValue}</h3>
+        <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
-      <div style={{display:"flex", justifyContent: 'center'}}>
-      {searchStock.companyName ? <StockCard
-        symbol={searchStock.symbol}
-        stockName={searchStock.companyName}
-        price={searchStock.latestPrice}
-        dayChange={searchStock.change}
-        percentChange={searchStock.changePercent}
-        time={searchStock.latestTime}
-        setPrice={setStockPrice}
-        setStockName={setStockName}
-        setSymbol={setSymbol}
-      /> : null} 
+      <div style={{ display: "flex", justifyContent: "center" }}>
+        {searchStock.companyName ? (
+          <StockCard
+            symbol={searchStock.symbol}
+            stockName={searchStock.companyName}
+            price={searchStock.latestPrice}
+            dayChange={searchStock.change}
+            percentChange={searchStock.changePercent}
+            time={searchStock.latestTime}
+            setPrice={setStockPrice}
+            setStockName={setStockName}
+            setSymbol={setSymbol}
+          />
+        ) : null}
       </div>
       <h1 style={{ fontSize: "30px", marginTop: "15px" }}> Positions Cards </h1>
       <header
