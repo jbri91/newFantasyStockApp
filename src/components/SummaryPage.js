@@ -192,6 +192,8 @@ function SummaryPage() {
           stockPrice={stockPrice}
           stockName={stockName}
           symbol={symbol}
+          buyingPower={buyingPower}
+          sumofPurchasedStocks={sumofPurchasedStocks}
         />
       </div>
     </div>

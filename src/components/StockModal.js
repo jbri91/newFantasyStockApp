@@ -92,6 +92,8 @@ function StockModal(props) {
       symbol={props.symbol}
       quantity={quantity}
       selected={selected}
+      buyingPower={props.buyingPower}
+      sumofPurchasedStocks={props.sumofPurchasedStocks}
       />
     </div>
   );
