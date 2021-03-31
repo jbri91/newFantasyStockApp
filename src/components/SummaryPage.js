@@ -84,16 +84,20 @@ function SummaryPage() {
       />
     );
   }
+  
 
 
 
-  let sum = 0;  
+ 
   for(let j=0; j < purchasedStocks.length;j++){
-    sum += parseFloat(purchasedStocks[j][3]); 
-    console.log(sum)
-  }
+    let sum = 0;  
+    sum += purchasedStocks[j][3]; 
+    setPurchasedTotal(sum);
+  } 
+  console.log(purchasedTotal)
 
 
+  
   return (
     <div>
       <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>

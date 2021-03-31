@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
 function StockModal(props) {
-  console.log(props)
   const [selected, setSelected] = useState('');
   const [quantity, setQuantity] = useState([]);
   const [stockSum, setStockSum] = useState([]);
