@@ -13,6 +13,9 @@ function SummaryPage() {
   const [stockName, setStockName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [searchStock, setSearchStock] = useState("");
+  const [purchasedTotal, setPurchasedTotal] = useState(0);
+  const [profitDebt, setProfitDebt] = useState(0);
+
 
   useEffect(() => {
     fetch("/api/tesla")
@@ -62,8 +65,10 @@ function SummaryPage() {
       .catch((error) => console.log(error));
   }
 
+
+
   let stocksPurchased = [];
-  for (let i = 0; i < purchasedStocks.length; i++) {
+  for (let i = 0; i < purchasedStocks.length; i++) { 
     stocksPurchased.push(
       <StockCard
         key={purchasedStocks[i][0]}
@@ -80,12 +85,21 @@ function SummaryPage() {
     );
   }
 
+
+
+  let sum = 0;  
+  for(let j=0; j < purchasedStocks.length;j++){
+    sum += parseFloat(purchasedStocks[j][3]); 
+    console.log(sum)
+  }
+
+
   return (
     <div>
       <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>
-      <h3>Buying Power: $</h3>
-      <h3>Account Value: $</h3>
-      <h3>Profit/Debt: $</h3>
+      <h3>Buying Power: ${balance}</h3>
+      <h3>Account Value: ${purchasedTotal}</h3>
+      <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
