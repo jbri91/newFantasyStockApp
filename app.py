@@ -65,6 +65,8 @@ cur.close()
 conn.close()
 
 
+
+
 class Stock(Resource):
     def get(self):
         return jsonify(stock)
@@ -81,6 +83,19 @@ class PurchasedStock(Resource):
         return jsonify(purchasedStock)
 
 api.add_resource(PurchasedStock, '/api/purchased')
+
+class SumOfPurchasedStock(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+        cur = conn.cursor()
+        cur.execute('SELECT SUM(price) FROM purchased_stock')
+        sum = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(sum)
+
+api.add_resource(SumOfPurchasedStock, '/api/sum')
 
 class UserCredentials(Resource):
     def get(self):

@@ -16,6 +16,11 @@ function SummaryPage() {
   const [purchasedTotal, setPurchasedTotal] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
+useEffect(() => {
+  fetch('/api/sum')
+  .then(res => res.json())
+  .then(data => setPurchasedTotal(data))
+})
 
   useEffect(() => {
     fetch("/api/tesla")
@@ -88,16 +93,7 @@ function SummaryPage() {
 
 
 
- 
-  for(let j=0; j < purchasedStocks.length;j++){
-    let sum = 0;  
-    sum += purchasedStocks[j][3]; 
-    setPurchasedTotal(sum);
-  } 
-  console.log(purchasedTotal)
 
-
-  
   return (
     <div>
       <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>
