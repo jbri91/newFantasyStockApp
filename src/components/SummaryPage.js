@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
 function SummaryPage() {
-  const [balance, setBalance] = useState(20000);
+  const [buyingPower, setBuyingPower] = useState(20000);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -13,13 +13,13 @@ function SummaryPage() {
   const [stockName, setStockName] = useState("");
   const [symbol, setSymbol] = useState("");
   const [searchStock, setSearchStock] = useState("");
-  const [purchasedTotal, setPurchasedTotal] = useState(0);
+  const [accountValue, setAccountValue] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
 useEffect(() => {
   fetch('/api/sum')
   .then(res => res.json())
-  .then(data => setPurchasedTotal(data))
+  .then(data => setAccountValue(data))
 })
 
   useEffect(() => {
@@ -97,8 +97,8 @@ useEffect(() => {
   return (
     <div>
       <div style={{ display: 'grid',justifyContent:'flex-start', marginLeft:'10px', borderStyle:'solid', width:'400px', position:'relative', top:'-70px', left:'-10px' }}>
-      <h3>Buying Power: ${balance}</h3>
-      <h3>Account Value: ${purchasedTotal}</h3>
+      <h3>Buying Power: ${buyingPower}</h3>
+      <h3>Account Value: ${accountValue}</h3>
       <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>
