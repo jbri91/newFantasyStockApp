@@ -78,9 +78,9 @@ function NavigationBar() {
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <NavLink
-                to="/createAccount"
-                href="createAccount"
-                className="btn btn-link"
+              to="/createAccount"
+              href="createAccount"
+              className="btn btn-link"
               >
                 Create Account
               </NavLink>
