@@ -57,7 +57,6 @@ api.add_resource(Microsoft, '/api/microsoft')
 # Connecting with Database
 conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
 cur = conn.cursor()
-# cur.execute('SELECT * FROM user_credentials;')
 cur.execute('SELECT * FROM purchased_stock;')
 purchasedStock = cur.fetchall()
 conn.commit()
@@ -97,6 +96,17 @@ class SumOfPurchasedStock(Resource):
 
 api.add_resource(SumOfPurchasedStock, '/api/sum')
 
+class InsertStocks(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+        cur.execute('INSERT INTO purchased_stock (stock_id, symbol, stock_name, price, day_change, percentage_change, date) VALUES(13, DIS, Walt Disney Co, 188.18, 3.66, 1.98, 2021-04-01 )')
+        inserting = cur.fetchall()
+        conn.commit()
+        return jsonify(inserting)
+
+api.add_resource(InsertStocks, '/api/insert')
+
+        
 class UserCredentials(Resource):
     def get(self):
         conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')

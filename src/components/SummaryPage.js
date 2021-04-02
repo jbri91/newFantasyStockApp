@@ -21,17 +21,17 @@ function SummaryPage() {
     setAccountValue(
       buyingPower - sumofPurchasedStocks + parseFloat(sumofPurchasedStocks)
     );
-  });
+  }, []);
 
-  useEffect(() => {
-    setProfitDebt((accountValue - buyingPower).toFixed(2));
-  });
+  // useEffect(() => {
+  //   setProfitDebt((accountValue - buyingPower).toFixed(2));
+  // }, []);
 
   useEffect(() => {
     fetch("/api/sum")
       .then((res) => res.json())
       .then((data) => setSumofPurchasedStocks(data));
-  });
+  }, []);
 
   useEffect(() => {
     fetch("/api/tesla")

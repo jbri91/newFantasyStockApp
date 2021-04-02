@@ -12,6 +12,18 @@ function StockCard(props) {
     props.setSymbol(symbol);
   }
 
+  const greenStock={
+    fontSize: "12px", 
+    fontWeight: "bold", 
+    color: "green"
+  }
+
+  const redStock={
+    fontSize: "12px", 
+    fontWeight: "bold", 
+    color: "red"
+  }
+
   return (
     <div>
       <Card style={{ width: "18rem", height: "11rem", margin: "20px" }}>
@@ -94,7 +106,7 @@ function StockCard(props) {
                 ${props.price}{" "}
               </Card.Text>
               <Card.Text
-                style={{ fontSize: "12px", fontWeight: "bold", color: "green" }}
+                style={ props.dayChange > 0 ? greenStock : redStock }
               >
                 {" "}
                 {props.dayChange} ({props.percentChange}%){" "}
