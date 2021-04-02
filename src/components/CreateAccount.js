@@ -1,6 +1,21 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 function CreateAccount() {
+
+
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Ty[e': 'application/json'},
+        body: JSON.stringify({ title: 'React POST Request Example'})
+    };
+    
+    useEffect(() => {
+        fetch('/api/createaccount/jbbbb/password', requestOptions)
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(error => console.log(error))
+    }, []);    
+
     return(
         <div style={{ 
             border: '15px solid grey',
