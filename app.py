@@ -97,21 +97,30 @@ class SumOfPurchasedStock(Resource):
 api.add_resource(SumOfPurchasedStock, '/api/sum')
 
 
-class CreateAccount(Resource):
-    def post(self, username, password):
-        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
-        cur = conn.cursor()
-        cur.execute('INSERT INTO user_credentials (username, password) VALUES(%s, %s)', (username, password))
-        cur.execute('SELECT * FROM user_credentials;')
-        inserting = cur.fetchall()
-        for r in inserting:
-            print(f"username {r[0]} password {r[1]}")
-            conn.commit()
-            cur.close()
-            conn.close()
-            return username, 201
-api.add_resource(CreateAccount, '/api/<string:username>/<string:password>')
+# class CreateAccount(Resource):
+#     def post(self, username, password):
+#         conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+#         cur = conn.cursor()
+#         cur.execute('INSERT INTO user_credentials (username, password) VALUES(%s, %s)', ('johnny', 'paassworddd'))
+#         cur.execute('SELECT * FROM user_credentials;')
+#         inserting = cur.fetchall()
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         print(user)
+# api.add_resource(CreateAccount, '/api/createaccount/<string:username>/<string:password>')
 
-        
+
+class CreateUsername(Resource):
+    def get(self, username):
+        print(username)
+        return jsonify(username)
+api.add_resource(CreateUsername, '/api/createaccount/<string:username>')
+
+class CreatePassword(Resource):
+    def get(self, password):
+        print(password)
+        return jsonify(password)
+api.add_resource(CreatePassword, '/api/createaccount/<string:password>')
 
 app.run(debug=True)
