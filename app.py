@@ -96,29 +96,42 @@ class SumOfPurchasedStock(Resource):
 
 api.add_resource(SumOfPurchasedStock, '/api/sum')
 
-class InsertStocks(Resource):
-    def get(self):
-        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
-        cur.execute('INSERT INTO purchased_stock (stock_id, symbol, stock_name, price, day_change, percentage_change, date) VALUES(13, DIS, Walt Disney Co, 188.18, 3.66, 1.98, 2021-04-01 )')
-        inserting = cur.fetchall()
-        conn.commit()
-        return jsonify(inserting)
+# class InsertStocks(Resource):
+#     def get(self):
+#         conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+#         cur.execute('INSERT INTO purchased_stock (stock_id, symbol, stock_name, price, day_change, percentage_change, date) VALUES(13, DIS, Walt Disney Co, 188.18, 3.66, 1.98, 2021-04-01 )')
+#         inserting = cur.fetchall()
+#         conn.commit()
+#         return jsonify(inserting)
 
-api.add_resource(InsertStocks, '/api/insert')
+# api.add_resource(InsertStocks, '/api/insert')
 
-        
-class UserCredentials(Resource):
-    def get(self):
-        conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
-        cur = conn.cursor()
-        cur.execute('SELECT * FROM user_credentials;')
-        userCredentials = cur.fetchall()
-        conn.commit()
-        cur.close()
-        conn.close()
-        return jsonify(userCredentials)
+conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+cur = conn.cursor()
+cur.execute('INSERT INTO user_credentials (username, password) VALUES(%s, %s)', ('jjjjj', 'password44'))
+cur.execute('SELECT * FROM user_credentials;')
 
-api.add_resource(UserCredentials, '/api/userCredentials')
+inserting = cur.fetchall()
+
+for r in inserting:
+    print(f"username {r[0]} password {r[1]}")
+
+conn.commit()
+cur.close()
+conn.close()
+
+# class UserCredentials(Resource):
+#     def get(self):
+#         conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+#         cur = conn.cursor()
+#         cur.execute('SELECT * FROM user_credentials;')
+#         userCredentials = cur.fetchall()
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         return jsonify(userCredentials)
+
+# api.add_resource(UserCredentials, '/api/userCredentials')
         
 
 app.run(debug=True)
