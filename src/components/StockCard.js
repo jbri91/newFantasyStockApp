@@ -106,7 +106,7 @@ function StockCard(props) {
                 ${props.price}{" "}
               </Card.Text>
               <Card.Text
-                style={ props.dayChange > 0 ? greenStock : redStock }
+                style={ props.dayChange >= 0 ? greenStock : redStock }
               >
                 {" "}
                 {props.dayChange} ({props.percentChange}%){" "}

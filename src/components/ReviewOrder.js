@@ -1,7 +1,6 @@
 import React from "react";
 
 function ReviewOrder(props) {
-
   return (
     <div>
       <div
@@ -22,13 +21,24 @@ function ReviewOrder(props) {
               style={{ display: "flex", justifyContent: "space-around" }}
               className="modal-body"
             >
-              <div style={{ fontSize: "20px", }}>
+              <div style={{ fontSize: "20px" }}>
                 <p>
-                  {props.selected} {props.quantity} shares of {props.symbol} ({props.stockName})
+                  {props.selected} {props.quantity} shares of {props.symbol} (
+                  {props.stockName})
                 </p>
                 <p> Limit at ${props.stockPrice}</p>
                 <p>Estimated Total: ${props.stockSum}</p>
-                <p> Remaining Buy Power: ${props.selected === 'Buy' ? props.buyingPower - props.stockSum : props.buyingPower + props.stockSum}</p>
+                <p>
+                  {" "}
+                  Remaining Buy Power: $
+                  {props.selected === "Buy"
+                    ? props.buyingPower -
+                      props.sumofPurchasedStocks -
+                      props.stockSum
+                    : props.buyingPower -
+                      props.sumofPurchasedStocks +
+                      props.stockSum}
+                </p>
               </div>
             </div>
             <button
