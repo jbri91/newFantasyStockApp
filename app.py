@@ -111,16 +111,24 @@ api.add_resource(SumOfPurchasedStock, '/api/sum')
 # api.add_resource(CreateAccount, '/api/createaccount/<string:username>/<string:password>')
 
 
-class CreateUsername(Resource):
-    def get(self, username):
-        print(username)
-        return jsonify(username)
-api.add_resource(CreateUsername, '/api/createaccount/<string:username>')
+# class CreateUsername(Resource):
+#     def get(self, username):
+#         print(username)
+#         return jsonify(username)
+# api.add_resource(CreateUsername, '/api/createaccount/<string:username>')
 
-class CreatePassword(Resource):
-    def get(self, password):
+# class CreatePassword(Resource):
+#     def get(self, password):
+#         print(password)
+#         return jsonify(password)
+# api.add_resource(CreatePassword, '/api/createaccount/<string:password>')
+
+class UserCredentials(Resource):
+    def get(self, username, password):
+        print(username)
         print(password)
-        return jsonify(password)
-api.add_resource(CreatePassword, '/api/createaccount/<string:password>')
+        return jsonify({'username' : username, 'password': password})
+api.add_resource(UserCredentials, '/api/createaccount/<string:username>/<string:password>')
+
 
 app.run(debug=True)

@@ -34,15 +34,15 @@ function handlePassword(e) {
 
 function handleSubmit(e) {
     e.preventDefault();
-    fetch(`api/createaccount/${username}`)
+    fetch(`api/createaccount/${username}/${password}`)
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
 
-    fetch(`api/createaccount/${password}`)
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
+    // fetch(`api/createaccount/${password}`)
+    // .then(res => res.json())
+    // .then(data => console.log(data))
+    // .catch(error => console.log(error))
 }
 
 
