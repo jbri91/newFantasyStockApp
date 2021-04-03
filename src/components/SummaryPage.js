@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { propTypes } from "react-bootstrap/esm/Image";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
@@ -17,7 +18,7 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-
+console.log(searchStock)
 
   useEffect(() => {
     setAccountValue(
