@@ -3,18 +3,22 @@ import React, { useState } from "react";
 function ReviewOrder(props) {
   const [buyingStock, setBuyingStock] = useState("");
 
-  function handlePlaceOrder() {
-    fetch(`/api/searchStock/${props.symbol}`)
+    function handlePlaceOrder() {
+   fetch(`/api/searchStock/${props.symbol}`)
       .then((res) => res.json())
       .then((data) => setBuyingStock(data))
       .catch((error) => console.log(error));
     console.log(buyingStock);
-    fetch(
-      `/api/buystock/${buyingStock.symbol}/${buyingStock.companyName}/${buyingStock.latestPrice}/${buyingStock.change}/${buyingStock.changePercent}/${buyingStock.latestTime}`
-    )
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log(error));
+    if(buyingStock) {
+      fetch(
+        `/api/buystock/${buyingStock.symbol}/${buyingStock.companyName}/${buyingStock.latestPrice}/${buyingStock.change}/${buyingStock.changePercent}/${buyingStock.latestTime}`
+      )
+        .then((res) => res.json())
+        .then((data) => console.log(data))
+        .catch((error) => console.log(error));
+
+    } 
+    
 
     console.log(
       "Price ",

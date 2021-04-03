@@ -107,7 +107,9 @@ class AddStocksToTable(Resource):
             conn.close()
             print(symbol)
             print(price)
+            print(day_change)
+            print(percentage_change)
             return jsonify({'symbol' : symbol, 'stock_name': stock_name, 'price': price, 'day_change': day_change, 'percentage_change': percentage_change, 'date': date})
-api.add_resource(AddStocksToTable, '/api/buystock/<string:symbol>/<string:stock_name>/<int:price>/<int:day_change>,<int:percentage_change>,<string:date>')
+api.add_resource(AddStocksToTable, '/api/buystock/<string:symbol>/<string:stock_name>/<int:price>/<int:day_change>/<int:percentage_change>/<string:date>')
 
 app.run(debug=True)
