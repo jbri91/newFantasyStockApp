@@ -1,6 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 
 function ReviewOrder(props) {
+  const [buyingStock, setBuyingStock] = useState("");
+
+  function handlePlaceOrder() {
+    fetch(`/api/searchStock/${props.symbol}`)
+      .then((res) => res.json())
+      .then((data) => setBuyingStock(data))
+      .catch((error) => console.log(error));
+    console.log(buyingStock);
+    fetch(
+      `/api/buystock/${buyingStock.symbol}/${buyingStock.companyName}/${buyingStock.latestPrice}/${buyingStock.change}/${buyingStock.changePercent}/${buyingStock.latestTime}`
+    )
+      .then((res) => res.json())
+      .then((data) => console.log(data))
+      .catch((error) => console.log(error));
+
+    console.log(
+      "Price ",
+      props.stockPrice,
+      "Estimated Total ",
+      props.stockSum,
+      "Remaining Buy Power ",
+      props.buyingPower - props.sumofPurchasedStocks - props.stockSum,
+      "Quantity ",
+      props.quantity,
+      "Stock Symbol ",
+      props.symbol
+    );
+  }
+
   return (
     <div>
       <div
@@ -45,6 +74,7 @@ function ReviewOrder(props) {
               type="button"
               className="btn btn-info"
               style={{ color: "black", fontWeight: "bolder" }}
+              onClick={handlePlaceOrder}
             >
               Place Order
             </button>

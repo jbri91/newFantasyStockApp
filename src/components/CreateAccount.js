@@ -4,20 +4,7 @@ function CreateAccount() {
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    // const [copyPassword, setCopyPassword] = useState('');
-
-    // const requestOptions = {
-    //     method: 'POST',
-    //     headers: { 'Content-Ty[e': 'application/json'},
-    //     body: JSON.stringify({ title: 'React POST Request Example'})
-    // };
-    
-    // useEffect(() => {
-    //     fetch('/api/createaccount/jbbbb/password', requestOptions)
-    //     .then(res => res.json())
-    //     .then(data => console.log(data))
-    //     .catch(error => console.log(error))
-    // }, []);    
+    // const [copyPassword, setCopyPassword] = useState('');   
 
 
     function handleUsername(e) {

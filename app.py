@@ -8,14 +8,7 @@ import decimal
 app = Flask(__name__)
 api = Api(app)
 
-# Connecting with Trial Stock API
-stock = requests.get('https://sandbox.iexapis.com/stable/stock/IBM/quote?token=Tpk_b6429f1574564a01b54d614f88e0f93f').json()
-
-# headers = {'token': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
-# iexCloud = requests.get('https://cloud.iexapis.com/stable/stock/IBM/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual').json()
-# print(iexCloud)
-
-
+ 
 class SearchStock(Resource):
     def get(self, stock):
         headers = {'token': 'pk_75972e634de441d4a997ed43057a5221', 'Accept' : 'application.json', 'Content-Type' : 'application/json'}
@@ -54,21 +47,15 @@ class Microsoft(Resource):
 
 api.add_resource(Microsoft, '/api/microsoft')
 
-# Connecting with Database
-conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
-cur = conn.cursor()
-cur.execute('SELECT * FROM purchased_stock;')
-purchasedStock = cur.fetchall()
-conn.commit()
-cur.close()
-conn.close()
+# # Connecting with Database
+# conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+# cur = conn.cursor()
+# cur.execute('SELECT * FROM purchased_stock;')
+# purchasedStock = cur.fetchall()
+# conn.commit()
+# cur.close()
+# conn.close()
 
-
-
-
-class Stock(Resource):
-    def get(self):
-        return jsonify(stock)
 
 class PurchasedStock(Resource):
     def get(self):
@@ -97,38 +84,30 @@ class SumOfPurchasedStock(Resource):
 api.add_resource(SumOfPurchasedStock, '/api/sum')
 
 
-# class CreateAccount(Resource):
-#     def post(self, username, password):
-#         conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
-#         cur = conn.cursor()
-#         cur.execute('INSERT INTO user_credentials (username, password) VALUES(%s, %s)', ('johnny', 'paassworddd'))
-#         cur.execute('SELECT * FROM user_credentials;')
-#         inserting = cur.fetchall()
-#         conn.commit()
-#         cur.close()
-#         conn.close()
-#         print(user)
-# api.add_resource(CreateAccount, '/api/createaccount/<string:username>/<string:password>')
-
-
-# class CreateUsername(Resource):
-#     def get(self, username):
-#         print(username)
-#         return jsonify(username)
-# api.add_resource(CreateUsername, '/api/createaccount/<string:username>')
-
-# class CreatePassword(Resource):
-#     def get(self, password):
-#         print(password)
-#         return jsonify(password)
-# api.add_resource(CreatePassword, '/api/createaccount/<string:password>')
-
 class UserCredentials(Resource):
-    def get(self, username, password):
-        print(username)
-        print(password)
-        return jsonify({'username' : username, 'password': password})
+        def get(self, username, password):
+            conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+            cur = conn.cursor()
+            cur.execute('INSERT INTO user_credentials (username, password) VALUES(%s, %s)', (username, password))
+            conn.commit()
+            cur.close()
+            conn.close()
+            print(username)
+            print(password)
+            return jsonify({'username' : username, 'password': password})
 api.add_resource(UserCredentials, '/api/createaccount/<string:username>/<string:password>')
 
+class AddStocksToTable(Resource):
+        def get(self, symbol, stock_name, price, day_change, percentage_change, date):
+            conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+            cur = conn.cursor()
+            cur.execute('INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)', (symbol, stock_name, price, day_change, percentage_change, date))
+            conn.commit()
+            cur.close()
+            conn.close()
+            print(symbol)
+            print(price)
+            return jsonify({'symbol' : symbol, 'stock_name': stock_name, 'price': price, 'day_change': day_change, 'percentage_change': percentage_change, 'date': date})
+api.add_resource(AddStocksToTable, '/api/buystock/<string:symbol>/<string:stock_name>/<int:price>/<int:day_change>,<int:percentage_change>,<string:date>')
 
 app.run(debug=True)
