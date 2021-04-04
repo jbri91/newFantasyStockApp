@@ -20,10 +20,11 @@ function ReviewOrder(props) {
     };
     fetch('/api/buystock', requestOptions)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => setPostId(data))
+    .catch(error => console.log(error))
   }, []);
   
-  
+  console.log(postId)
   
   function handlePlaceOrder() {
       
