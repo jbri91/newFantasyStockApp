@@ -172,7 +172,7 @@ class AddStocksToTable(Resource):
         # cur = conn.cursor()
         # print(request.json)
 
-        symbol = request.json['symbol']
+        symbol = self.get_json()
         print(symbol)
         # stockName = request.json['stockName']
         # price = request.json['price']
