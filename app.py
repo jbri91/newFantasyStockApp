@@ -135,38 +135,58 @@ class UserCredentials(Resource):
 api.add_resource(UserCredentials,
                  '/api/createaccount/<string:username>/<string:password>')
 
+# class AddStocksToTable(Resource):
+#     def get(self, symbol, stock_name, price, day_change, percentage_change,
+#             date):
+#         conn = psycopg2.connect(dbname='stock_application',
+#                                 user='postgres',
+#                                 password='databasePassword',
+#                                 host='localhost')
+#         cur = conn.cursor()
+#         cur.execute(
+#             'INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
+#             (symbol, stock_name, price, day_change, percentage_change, date))
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         print(symbol)
+#         print(price)
+#         print(day_change)
+#         print(percentage_change)
+#         return jsonify({
+#             'symbol': symbol,
+#             'stock_name': stock_name,
+#             'price': price,
+#             'day_change': day_change,
+#             'percentage_change': percentage_change,
+#             'date': date
+#         })
+
 
 class AddStocksToTable(Resource):
-    def get(self, symbol, stock_name, price, day_change, percentage_change,
-            date):
+    def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
+        print(request.json)
+
+        symbol = request.json['symbol']
+        stockName = request.json['stockName']
+        price = request.json['price']
+        day_change = request.json['day_change']
+        percentage_change = request.json['percentage_change']
+        date = request.json['date']
         cur.execute(
-            'INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
+            'INSERT INTO purhcased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
             (symbol, stock_name, price, day_change, percentage_change, date))
         conn.commit()
         cur.close()
         conn.close()
-        print(symbol)
-        print(price)
-        print(day_change)
-        print(percentage_change)
-        return jsonify({
-            'symbol': symbol,
-            'stock_name': stock_name,
-            'price': price,
-            'day_change': day_change,
-            'percentage_change': percentage_change,
-            'date': date
-        })
+        return {'STATUS': 'SUCCESS'}
 
 
-api.add_resource(
-    AddStocksToTable,
-    '/api/buystock/<string:symbol>/<string:stock_name>/<int:price>/<int:day_change>/<int:percentage_change>/<string:date>'
-)
+api.add_resource(AddStocksToTable, '/api/buystock')
 
 app.run(debug=True)

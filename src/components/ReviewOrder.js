@@ -9,16 +9,6 @@ function ReviewOrder(props) {
       .then((data) => setBuyingStock(data))
       .catch((error) => console.log(error));
     console.log(buyingStock);
-    if(buyingStock) {
-      fetch(
-        `/api/buystock/${buyingStock.symbol}/${buyingStock.companyName}/${buyingStock.latestPrice}/${buyingStock.change}/${buyingStock.changePercent}/${buyingStock.latestTime}`
-      )
-        .then((res) => res.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.log(error));
-
-    } 
-    
 
     console.log(
       "Price ",
