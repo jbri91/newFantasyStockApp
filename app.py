@@ -165,25 +165,26 @@ api.add_resource(UserCredentials,
 
 class AddStocksToTable(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password='databasePassword',
-                                host='localhost')
-        cur = conn.cursor()
-        print(request.json)
+        # conn = psycopg2.connect(dbname='stock_application',
+        #                         user='postgres',
+        #                         password='databasePassword',
+        #                         host='localhost')
+        # cur = conn.cursor()
+        # print(request.json)
 
         symbol = request.json['symbol']
-        stockName = request.json['stockName']
-        price = request.json['price']
-        day_change = request.json['day_change']
-        percentage_change = request.json['percentage_change']
-        date = request.json['date']
-        cur.execute(
-            'INSERT INTO purhcased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
-            (symbol, stock_name, price, day_change, percentage_change, date))
-        conn.commit()
-        cur.close()
-        conn.close()
+        print(symbol)
+        # stockName = request.json['stockName']
+        # price = request.json['price']
+        # day_change = request.json['day_change']
+        # percentage_change = request.json['percentage_change']
+        # date = request.json['date']
+        # cur.execute(
+        #     'INSERT INTO purhcased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
+        #     (symbol, stock_name, price, day_change, percentage_change, date))
+        # conn.commit()
+        # cur.close()
+        # conn.close()
         return {'STATUS': 'SUCCESS'}
 
 

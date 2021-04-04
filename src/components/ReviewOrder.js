@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ReviewOrder(props) {
   const [buyingStock, setBuyingStock] = useState("");
+  const [postId, setPostId] = useState(null);
 
-    function handlePlaceOrder() {
-   fetch(`/api/searchStock/${props.symbol}`)
-      .then((res) => res.json())
-      .then((data) => setBuyingStock(data))
-      .catch((error) => console.log(error));
-    console.log(buyingStock);
+
+  useEffect(() => {
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        symbol : 'symbol',
+        stockName : 'stockName',
+        price : 'price',
+        day_change : 'day_change',
+        percentage_change : 'percentage_change',
+        data : 'date'
+     })
+    };
+    fetch('/api/buystock', requestOptions)
+    .then(res => res.json())
+    .then(data => console.log(data))
+  }, []);
+  
+  
+  
+  function handlePlaceOrder() {
+      
+  console.log(postId)
 
     console.log(
       "Price ",
