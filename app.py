@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 import requests
 from flask_restful import Api, Resource, reqparse
 import psycopg2
@@ -165,6 +165,9 @@ api.add_resource(UserCredentials,
 
 class AddStocksToTable(Resource):
     def post(self):
+        # json_data = request.get_json()
+        # print(json_data)
+        
         # conn = psycopg2.connect(dbname='stock_application',
         #                         user='postgres',
         #                         password='databasePassword',
@@ -172,7 +175,7 @@ class AddStocksToTable(Resource):
         # cur = conn.cursor()
         # print(request.json)
 
-        symbol = self.get_json()
+        symbol = self.get_json('symbol')
         print(symbol)
         # stockName = request.json['stockName']
         # price = request.json['price']
