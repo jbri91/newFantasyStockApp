@@ -12,6 +12,9 @@ function SummaryPage() {
   const [microsoft, setMicrosoft] = useState([]);
   const [stockPrice, setStockPrice] = useState(0);
   const [stockName, setStockName] = useState("");
+  const [dayChange, setDayChange] = useState('');
+  const [percentageChange, setPercentageChange] = useState('')
+  const [date, setDate] = useState('')
   const [symbol, setSymbol] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
@@ -97,6 +100,9 @@ console.log(searchStock)
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
+        setDate={setDate}
+        setDayChange={setDayChange}
+        setPercentageChange={setPercentageChange}
       />
     );
   }
@@ -134,6 +140,10 @@ console.log(searchStock)
             setPrice={setStockPrice}
             setStockName={setStockName}
             setSymbol={setSymbol}
+            setDate={setDate}
+        setDayChange={setDayChange}
+        setPercentageChange={setPercentageChange}
+
           />
         ) : null}
       </div>
@@ -157,6 +167,10 @@ console.log(searchStock)
           setPrice={setStockPrice}
           setStockName={setStockName}
           setSymbol={setSymbol}
+          setDate={setDate}
+        setDayChange={setDayChange}
+        setPercentageChange={setPercentageChange}
+
         />
         <StockCard
           symbol={amazon.symbol}
@@ -168,6 +182,10 @@ console.log(searchStock)
           setPrice={setStockPrice}
           setStockName={setStockName}
           setSymbol={setSymbol}
+          setDate={setDate}
+        setDayChange={setDayChange}
+        setPercentageChange={setPercentageChange}
+
         />
         <StockCard
           symbol={apple.symbol}
@@ -179,6 +197,10 @@ console.log(searchStock)
           setPrice={setStockPrice}
           setStockName={setStockName}
           setSymbol={setSymbol}
+          setDate={setDate}
+        setDayChange={setDayChange}
+        setPercentageChange={setPercentageChange}
+
         />
         <StockCard
           symbol={microsoft.symbol}
@@ -190,11 +212,18 @@ console.log(searchStock)
           setPrice={setStockPrice}
           setStockName={setStockName}
           setSymbol={setSymbol}
+          setDate={setDate}
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+
         />
         <StockModal
           stockPrice={stockPrice}
           stockName={stockName}
           symbol={symbol}
+          dayChange={dayChange}
+          date={date}
+          percentageChange={percentageChange}
           buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
         />

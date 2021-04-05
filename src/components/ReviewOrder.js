@@ -4,29 +4,27 @@ function ReviewOrder(props) {
   const [buyingStock, setBuyingStock] = useState("");
   const [postId, setPostId] = useState(null);
 
-
-  useEffect(() => {
+  
+ 
+  
+  function handlePlaceOrder() {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ 
-        symbol : 'symbol',
-        stockName : 'stockName',
-        price : 'price',
-        day_change : 'day_change',
-        percentage_change : 'percentage_change',
-        date : 'date'
+        symbol : props.symbol,
+        stockName : props.stockName,
+        price : props.stockPrice,
+        day_change : props.dayChange,
+        percentage_change : props.percentageChange,
+        date : props.date
      })
     };
     fetch('/api/buystock', requestOptions)
     .then(res => res.json())
-    .then(data => setPostId(data))
+    .then(data => console.log(data))
     .catch(error => console.log(error))
-  }, []);
-  
-  console.log(postId)
-  
-  function handlePlaceOrder() {
+ 
       
   console.log(postId)
 

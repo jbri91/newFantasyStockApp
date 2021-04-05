@@ -188,7 +188,7 @@ class AddStocksToTable(Resource):
         # percentage_change = request.json['percentage_change']
         # date = request.json['date']
         # cur.execute(
-        #     'INSERT INTO purhcased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
+        #     'INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
         #     (symbol, stock_name, price, day_change, percentage_change, date))
         # conn.commit()
         # cur.close()

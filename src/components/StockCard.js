@@ -5,11 +5,19 @@ function StockCard(props) {
   const {price} = props;
   const {stockName} = props;
   const {symbol} = props;
+  const {time} = props;
+  const {dayChange} = props;
+  const {percentChange} = props;
+  
+
 
   function handleClick() {
     props.setPrice(price);
     props.setStockName(stockName);
     props.setSymbol(symbol);
+    props.setDayChange(dayChange);
+    props.setPercentageChange(percentChange);
+    props.setDate(time);
   }
 
   const greenStock={
