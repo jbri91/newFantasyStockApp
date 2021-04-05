@@ -175,8 +175,13 @@ class AddStocksToTable(Resource):
         # cur = conn.cursor()
         # print(request.json)
 
-        symbol = self.get_json('symbol')
-        print(symbol)
+        json_data = request.get_json()
+        symbol = json_data['symbol']
+        stockName = json_data['stockName']
+        price = json_data['price']
+        day_change = json_data['day_change']
+        percentage_change = json_data['percentage_change']
+        date = json_data['date']
         # stockName = request.json['stockName']
         # price = request.json['price']
         # day_change = request.json['day_change']
@@ -188,7 +193,7 @@ class AddStocksToTable(Resource):
         # conn.commit()
         # cur.close()
         # conn.close()
-        return {'STATUS': 'SUCCESS'}
+        return jsonify(symbol, stockName, price, day_change, percentage_change, date)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')

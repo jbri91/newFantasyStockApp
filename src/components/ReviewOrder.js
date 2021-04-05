@@ -15,7 +15,7 @@ function ReviewOrder(props) {
         price : 'price',
         day_change : 'day_change',
         percentage_change : 'percentage_change',
-        data : 'date'
+        date : 'date'
      })
     };
     fetch('/api/buystock', requestOptions)
