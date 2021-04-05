@@ -165,16 +165,6 @@ api.add_resource(UserCredentials,
 
 class AddStocksToTable(Resource):
     def post(self):
-        # json_data = request.get_json()
-        # print(json_data)
-        
-        # conn = psycopg2.connect(dbname='stock_application',
-        #                         user='postgres',
-        #                         password='databasePassword',
-        #                         host='localhost')
-        # cur = conn.cursor()
-        # print(request.json)
-
         json_data = request.get_json()
         symbol = json_data['symbol']
         stockName = json_data['stockName']
@@ -182,18 +172,19 @@ class AddStocksToTable(Resource):
         day_change = json_data['day_change']
         percentage_change = json_data['percentage_change']
         date = json_data['date']
-        # stockName = request.json['stockName']
-        # price = request.json['price']
-        # day_change = request.json['day_change']
-        # percentage_change = request.json['percentage_change']
-        # date = request.json['date']
+        # conn = psycopg2.connect(dbname='stock_application',
+        #                         user='postgres',
+        #                         password='databasePassword',
+        #                         host='localhost')
+        # cur = conn.cursor()
         # cur.execute(
         #     'INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
-        #     (symbol, stock_name, price, day_change, percentage_change, date))
+        #     (symbol, stockName, price, day_change, percentage_change, date))
         # conn.commit()
         # cur.close()
         # conn.close()
-        return jsonify(symbol, stockName, price, day_change, percentage_change, date)
+        return jsonify(symbol, stockName, price, day_change, percentage_change,
+                       date)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
