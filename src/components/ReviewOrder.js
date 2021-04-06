@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 function ReviewOrder(props) {
+  const {selected} = props;
   const [buyingStock, setBuyingStock] = useState("");
-  const [postId, setPostId] = useState(null);
 
-  
+  console.log(selected)
  
   
   function handlePlaceOrder() {
+
+    if(selected === 'Buy') {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -24,22 +26,7 @@ function ReviewOrder(props) {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
- 
-      
-  console.log(postId)
-
-    console.log(
-      "Price ",
-      props.stockPrice,
-      "Estimated Total ",
-      props.stockSum,
-      "Remaining Buy Power ",
-      props.buyingPower - props.sumofPurchasedStocks - props.stockSum,
-      "Quantity ",
-      props.quantity,
-      "Stock Symbol ",
-      props.symbol
-    );
+  } 
   }
 
   return (
