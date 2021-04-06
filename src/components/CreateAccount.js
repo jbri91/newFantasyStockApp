@@ -21,15 +21,18 @@ function handlePassword(e) {
 
 function handleSubmit(e) {
     e.preventDefault();
-    fetch(`api/createaccount/${username}/${password}`)
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type' : 'application/json'},
+        body: JSON.stringify({
+            username : username,
+            password : password
+        })
+    };
+    fetch('api/createaccount', requestOptions)
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error));
-
-    // fetch(`api/createaccount/${password}`)
-    // .then(res => res.json())
-    // .then(data => console.log(data))
-    // .catch(error => console.log(error))
 }
 
 

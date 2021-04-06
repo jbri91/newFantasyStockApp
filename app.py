@@ -115,52 +115,27 @@ api.add_resource(SumOfPurchasedStock, '/api/sum')
 
 
 class UserCredentials(Resource):
-    def get(self, username, password):
+    def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
+        json_data = request.get_json()
+        username = json_data['username']
+        password = json_data['password']
         cur.execute(
             'INSERT INTO user_credentials (username, password) VALUES(%s, %s)',
             (username, password))
         conn.commit()
+        print('User Inserted...')
         cur.close()
         conn.close()
-        print(username)
-        print(password)
-        return jsonify({'username': username, 'password': password})
+        return jsonify(username, password)
 
 
 api.add_resource(UserCredentials,
-                 '/api/createaccount/<string:username>/<string:password>')
-
-# class AddStocksToTable(Resource):
-#     def get(self, symbol, stock_name, price, day_change, percentage_change,
-#             date):
-#         conn = psycopg2.connect(dbname='stock_application',
-#                                 user='postgres',
-#                                 password='databasePassword',
-#                                 host='localhost')
-#         cur = conn.cursor()
-#         cur.execute(
-#             'INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %S, %s)',
-#             (symbol, stock_name, price, day_change, percentage_change, date))
-#         conn.commit()
-#         cur.close()
-#         conn.close()
-#         print(symbol)
-#         print(price)
-#         print(day_change)
-#         print(percentage_change)
-#         return jsonify({
-#             'symbol': symbol,
-#             'stock_name': stock_name,
-#             'price': price,
-#             'day_change': day_change,
-#             'percentage_change': percentage_change,
-#             'date': date
-#         })
+                 '/api/createaccount')
 
 
 class AddStocksToTable(Resource):
