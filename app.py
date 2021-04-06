@@ -169,7 +169,6 @@ class AddStocksToTable(Resource):
                             user='postgres',
                             password='databasePassword',
                             host='localhost')
-        conn.autocommit = True
         cur = conn.cursor()
         json_data = request.get_json()
         symbol = json_data['symbol']
@@ -178,10 +177,6 @@ class AddStocksToTable(Resource):
         day_change = json_data['day_change']
         percentage_change = json_data['percentage_change']
         date = json_data['date']
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password='databasePassword',
-                                host='localhost')
         cur.execute(
             "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %s, %s)",
             (symbol, stockName, price, day_change, percentage_change, date)) 
