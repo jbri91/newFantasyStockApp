@@ -4,7 +4,7 @@ function ReviewOrder(props) {
   const {selected} = props;
   const [buyingStock, setBuyingStock] = useState("");
 
-  console.log(props)
+ 
  
   
   function handlePlaceOrder() {
