@@ -8,6 +8,7 @@ function StockCard(props) {
   const {time} = props;
   const {dayChange} = props;
   const {percentChange} = props;
+  const {stockId} = props;
   
 
 
@@ -18,6 +19,7 @@ function StockCard(props) {
     props.setDayChange(dayChange);
     props.setPercentageChange(percentChange);
     props.setDate(time);
+    props.setStockId(stockId);
   }
 
   const greenStock={

@@ -4,7 +4,7 @@ function ReviewOrder(props) {
   const {selected} = props;
   const [buyingStock, setBuyingStock] = useState("");
 
-  console.log(selected)
+  console.log(props)
  
   
   function handlePlaceOrder() {
@@ -33,7 +33,7 @@ function ReviewOrder(props) {
       method: 'DELETE',
       headers: { 'Content-Type' : 'application/json' },
       body: JSON.stringify({
-        stock_id : '13'
+        stock_id : props.stockId
     })
   };
     fetch('/api/deleterow', requestOptions)

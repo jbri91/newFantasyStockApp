@@ -16,6 +16,7 @@ function SummaryPage() {
   const [percentageChange, setPercentageChange] = useState('')
   const [date, setDate] = useState('')
   const [symbol, setSymbol] = useState("");
+  const [stockId, setStockId] = useState('');
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
@@ -91,6 +92,7 @@ console.log(searchStock)
     stocksPurchased.push(
       <StockCard
         key={purchasedStocks[i][0]}
+        stockId={purchasedStocks[i][0]}
         symbol={purchasedStocks[i][1]}
         stockName={purchasedStocks[i][2]}
         price={purchasedStocks[i][3]}
@@ -103,6 +105,7 @@ console.log(searchStock)
         setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
       />
     );
   }
@@ -143,6 +146,7 @@ console.log(searchStock)
             setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
 
           />
         ) : null}
@@ -170,6 +174,7 @@ console.log(searchStock)
           setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
 
         />
         <StockCard
@@ -185,6 +190,7 @@ console.log(searchStock)
           setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
 
         />
         <StockCard
@@ -200,6 +206,7 @@ console.log(searchStock)
           setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
 
         />
         <StockCard
@@ -215,6 +222,7 @@ console.log(searchStock)
           setDate={setDate}
           setDayChange={setDayChange}
           setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
 
         />
         <StockModal
@@ -226,6 +234,7 @@ console.log(searchStock)
           percentageChange={percentageChange}
           buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
+          stockId={stockId}
         />
       </div>
     </div>

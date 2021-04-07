@@ -90,6 +90,7 @@ function StockModal(props) {
       stockPrice={props.stockPrice}
       stockName={props.stockName}
       symbol={props.symbol}
+      stockId={props.stockId}
       dayChange={props.dayChange}
       percentageChange={props.percentageChange}
       date={props.date}
