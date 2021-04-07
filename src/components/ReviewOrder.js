@@ -26,13 +26,21 @@ function ReviewOrder(props) {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
-  } else if (selected === 'Sell') {
-
-    fetch('/api/deleterow', { method: 'DELETE' })
+  } 
+  
+    else if (selected === 'Sell') {
+    const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({
+        stock_id : '13'
+    })
+  };
+    fetch('/api/deleterow', requestOptions)
     .then(() => console.log('Deleted'))
   }
-  }
-
+}
+  
   return (
     <div>
       <div

@@ -167,6 +167,17 @@ api.add_resource(AddStocksToTable, '/api/buystock')
 
 class DeleteRow(Resource):
     def delete(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                            user='postgres',
+                            password='databasePassword',
+                            host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        stock_id = json_data['stock_id']
+        cur.execute(
+            'SELECT FROM purchased_stock WHERE stock_id = %s', (stock_id))
+        conn.commit()
+        cur.close()
         print('Deleted')
         return { 'Success' : '200'}
 

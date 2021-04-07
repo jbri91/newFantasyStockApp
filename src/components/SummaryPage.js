@@ -106,7 +106,7 @@ console.log(searchStock)
       />
     );
   }
-
+  
   return (
     <div>
       <div
