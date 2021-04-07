@@ -165,4 +165,12 @@ class AddStocksToTable(Resource):
 
 api.add_resource(AddStocksToTable, '/api/buystock')
 
+class DeleteRow(Resource):
+    def delete(self):
+        print('Deleted')
+        return { 'Success' : '200'}
+
+api.add_resource(DeleteRow, '/api/deleterow')
+    
+
 app.run(debug=True)

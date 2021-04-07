@@ -26,7 +26,11 @@ function ReviewOrder(props) {
     .then(res => res.json())
     .then(data => console.log(data))
     .catch(error => console.log(error))
-  } 
+  } else if (selected === 'Sell') {
+
+    fetch('/api/deleterow', { method: 'DELETE' })
+    .then(() => console.log('Deleted'))
+  }
   }
 
   return (
