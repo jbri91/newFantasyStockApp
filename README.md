@@ -1,1 +1,1 @@
-![alt text](http://url/to/img.png)
+![Under Construction](src/stockAppUnderConstructionReadMe.png)
