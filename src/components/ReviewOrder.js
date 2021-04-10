@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 
 function ReviewOrder(props) {
-  const {selected} = props;
-  const [buyingStock, setBuyingStock] = useState("");
+  const { selected } = props;
+  const [ buyingStock, setBuyingStock] = useState("");
+  const [ purchasedStock, setPurchasedStock ] = useState([])
 
  
  
@@ -24,7 +25,7 @@ function ReviewOrder(props) {
     };
     fetch('/api/buystock', requestOptions)
     .then(res => res.json())
-    .then(data => console.log(data))
+    .then(data => setPurchasedStock(data))
     .catch(error => console.log(error))
   } 
   
@@ -40,6 +41,7 @@ function ReviewOrder(props) {
     .then(() => console.log('Deleted'))
   }
 }
+console.log(purchasedStock)
   
   return (
     <div>
@@ -86,6 +88,7 @@ function ReviewOrder(props) {
               className="btn btn-info"
               style={{ color: "black", fontWeight: "bolder" }}
               onClick={handlePlaceOrder}
+              data-dismiss="modal"
             >
               Place Order
             </button>
