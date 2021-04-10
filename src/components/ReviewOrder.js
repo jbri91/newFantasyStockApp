@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
   const { selected } = props;
   const [ buyingStock, setBuyingStock] = useState("");
   const [ purchasedStock, setPurchasedStock ] = useState([])
 
- 
+ console.log(props)
  
   
   function handlePlaceOrder() {
 
     if(selected === 'Buy') {
+      if(props.stockSum > props.buyingPower) {
+        alert('You do not have enough buy power!')
+      } else {
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -27,7 +31,7 @@ function ReviewOrder(props) {
     .then(res => res.json())
     .then(data => setPurchasedStock(data))
     .catch(error => console.log(error))
-  } 
+  } }
   
     else if (selected === 'Sell') {
     const requestOptions = {
@@ -41,7 +45,6 @@ function ReviewOrder(props) {
     .then(() => console.log('Deleted'))
   }
 }
-console.log(purchasedStock)
   
   return (
     <div>
