@@ -25,7 +25,7 @@ function ReviewOrder(props) {
             percentage_change: props.percentageChange,
             date: props.date,
           }),
-        };
+        }
         fetch("/api/buystock", requestOptions)
           .then((res) => res.json())
           .then((data) => console.log(data))
@@ -42,6 +42,7 @@ function ReviewOrder(props) {
 
     
     } else if (selected === "Sell") {
+
       const requestOptions = {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
