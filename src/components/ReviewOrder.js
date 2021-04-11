@@ -30,7 +30,7 @@ function ReviewOrder(props) {
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
 
-          props.setBuyingPower((props.buyingPower - props.stockSum).toFixed(2))
+          // props.setBuyingPower((props.buyingPower - props.stockSum).toFixed(2))
       }
     } else if (selected === "Sell") {
       const requestOptions = {
@@ -46,7 +46,7 @@ function ReviewOrder(props) {
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error))
       );
-      props.setBuyingPower(props.buyingPower + props.stockSum)
+      // props.setBuyingPower(props.buyingPower + props.stockSum)
     }
     fetch("/api/purchased")
       .then((res) => res.json())
