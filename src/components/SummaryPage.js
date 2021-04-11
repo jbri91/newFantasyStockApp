@@ -127,7 +127,7 @@ function SummaryPage() {
           left: "-10px",
         }} 
       >
-        <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
+        <h3>Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
