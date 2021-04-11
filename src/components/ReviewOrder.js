@@ -5,15 +5,13 @@ function ReviewOrder(props) {
   const { selected } = props;
   // const [buyingStock, setBuyingStock] = useState("");
 
-  console.log(props.stockId);
-  console.log(props.purchasedStocks);
-
   function handlePlaceOrder() {
     if (selected === "Buy") {
       if (props.stockSum > props.buyingPower) {
         alert("You do not have enough buy power!");
       } else {
 
+        console.log(props.quantity)
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
