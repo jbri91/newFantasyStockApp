@@ -6,7 +6,7 @@ function ReviewOrder(props) {
   // const [buyingStock, setBuyingStock] = useState("");
 
   console.log(props.stockId);
-  console.log(props.purchasedStocks)
+  console.log(props.purchasedStocks);
 
   function handlePlaceOrder() {
     if (selected === "Buy") {
@@ -29,16 +29,14 @@ function ReviewOrder(props) {
           .then((res) => res.json())
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
-      
-          fetch('/api/purchased')
+
+        fetch("/api/purchased")
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error))
-           console.log(props.purchasedStocks)
-      
-        }
+          .catch((error) => console.log(error));
+        console.log(props.purchasedStocks);
+      }
     } else if (selected === "Sell") {
-     
       const requestOptions = {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -47,22 +45,16 @@ function ReviewOrder(props) {
         }),
       };
       fetch("/api/deleterow", requestOptions).then(() =>
-      fetch('/api/purchased')
+        fetch("/api/purchased")
+          .then((res) => res.json())
+          .then((data) => props.setPurchasedStocks(data))
+          .catch((error) => console.log(error))
+      );
+    }
+    fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => props.setPurchasedStocks(data))
-      .catch((error) => console.log(error))
-      );
-      
-      // let ownedStocks = props.purchasedStocks;
-      // const id = ownedStocks.indexOf(props.stockId);
-      // ownedStocks.splice(id, 1);
-      // console.log(ownedStocks)
-      // props.setPurchasedStocks(ownedStocks);
-    }
-    fetch('/api/purchased')
-    .then((res) => res.json())
-    .then((data) => props.setPurchasedStocks(data))
-    .catch((error) => console.log(error))
+      .catch((error) => console.log(error));
   }
 
   return (

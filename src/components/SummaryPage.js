@@ -11,11 +11,11 @@ function SummaryPage() {
   const [microsoft, setMicrosoft] = useState([]);
   const [stockPrice, setStockPrice] = useState(0);
   const [stockName, setStockName] = useState("");
-  const [dayChange, setDayChange] = useState('');
-  const [percentageChange, setPercentageChange] = useState('')
-  const [date, setDate] = useState('')
+  const [dayChange, setDayChange] = useState("");
+  const [percentageChange, setPercentageChange] = useState("");
+  const [date, setDate] = useState("");
   const [symbol, setSymbol] = useState("");
-  const [stockId, setStockId] = useState('');
+  const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
@@ -106,7 +106,7 @@ function SummaryPage() {
       />
     );
   }
-  
+
   return (
     <div>
       <div
@@ -121,7 +121,7 @@ function SummaryPage() {
           left: "-10px",
         }}
       >
-        <h3>Buying Power: ${buyingPower -  sumofPurchasedStocks}</h3>
+        <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
@@ -141,10 +141,9 @@ function SummaryPage() {
             setStockName={setStockName}
             setSymbol={setSymbol}
             setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-        setStockId={setStockId}
-
+            setDayChange={setDayChange}
+            setPercentageChange={setPercentageChange}
+            setStockId={setStockId}
           />
         ) : null}
       </div>
@@ -169,10 +168,9 @@ function SummaryPage() {
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-        setStockId={setStockId}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={amazon.symbol}
@@ -185,10 +183,9 @@ function SummaryPage() {
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-        setStockId={setStockId}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={apple.symbol}
@@ -201,10 +198,9 @@ function SummaryPage() {
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-        setStockId={setStockId}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={microsoft.symbol}
@@ -220,7 +216,6 @@ function SummaryPage() {
           setDayChange={setDayChange}
           setPercentageChange={setPercentageChange}
           setStockId={setStockId}
-
         />
         <StockModal
           stockPrice={stockPrice}
@@ -231,8 +226,8 @@ function SummaryPage() {
           percentageChange={percentageChange}
           buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
-          purchasedStocks = {purchasedStocks}
-          setPurchasedStocks = {setPurchasedStocks}
+          purchasedStocks={purchasedStocks}
+          setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
         />
       </div>
