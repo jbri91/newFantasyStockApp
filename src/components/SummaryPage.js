@@ -21,7 +21,6 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-
   useEffect(() => {
     setAccountValue(
       buyingPower - sumofPurchasedStocks + parseFloat(sumofPurchasedStocks)
@@ -232,6 +231,8 @@ function SummaryPage() {
           percentageChange={percentageChange}
           buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
+          purchasedStocks = {purchasedStocks}
+          setPurchasedStocks = {setPurchasedStocks}
           stockId={stockId}
         />
       </div>

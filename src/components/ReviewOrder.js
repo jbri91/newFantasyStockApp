@@ -3,49 +3,53 @@ import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
   const { selected } = props;
-  const [ buyingStock, setBuyingStock] = useState("");
-  const [ purchasedStock, setPurchasedStock ] = useState([])
+  const [buyingStock, setBuyingStock] = useState("");
+  // const [purchasedStock, setPurchasedStock] = useState([]);
 
- console.log(props)
- 
-  
+  console.log(props.stockId);
+  console.log(props.purchasedStocks)
+
   function handlePlaceOrder() {
-
-    if(selected === 'Buy') {
-      if(props.stockSum > props.buyingPower) {
-        alert('You do not have enough buy power!')
+    if (selected === "Buy") {
+      if (props.stockSum > props.buyingPower) {
+        alert("You do not have enough buy power!");
       } else {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        symbol : props.symbol,
-        stockName : props.stockName,
-        price : props.stockPrice,
-        day_change : props.dayChange,
-        percentage_change : props.percentageChange,
-        date : props.date
-     })
-    };
-    fetch('/api/buystock', requestOptions)
-    .then(res => res.json())
-    .then(data => setPurchasedStock(data))
-    .catch(error => console.log(error))
-  } }
-  
-    else if (selected === 'Sell') {
-    const requestOptions = {
-      method: 'DELETE',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify({
-        stock_id : props.stockId
-    })
-  };
-    fetch('/api/deleterow', requestOptions)
-    .then(() => console.log('Deleted'))
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            symbol: props.symbol,
+            stockName: props.stockName,
+            price: props.stockPrice,
+            day_change: props.dayChange,
+            percentage_change: props.percentageChange,
+            date: props.date,
+          }),
+        };
+        fetch("/api/buystock", requestOptions)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
+      }
+    } else if (selected === "Sell") {
+      let ownedStocks = props.purchasedStocks;
+      const id = ownedStocks.indexOf(props.stockId);
+      ownedStocks.splice(id, 1);
+      console.log(ownedStocks)
+      props.setPurchasedStocks(ownedStocks);
+      const requestOptions = {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stock_id: props.stockId,
+        }),
+      };
+      fetch("/api/deleterow", requestOptions).then(() =>
+        console.log("Deleted")
+      );
+    }
   }
-}
-  
+
   return (
     <div>
       <div

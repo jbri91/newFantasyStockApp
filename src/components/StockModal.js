@@ -98,6 +98,8 @@ function StockModal(props) {
       selected={selected}
       buyingPower={props.buyingPower}
       sumofPurchasedStocks={props.sumofPurchasedStocks}
+      purchasedStocks={props.purchasedStocks}
+      setPurchasedStocks = {props.setPurchasedStocks}
       />
     </div>
   );
