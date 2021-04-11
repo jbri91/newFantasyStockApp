@@ -28,6 +28,10 @@ function SummaryPage() {
   }, []);
 
   // useEffect(() => {
+  //   setBuyingPower(buyingPower - sumofPurchasedStocks)
+  // }, [])
+
+  // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
 
@@ -229,6 +233,8 @@ function SummaryPage() {
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
+          buyingPower = {buyingPower}
+          setBuyingPower = {setBuyingPower}
         />
       </div>
     </div>

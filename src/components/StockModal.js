@@ -2,20 +2,23 @@ import React, { useState } from "react";
 import ReviewOrder from "./ReviewOrder";
 
 function StockModal(props) {
-  const [selected, setSelected] = useState('');
+  const [selected, setSelected] = useState("");
   const [quantity, setQuantity] = useState([]);
   const [stockSum, setStockSum] = useState([]);
 
   function handleStockSum() {
-    let price = props.stockPrice;
-    setStockSum(price * quantity);
+    if (quantity <= 0 || selected === "" || selected === 'Select') {
+      console.log('Please Fill Out All Fields')
+    } else {
+      let price = props.stockPrice;
+      setStockSum(price * quantity);
+    }
   }
-  
 
   function handleSelectChange(e) {
     setSelected(e.target.value);
   }
-  
+
   function handleQuantityChange(e) {
     setQuantity(e.target.value);
   }
@@ -47,7 +50,7 @@ function StockModal(props) {
                 value={selected}
                 onChange={handleSelectChange}
               >
-                <option value="select"> --Select-- </option>
+                <option value="Select"> --Select-- </option>
                 <option value="Buy"> Buy </option>
                 <option value="Sell"> Sell </option>
               </select>
@@ -85,21 +88,23 @@ function StockModal(props) {
           </div>
         </div>
       </div>
-      <ReviewOrder 
-      stockSum={stockSum}
-      stockPrice={props.stockPrice}
-      stockName={props.stockName}
-      symbol={props.symbol}
-      stockId={props.stockId}
-      dayChange={props.dayChange}
-      percentageChange={props.percentageChange}
-      date={props.date}
-      quantity={quantity}
-      selected={selected}
-      buyingPower={props.buyingPower}
-      sumofPurchasedStocks={props.sumofPurchasedStocks}
-      purchasedStocks={props.purchasedStocks}
-      setPurchasedStocks = {props.setPurchasedStocks}
+      <ReviewOrder
+        stockSum={stockSum}
+        stockPrice={props.stockPrice}
+        stockName={props.stockName}
+        symbol={props.symbol}
+        stockId={props.stockId}
+        dayChange={props.dayChange}
+        percentageChange={props.percentageChange}
+        date={props.date}
+        quantity={quantity}
+        selected={selected}
+        buyingPower={props.buyingPower}
+        sumofPurchasedStocks={props.sumofPurchasedStocks}
+        purchasedStocks={props.purchasedStocks}
+        setPurchasedStocks={props.setPurchasedStocks}
+        buyingPower = {props.buyingPower}
+        setBuyingPower = {props.setBuyingPower}
       />
     </div>
   );

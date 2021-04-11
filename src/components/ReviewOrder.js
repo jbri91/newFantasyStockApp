@@ -34,7 +34,7 @@ function ReviewOrder(props) {
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error));
-        console.log(props.purchasedStocks);
+        console.log(props.purchasedStocks); 
       }
     } else if (selected === "Sell") {
       const requestOptions = {
@@ -55,7 +55,15 @@ function ReviewOrder(props) {
       .then((res) => res.json())
       .then((data) => props.setPurchasedStocks(data))
       .catch((error) => console.log(error));
+
+      
+      fetch('/api/sum')
+      .then(res => res.json())
+      .then(data => props.setBuyingPower((props.buyingPower - data)))
+      .catch(error => console.log(error))
   }
+
+ 
 
   return (
     <div>
