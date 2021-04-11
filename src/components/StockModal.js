@@ -3,7 +3,7 @@ import ReviewOrder from "./ReviewOrder";
 
 function StockModal(props) {
   const [selected, setSelected] = useState("");
-  const [quantity, setQuantity] = useState([]);
+  const [quantity, setQuantity] = useState("");
   const [stockSum, setStockSum] = useState([]);
 
   function handleStockSum() {

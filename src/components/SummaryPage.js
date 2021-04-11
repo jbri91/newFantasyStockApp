@@ -21,15 +21,7 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-  useEffect(() => {
-    setAccountValue(
-      buyingPower - sumofPurchasedStocks + parseFloat(sumofPurchasedStocks)
-    );
-  }, []);
-
-  // useEffect(() => {
-  //   setBuyingPower(buyingPower - sumofPurchasedStocks)
-  // }, [])
+  
 
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
@@ -74,6 +66,16 @@ function SummaryPage() {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    setAccountValue(
+      buyingPower + sumofPurchasedStocks
+    );
+  }, []);
+
+  useEffect(() => {
+    setBuyingPower(buyingPower)
+  }, [])
 
   function handleSearch(e) {
     console.log(e.target.value);
@@ -123,9 +125,9 @@ function SummaryPage() {
           position: "relative",
           top: "-70px",
           left: "-10px",
-        }}
+        }} 
       >
-        <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
+        <h3>Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
