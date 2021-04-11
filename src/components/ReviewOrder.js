@@ -30,11 +30,7 @@ function ReviewOrder(props) {
           .then((data) => console.log(data))
           .catch((error) => console.log(error));
 
-        fetch("/api/purchased")
-          .then((res) => res.json())
-          .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error));
-        console.log(props.purchasedStocks); 
+          props.setBuyingPower((props.buyingPower - props.stockSum).toFixed(2))
       }
     } else if (selected === "Sell") {
       const requestOptions = {
@@ -50,20 +46,14 @@ function ReviewOrder(props) {
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error))
       );
+      props.setBuyingPower(props.buyingPower + props.stockSum)
     }
     fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => props.setPurchasedStocks(data))
       .catch((error) => console.log(error));
 
-      
-      fetch('/api/sum')
-      .then(res => res.json())
-      .then(data => props.setBuyingPower((props.buyingPower - data)))
-      .catch(error => console.log(error))
   }
-
- 
 
   return (
     <div>
@@ -96,12 +86,8 @@ function ReviewOrder(props) {
                   {" "}
                   Remaining Buy Power: $
                   {props.selected === "Buy"
-                    ? props.buyingPower -
-                      props.sumofPurchasedStocks -
-                      props.stockSum
-                    : props.buyingPower -
-                      props.sumofPurchasedStocks +
-                      props.stockSum}
+                    ? (props.buyingPower - props.stockSum).toFixed(2)
+                    : props.buyingPower + props.stockSum}
                 </p>
               </div>
             </div>
