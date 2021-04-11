@@ -91,8 +91,8 @@ function ReviewOrder(props) {
                   {" "}
                   Remaining Buy Power: $
                   {props.selected === "Buy"
-                    ? (props.buyingPower - props.stockSum).toFixed(2)
-                    : props.buyingPower + props.stockSum}
+                    ? ((props.buyingPower - props.sumofPurchasedStocks) - props.stockSum).toFixed(2)
+                    : ((props.buyingPower - props.sumofPurchasedStocks) + props.stockSum).toFixed(2)}
                 </p>
               </div>
             </div>
