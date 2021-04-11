@@ -1,33 +1,69 @@
 import React, { useEffect, useState } from "react";
+import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
-  const {selected} = props;
-  const [buyingStock, setBuyingStock] = useState("");
+  const { selected } = props;
+  // const [buyingStock, setBuyingStock] = useState("");
 
-  console.log(selected)
- 
-  
+  console.log(props.stockId);
+  console.log(props.purchasedStocks);
+
   function handlePlaceOrder() {
+    if (selected === "Buy") {
+      if (props.stockSum > props.buyingPower) {
+        alert("You do not have enough buy power!");
+      } else {
+        const requestOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            symbol: props.symbol,
+            stockName: props.stockName,
+            price: props.stockPrice,
+            day_change: props.dayChange,
+            percentage_change: props.percentageChange,
+            date: props.date,
+          }),
+        };
+        fetch("/api/buystock", requestOptions)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((error) => console.log(error));
 
-    if(selected === 'Buy') {
-    const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ 
-        symbol : props.symbol,
-        stockName : props.stockName,
-        price : props.stockPrice,
-        day_change : props.dayChange,
-        percentage_change : props.percentageChange,
-        date : props.date
-     })
-    };
-    fetch('/api/buystock', requestOptions)
-    .then(res => res.json())
-    .then(data => console.log(data))
-    .catch(error => console.log(error))
-  } 
+        fetch("/api/purchased")
+          .then((res) => res.json())
+          .then((data) => props.setPurchasedStocks(data))
+          .catch((error) => console.log(error));
+        console.log(props.purchasedStocks); 
+      }
+    } else if (selected === "Sell") {
+      const requestOptions = {
+        method: "DELETE",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          stock_id: props.stockId,
+        }),
+      };
+      fetch("/api/deleterow", requestOptions).then(() =>
+        fetch("/api/purchased")
+          .then((res) => res.json())
+          .then((data) => props.setPurchasedStocks(data))
+          .catch((error) => console.log(error))
+      );
+    }
+    fetch("/api/purchased")
+      .then((res) => res.json())
+      .then((data) => props.setPurchasedStocks(data))
+      .catch((error) => console.log(error));
+
+      
+      fetch('/api/sum')
+      .then(res => res.json())
+      .then(data => props.setBuyingPower((props.buyingPower - data)))
+      .catch(error => console.log(error))
   }
+
+ 
 
   return (
     <div>
@@ -74,6 +110,7 @@ function ReviewOrder(props) {
               className="btn btn-info"
               style={{ color: "black", fontWeight: "bolder" }}
               onClick={handlePlaceOrder}
+              data-dismiss="modal"
             >
               Place Order
             </button>

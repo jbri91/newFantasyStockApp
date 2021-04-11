@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { propTypes } from "react-bootstrap/esm/Image";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
@@ -12,22 +11,25 @@ function SummaryPage() {
   const [microsoft, setMicrosoft] = useState([]);
   const [stockPrice, setStockPrice] = useState(0);
   const [stockName, setStockName] = useState("");
-  const [dayChange, setDayChange] = useState('');
-  const [percentageChange, setPercentageChange] = useState('')
-  const [date, setDate] = useState('')
+  const [dayChange, setDayChange] = useState("");
+  const [percentageChange, setPercentageChange] = useState("");
+  const [date, setDate] = useState("");
   const [symbol, setSymbol] = useState("");
+  const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
-
-console.log(searchStock)
 
   useEffect(() => {
     setAccountValue(
       buyingPower - sumofPurchasedStocks + parseFloat(sumofPurchasedStocks)
     );
   }, []);
+
+  // useEffect(() => {
+  //   setBuyingPower(buyingPower - sumofPurchasedStocks)
+  // }, [])
 
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
@@ -91,6 +93,7 @@ console.log(searchStock)
     stocksPurchased.push(
       <StockCard
         key={purchasedStocks[i][0]}
+        stockId={purchasedStocks[i][0]}
         symbol={purchasedStocks[i][1]}
         stockName={purchasedStocks[i][2]}
         price={purchasedStocks[i][3]}
@@ -103,6 +106,7 @@ console.log(searchStock)
         setDate={setDate}
         setDayChange={setDayChange}
         setPercentageChange={setPercentageChange}
+        setStockId={setStockId}
       />
     );
   }
@@ -121,7 +125,7 @@ console.log(searchStock)
           left: "-10px",
         }}
       >
-        <h3>Buying Power: ${buyingPower -  sumofPurchasedStocks}</h3>
+        <h3>Buying Power: ${buyingPower - sumofPurchasedStocks}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
@@ -141,9 +145,9 @@ console.log(searchStock)
             setStockName={setStockName}
             setSymbol={setSymbol}
             setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-
+            setDayChange={setDayChange}
+            setPercentageChange={setPercentageChange}
+            setStockId={setStockId}
           />
         ) : null}
       </div>
@@ -168,9 +172,9 @@ console.log(searchStock)
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={amazon.symbol}
@@ -183,9 +187,9 @@ console.log(searchStock)
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={apple.symbol}
@@ -198,9 +202,9 @@ console.log(searchStock)
           setStockName={setStockName}
           setSymbol={setSymbol}
           setDate={setDate}
-        setDayChange={setDayChange}
-        setPercentageChange={setPercentageChange}
-
+          setDayChange={setDayChange}
+          setPercentageChange={setPercentageChange}
+          setStockId={setStockId}
         />
         <StockCard
           symbol={microsoft.symbol}
@@ -215,7 +219,7 @@ console.log(searchStock)
           setDate={setDate}
           setDayChange={setDayChange}
           setPercentageChange={setPercentageChange}
-
+          setStockId={setStockId}
         />
         <StockModal
           stockPrice={stockPrice}
@@ -226,6 +230,11 @@ console.log(searchStock)
           percentageChange={percentageChange}
           buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
+          purchasedStocks={purchasedStocks}
+          setPurchasedStocks={setPurchasedStocks}
+          stockId={stockId}
+          buyingPower = {buyingPower}
+          setBuyingPower = {setBuyingPower}
         />
       </div>
     </div>

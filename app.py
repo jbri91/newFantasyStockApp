@@ -134,16 +134,15 @@ class UserCredentials(Resource):
         return jsonify(username, password)
 
 
-api.add_resource(UserCredentials,
-                 '/api/createaccount')
+api.add_resource(UserCredentials, '/api/createaccount')
 
 
 class AddStocksToTable(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
-                            user='postgres',
-                            password='databasePassword',
-                            host='localhost')
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         symbol = json_data['symbol']
@@ -154,7 +153,7 @@ class AddStocksToTable(Resource):
         date = json_data['date']
         cur.execute(
             "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %s, %s)",
-            (symbol, stockName, price, day_change, percentage_change, date)) 
+            (symbol, stockName, price, day_change, percentage_change, date))
         conn.commit()
         print('Records Inserted....')
         cur.close()
@@ -164,5 +163,27 @@ class AddStocksToTable(Resource):
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
+
+
+class DeleteRow(Resource):
+    def delete(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        stock_id = json_data['stock_id']
+        cur.execute('DELETE FROM purchased_stock WHERE stock_id = %s',
+                    (stock_id, ))
+        rows_deleted = cur.rowcount
+        print(rows_deleted)
+        conn.commit()
+        cur.close()
+        print('Deleted')
+        return jsonify(stock_id)
+
+
+api.add_resource(DeleteRow, '/api/deleterow')
 
 app.run(debug=True)
