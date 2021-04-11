@@ -235,8 +235,8 @@ function SummaryPage() {
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
-          // buyingPower = {buyingPower}
-          // setBuyingPower = {setBuyingPower}
+          buyingPower = {buyingPower}
+          setBuyingPower = {setBuyingPower}
         />
       </div>
     </div>
