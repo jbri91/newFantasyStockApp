@@ -52,8 +52,8 @@ function ReportPage() {
       <tr>
         <td> {allSymbols[i]} </td>
         <td> {numberShares[i]} </td>
-        <td> ${totalInvested} </td>
-        <td> {((totalInvested / totalPortfolioSum) * 100).toFixed(2)}% </td>
+        <td> ${totalInvested[i]} </td>
+        <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
           <button type="button" className="btn btn-secondary">
             Sell All
