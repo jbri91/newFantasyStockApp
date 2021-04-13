@@ -186,4 +186,71 @@ class DeleteRow(Resource):
 
 api.add_resource(DeleteRow, '/api/deleterow')
 
+# Report Page
+
+
+class AllSymbols(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute('SELECT symbol FROM purchased_stock;')
+        symbols = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(symbols)
+
+api.add_resource(AllSymbols, '/api/allsymbols')
+
+class NumberOfShares(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute("SELECT COUNT(*) FROM purchased_stock WHERE symbol = 'AAPL' ;")
+        shares = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify (shares)
+
+api.add_resource(NumberOfShares, '/api/shares')
+
+class TotalInvested(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute("SELECT SUM(price) FROM purchased_stock WHERE symbol = 'AAPL';")
+        invested = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(invested)
+
+api.add_resource(TotalInvested, '/api/invested')
+
+class TotalPortfolio(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute("SELECT SUM(price) FROM purchased_stock")
+        totalPortfolio = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(totalPortfolio)
+
+api.add_resource(TotalPortfolio, '/api/totalPortfolio')
+
 app.run(debug=True)

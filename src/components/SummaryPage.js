@@ -78,7 +78,6 @@ function SummaryPage() {
   }, [])
 
   function handleSearch(e) {
-    console.log(e.target.value);
     setSearchStock(e.target.value);
   }
 
