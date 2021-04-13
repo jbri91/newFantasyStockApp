@@ -203,7 +203,9 @@ class AllSymbols(Resource):
         conn.close()
         return jsonify(symbols)
 
+
 api.add_resource(AllSymbols, '/api/allsymbols')
+
 
 class NumberOfShares(Resource):
     def get(self):
@@ -217,9 +219,11 @@ class NumberOfShares(Resource):
         conn.commit()
         cur.close()
         conn.close()
-        return jsonify (shares)
+        return jsonify(shares)
+
 
 api.add_resource(NumberOfShares, '/api/shares')
+
 
 class TotalInvested(Resource):
     def get(self):
@@ -235,7 +239,9 @@ class TotalInvested(Resource):
         conn.close()
         return jsonify(invested)
 
+
 api.add_resource(TotalInvested, '/api/invested')
+
 
 class TotalPortfolio(Resource):
     def get(self):
@@ -251,6 +257,27 @@ class TotalPortfolio(Resource):
         conn.close()
         return jsonify(totalPortfolio)
 
+
 api.add_resource(TotalPortfolio, '/api/totalPortfolio')
+
+
+class DeleteAllStocks(Resource):
+    def delete(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        stock_symbol = json_data['stock_symbol']
+        cur.execute('DELETE FROM purchased_stock WHERE symbol = %s',
+                    (stock_symbol, ))
+        conn.commit()
+        cur.close()
+        print('Deleted')
+        return jsonify(stock_symbol)
+
+
+api.add_resource(DeleteAllStocks, '/api/deleteall')
 
 app.run(debug=True)

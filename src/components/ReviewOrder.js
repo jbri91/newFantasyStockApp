@@ -10,8 +10,7 @@ function ReviewOrder(props) {
       if (props.stockSum > props.buyingPower) {
         alert("You do not have enough buy power!");
       } else {
-
-        console.log(props.quantity)
+        console.log(props.quantity);
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -23,24 +22,20 @@ function ReviewOrder(props) {
             percentage_change: props.percentageChange,
             date: props.date,
           }),
-        }
+        };
         fetch("/api/buystock", requestOptions)
           .then((res) => res.json())
           .then((data) => console.log(data))
-          .catch((error) => console.log(error))
-          
-          fetch("/api/purchased")
+          .catch((error) => console.log(error));
+
+        fetch("/api/purchased")
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error));
-          
-          props.setBuyingPower(props.buyingPower - props.stockSum)
 
-        }
-
-    
+        props.setBuyingPower(props.buyingPower - props.stockSum);
+      }
     } else if (selected === "Sell") {
-
       const requestOptions = {
         method: "DELETE",
         headers: { "Content-Type": "application/json" },
@@ -54,13 +49,12 @@ function ReviewOrder(props) {
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error))
       );
-      props.setBuyingPower(props.buyingPower + props.stockSum)
+      props.setBuyingPower(props.buyingPower + props.stockSum);
     }
     fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => props.setPurchasedStocks(data))
       .catch((error) => console.log(error));
-
   }
 
   return (
@@ -94,8 +88,14 @@ function ReviewOrder(props) {
                   {" "}
                   Remaining Buy Power: $
                   {props.selected === "Buy"
-                    ? ((props.buyingPower - props.sumofPurchasedStocks) - props.stockSum).toFixed(2)
-                    : ((props.buyingPower - props.sumofPurchasedStocks) + props.stockSum)}
+                    ? (
+                        props.buyingPower -
+                        props.sumofPurchasedStocks -
+                        props.stockSum
+                      ).toFixed(2)
+                    : props.buyingPower -
+                      props.sumofPurchasedStocks +
+                      props.stockSum}
                 </p>
               </div>
             </div>

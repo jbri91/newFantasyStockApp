@@ -10,26 +10,38 @@ function ReportPage() {
     fetch("/api/allsymbols")
       .then((res) => res.json())
       .then((data) => setAllSymbols(data));
-  }, []);
+  }, [allSymbols]);
 
   useEffect(() => {
     fetch("/api/shares")
       .then((res) => res.json())
       .then((data) => setNumberShares(data));
-  }, []);
+  }, [numberShares]);
 
   useEffect(() => {
     fetch("/api/invested")
       .then((res) => res.json())
       .then((data) => setTotalInvested(data));
-  }, []);
+  }, [totalInvested]);
 
   useEffect(() => {
     fetch("/api/totalPortfolio")
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data));
-  }, []);
+  }, [totalPortfolioSum]);
 
+
+  function handleDelete(e) {
+    console.log(e.target.id)
+    const requestOptions = {
+      method: 'DELETE',
+      headers: {'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        stock_symbol: e.target.id,
+      })
+    };
+    fetch('/api/deleteall', requestOptions)  
+  }
 
   let stockRows = [];
   for (let i = 0; i < allSymbols.length; i++) {
@@ -40,7 +52,7 @@ function ReportPage() {
         <td> ${totalInvested[i]} </td>
         <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
-          <button type="button" className="btn btn-secondary">
+          <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
             Sell All
           </button>
         </td>
