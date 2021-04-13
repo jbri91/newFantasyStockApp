@@ -229,7 +229,6 @@ function SummaryPage() {
           dayChange={dayChange}
           date={date}
           percentageChange={percentageChange}
-          buyingPower={buyingPower}
           sumofPurchasedStocks={sumofPurchasedStocks}
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
