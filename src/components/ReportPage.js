@@ -5,7 +5,6 @@ function ReportPage() {
   const [numberShares, setNumberShares] = useState([]);
   const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
-  const [portfolioPercentage, setPortfolioPercentage] = useState([]);
 
   useEffect(() => {
     fetch("/api/purchased")
@@ -13,7 +12,6 @@ function ReportPage() {
       .then((data) => setAllStocks(data));
   }, []);
 
-  console.log(allStocks);
 
   useEffect(() => {
     fetch("/api/allsymbols")
@@ -39,17 +37,11 @@ function ReportPage() {
       .then((data) => setTotalPortfolioSum(data));
   }, []);
 
-  console.log(totalPortfolioSum);
-
-  useEffect(() => {
-    setPortfolioPercentage((totalInvested / totalPortfolioSum) * 100);
-  }, []);
-  console.log(portfolioPercentage);
 
   let stockRows = [];
   for (let i = 0; i < allSymbols.length; i++) {
     stockRows.push(
-      <tr>
+      <tr key={i}>
         <td> {allSymbols[i]} </td>
         <td> {numberShares[i]} </td>
         <td> ${totalInvested[i]} </td>
