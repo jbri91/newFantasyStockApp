@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
 function ReportPage() {
-  const [allStocks, setAllStocks] = useState([]);
   const [allSymbols, setAllSymbols] = useState([]);
   const [numberShares, setNumberShares] = useState([]);
   const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
-
-  useEffect(() => {
-    fetch("/api/purchased")
-      .then((res) => res.json())
-      .then((data) => setAllStocks(data));
-  }, []);
 
 
   useEffect(() => {
