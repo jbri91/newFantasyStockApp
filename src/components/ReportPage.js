@@ -64,7 +64,7 @@ console.log(portfolioPercentage)
           <tr>
             <td> {allSymbols[0]} </td>
             <td> {numberShares} </td>
-            <td> {totalInvested} </td>
+            <td> ${totalInvested} </td>
             <td> {(totalInvested / totalPortfolioSum * 100).toFixed(2)} % </td>
           </tr>
         </tbody>
