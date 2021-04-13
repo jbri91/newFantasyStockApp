@@ -196,7 +196,7 @@ class AllSymbols(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT symbol FROM purchased_stock;')
+        cur.execute('SELECT DISTINCT symbol FROM purchased_stock;')
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -212,7 +212,7 @@ class NumberOfShares(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT COUNT(*) FROM purchased_stock WHERE symbol = 'AAPL' ;")
+        cur.execute("SELECT COUNT(1) FROM purchased_stock GROUP BY symbol")
         shares = cur.fetchall()
         conn.commit()
         cur.close()
