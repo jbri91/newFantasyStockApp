@@ -40,7 +40,7 @@ function ReportPage() {
         stock_symbol: e.target.id,
       })
     };
-    fetch('/api/deleteall', requestOptions)  
+    fetch('/api/deleteall', requestOptions)
   }
 
   let stockRows = [];

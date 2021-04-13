@@ -272,6 +272,7 @@ class DeleteAllStocks(Resource):
         stock_symbol = json_data['stock_symbol']
         cur.execute('DELETE FROM purchased_stock WHERE symbol = %s',
                     (stock_symbol, ))
+        
         conn.commit()
         cur.close()
         print('Deleted')
