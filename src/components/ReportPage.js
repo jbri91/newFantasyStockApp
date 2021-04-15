@@ -49,7 +49,7 @@ function ReportPage() {
       <tr key={i}>
         <td> {allSymbols[i]} </td>
         <td> {numberShares[i]} </td>
-        <td> ${totalInvested[i]} </td>
+        <td> ${(numberShares[i] * totalInvested[i]).toFixed(2)} </td>
         <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
           <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">

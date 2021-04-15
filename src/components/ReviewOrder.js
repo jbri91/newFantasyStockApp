@@ -3,6 +3,7 @@ import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
   const { selected } = props;
+  const { quantity } = props;
   // const [buyingStock, setBuyingStock] = useState("");
 
   function handlePlaceOrder() {
@@ -21,6 +22,7 @@ function ReviewOrder(props) {
             day_change: props.dayChange,
             percentage_change: props.percentageChange,
             date: props.date,
+            shares: quantity
           }),
         };
         fetch("/api/buystock", requestOptions)

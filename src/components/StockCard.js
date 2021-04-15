@@ -9,6 +9,7 @@ function StockCard(props) {
   const {dayChange} = props;
   const {percentChange} = props;
   const {stockId} = props;
+  const {shares} = props;
   
 
 
@@ -131,7 +132,8 @@ function StockCard(props) {
               display: "flex",
             }}
           >
-            {props.time}
+            {props.time} 
+            <p style={{ marginLeft:'100px'}}>{shares} Shares </p>
           </Card.Text>
         </Card.Body>
       </Card> 

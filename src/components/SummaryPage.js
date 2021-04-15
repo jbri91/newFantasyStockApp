@@ -21,8 +21,7 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-  
-
+  console.log(purchasedStocks)
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
@@ -101,6 +100,7 @@ function SummaryPage() {
         dayChange={purchasedStocks[i][4]}
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
+        shares={purchasedStocks[i][7]}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}

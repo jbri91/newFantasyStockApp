@@ -151,15 +151,16 @@ class AddStocksToTable(Resource):
         day_change = json_data['day_change']
         percentage_change = json_data['percentage_change']
         date = json_data['date']
+        shares = json_data['shares']
         cur.execute(
-            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date) VALUES(%s, %s, %s, %s, %s, %s)",
-            (symbol, stockName, price, day_change, percentage_change, date))
+            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares) VALUES(%s, %s, %s, %s, %s, %s, %s)",
+            (symbol, stockName, price, day_change, percentage_change, date, shares))
         conn.commit()
         print('Records Inserted....')
         cur.close()
         conn.close()
         return jsonify(symbol, stockName, price, day_change, percentage_change,
-                       date)
+                       date, shares)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
@@ -214,7 +215,7 @@ class NumberOfShares(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT COUNT(1) FROM purchased_stock GROUP BY symbol")
+        cur.execute("SELECT SUM(shares) FROM purchased_stock GROUP BY symbol")
         shares = cur.fetchall()
         conn.commit()
         cur.close()
