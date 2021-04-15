@@ -6,30 +6,31 @@ function ReportPage() {
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
 
 
+  function ResetStocks() {
   useEffect(() => {
     fetch("/api/allsymbols")
       .then((res) => res.json())
       .then((data) => setAllSymbols(data));
-  }, [allSymbols]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/shares")
       .then((res) => res.json())
       .then((data) => setNumberShares(data));
-  }, [numberShares]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/invested")
       .then((res) => res.json())
       .then((data) => setTotalInvested(data));
-  }, [totalInvested]);
+  }, []);
 
   useEffect(() => {
     fetch("/api/totalPortfolio")
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data));
-  }, [totalPortfolioSum]);
-
+  }, []);
+}
 
   function handleDelete(e) {
     console.log(e.target.id)
@@ -42,6 +43,10 @@ function ReportPage() {
     };
     fetch('/api/deleteall', requestOptions)
   }
+
+
+ResetStocks()
+
 
   let stockRows = [];
   for (let i = 0; i < allSymbols.length; i++) {
