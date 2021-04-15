@@ -33,7 +33,6 @@ function ReportPage() {
 
 
 
-
   function handleDelete(e) {
     console.log(e.target.id)
     const requestOptions = {
@@ -44,20 +43,28 @@ function ReportPage() {
       })
     };
     fetch('/api/deleteall', requestOptions)
-    .then(res => {
-      // setAllSymbols([])
-      // setNumberShares([])
-      setStockReport([])
+  
+ 
+//       for(let i = 0; i < stockReport.length; i++) { 
+// const index = stockReport[i][0].indexOf(e.target.id)
+// console.log(index)
+//       }
+    // for(let i = 0; i < stockReport.length; i++) {
+    //  const index = stockReport[i].indexOf(e.target.id)
+    //  stockReport.splice(index, 1)
+    //  console.log(stockReport)
+    
+
+// console.log(index)
       // Find index of item I want to delete
       // Delete item based on the index
       // One state which includes symbols and shares
-    })
+    
   }
 
 
  
-    console.log(allSymbols)
-    console.log(numberShares)
+
    
 
 
