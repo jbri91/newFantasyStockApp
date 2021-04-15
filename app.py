@@ -208,6 +208,24 @@ class AllSymbols(Resource):
 api.add_resource(AllSymbols, '/api/allsymbols')
 
 
+class StockReport(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute('SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol;')
+        symbols = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(symbols)
+
+
+api.add_resource(StockReport, '/api/stockreport')
+
+
 class NumberOfShares(Resource):
     def get(self):
         conn = psycopg2.connect(dbname='stock_application',

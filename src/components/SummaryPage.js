@@ -21,7 +21,7 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-  console.log(purchasedStocks)
+  
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
@@ -30,51 +30,32 @@ function SummaryPage() {
     fetch("/api/sum")
       .then((res) => res.json())
       .then((data) => setSumofPurchasedStocks(data));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/tesla")
+      fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/amazon")
+      fetch("/api/amazon")
       .then((res) => res.json())
       .then((data) => setAmazon(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/microsoft")
+      fetch("/api/microsoft")
       .then((res) => res.json())
       .then((data) => setMicrosoft(data))
       .catch((error) => console.log(error));
-  }, []);
-  useEffect(() => {
-    fetch("/api/apple")
+      fetch("/api/apple")
       .then((res) => res.json())
       .then((data) => setApple(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/purchased")
+      fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
+      setAccountValue(
+        buyingPower + sumofPurchasedStocks)
+        setBuyingPower(buyingPower)
   }, []);
 
-  useEffect(() => {
-    setAccountValue(
-      buyingPower + sumofPurchasedStocks
-    );
-  }, []);
 
-  useEffect(() => {
-    setBuyingPower(buyingPower)
-  }, [])
 
   function handleSearch(e) {
     setSearchStock(e.target.value);

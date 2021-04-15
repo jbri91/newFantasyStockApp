@@ -4,33 +4,35 @@ function ReportPage() {
   const [numberShares, setNumberShares] = useState([]);
   const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
+  const [stockReport, setStockReport] = useState([])
 
 
-  function ResetStocks() {
   useEffect(() => {
     fetch("/api/allsymbols")
       .then((res) => res.json())
-      .then((data) => setAllSymbols(data));
+      .then((data) => setAllSymbols(data))
+      .catch(error => console.log(error));
+      fetch("/api/shares")
+      .then((res) => res.json())
+      .then((data) => setNumberShares(data))
+      .catch(error => console.log(error));
+      fetch("/api/invested")
+      .then((res) => res.json())
+      .then((data) => setTotalInvested(data))
+      .catch(error => console.log(error));
+      fetch("/api/totalPortfolio")
+      .then((res) => res.json())
+      .then((data) => setTotalPortfolioSum(data))
+      .catch(error => console.log(error));
+
+      fetch('/api/stockreport')
+      .then(res => res.json())
+      .then(data => setStockReport(data))
+      .catch(error => console.log(error))
   }, []);
 
-  useEffect(() => {
-    fetch("/api/shares")
-      .then((res) => res.json())
-      .then((data) => setNumberShares(data));
-  }, []);
 
-  useEffect(() => {
-    fetch("/api/invested")
-      .then((res) => res.json())
-      .then((data) => setTotalInvested(data));
-  }, []);
 
-  useEffect(() => {
-    fetch("/api/totalPortfolio")
-      .then((res) => res.json())
-      .then((data) => setTotalPortfolioSum(data));
-  }, []);
-}
 
   function handleDelete(e) {
     console.log(e.target.id)
@@ -42,18 +44,31 @@ function ReportPage() {
       })
     };
     fetch('/api/deleteall', requestOptions)
+    .then(res => {
+      // setAllSymbols([])
+      // setNumberShares([])
+      setStockReport([])
+      // Find index of item I want to delete
+      // Delete item based on the index
+      // One state which includes symbols and shares
+    })
   }
 
 
-ResetStocks()
+ 
+    console.log(allSymbols)
+    console.log(numberShares)
+   
+
+
 
 
   let stockRows = [];
-  for (let i = 0; i < allSymbols.length; i++) {
+  for (let i = 0; i < stockReport.length; i++) {
     stockRows.push(
       <tr key={i}>
-        <td> {allSymbols[i]} </td>
-        <td> {numberShares[i]} </td>
+        <td> {stockReport[i][0]} </td>
+        <td> {stockReport[i][1]} </td>
         <td> ${(numberShares[i] * totalInvested[i]).toFixed(2)} </td>
         <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
