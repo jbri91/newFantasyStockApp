@@ -8,7 +8,7 @@ function ReportPage() {
 
 
   useEffect(() => {
-    fetch("/api/allsymbols")
+       fetch("/api/allsymbols")
       .then((res) => res.json())
       .then((data) => setAllSymbols(data))
       .catch(error => console.log(error));
@@ -43,6 +43,13 @@ function ReportPage() {
       })
     };
     fetch('/api/deleteall', requestOptions)
+    .then( res => {
+      let index = stockReport.indexOf(e.target.id)
+      stockReport.splice(index, 1);
+      setStockReport(stockReport)
+    })
+
+
   
  
 //       for(let i = 0; i < stockReport.length; i++) { 
