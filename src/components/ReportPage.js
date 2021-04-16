@@ -35,8 +35,6 @@ function ReportPage() {
 
   function handleDelete(e) {
     console.log(e.target.id)
-
-    
     const requestOptions = {
       method: 'DELETE',
       headers: {'Content-Type': 'application/json' },
@@ -45,17 +43,14 @@ function ReportPage() {
       })
     };
     fetch('/api/deleteall', requestOptions)
-   const index = stockReport.indexOf(e.target.id);
-   stockReport.splice( index, 1 );
-   setStockReport(stockReport)
+    .then( res => {
+      fetch('/api/stockreport')
+      .then(res => res.json())
+      .then(data => setStockReport(data))
+    })
     }
+console.log(stockReport)
 
-
-console.log(allSymbols)
-
-let stocks = allSymbols.indexOf('AAPL')
-
-console.log(stocks)
 
 // console.log(index)
       // Find index of item I want to delete
