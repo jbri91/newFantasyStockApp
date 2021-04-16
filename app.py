@@ -154,7 +154,8 @@ class AddStocksToTable(Resource):
         shares = json_data['shares']
         cur.execute(
             "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares) VALUES(%s, %s, %s, %s, %s, %s, %s)",
-            (symbol, stockName, price, day_change, percentage_change, date, shares))
+            (symbol, stockName, price, day_change, percentage_change, date,
+             shares))
         conn.commit()
         print('Records Inserted....')
         cur.close()
@@ -215,7 +216,8 @@ class StockReport(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol;')
+        cur.execute(
+            'SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol;')
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -291,7 +293,7 @@ class DeleteAllStocks(Resource):
         stock_symbol = json_data['stock_symbol']
         cur.execute('DELETE FROM purchased_stock WHERE symbol = %s',
                     (stock_symbol, ))
-        
+
         conn.commit()
         cur.close()
         print('Deleted')
@@ -299,5 +301,24 @@ class DeleteAllStocks(Resource):
 
 
 api.add_resource(DeleteAllStocks, '/api/deleteall')
+
+
+class UpdateStocks(Resource):
+    def update(shares, stock_id):
+        conn = psycopg2.connect(dbname='stock_application',
+                            user='postgres',
+                            password='databasePassword',
+                            host='localhost')
+        cur = conn.cursor()
+        cur.execute('UPDATE purchased_stock SET shares = %s WHERE stock_id = %s', (shares, stock_id))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+    if __name__ == '__main__':
+        update(20, 472)
+
+# api.add_resource(UpdateStocks, '/api/updatestocks')
 
 app.run(debug=True)
