@@ -6,7 +6,18 @@ function ReviewOrder(props) {
   const { quantity } = props;
   const { stockId } = props;
   const { setQuantity } = props;
-  // const [buyingStock, setBuyingStock] = useState("");
+  const { purchasedStocks } = props;
+  const [shares, setShares] = useState([]);
+  
+  useEffect(() => {
+  for(let i =0; i < purchasedStocks.length; i++ ) {
+    if(stockId === purchasedStocks[i][0]) {
+      setShares(purchasedStocks[i][7])
+  }}
+})
+
+console.log(stockId)
+console.log(shares)
 
   function handlePlaceOrder() {
     if (selected === "Buy") {
@@ -40,11 +51,14 @@ function ReviewOrder(props) {
         props.setBuyingPower(props.buyingPower - props.stockSum);
       }
     } else if (selected === "Sell") {
+      
+      setQuantity(shares - quantity)
+
       const requestOptions = {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          shares: quantity,
+          shares: shares - quantity,
           stock_id: stockId
         }),
       };
