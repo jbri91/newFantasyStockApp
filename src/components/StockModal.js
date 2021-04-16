@@ -98,6 +98,7 @@ function StockModal(props) {
         percentageChange={props.percentageChange}
         date={props.date}
         quantity={quantity}
+        setQuantity={setQuantity}
         selected={selected}
         sumofPurchasedStocks={props.sumofPurchasedStocks}
         purchasedStocks={props.purchasedStocks}

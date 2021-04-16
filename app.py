@@ -304,21 +304,23 @@ api.add_resource(DeleteAllStocks, '/api/deleteall')
 
 
 class UpdateStocks(Resource):
-    def update(shares, stock_id):
+    def put(self):
         conn = psycopg2.connect(dbname='stock_application',
-                            user='postgres',
-                            password='databasePassword',
-                            host='localhost')
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
         cur = conn.cursor()
-        cur.execute('UPDATE purchased_stock SET shares = %s WHERE stock_id = %s', (shares, stock_id))
+        json_data = request.get_json()
+        shares = json_data['shares']
+        stock_id = json_data['stock_id']
+        cur.execute(
+            'UPDATE purchased_stock SET shares = %s WHERE stock_id = %s',
+            (shares, stock_id))
         conn.commit()
         cur.close()
         conn.close()
 
 
-    if __name__ == '__main__':
-        update(20, 472)
-
-# api.add_resource(UpdateStocks, '/api/updatestocks')
+api.add_resource(UpdateStocks, '/api/updatestocks')
 
 app.run(debug=True)
