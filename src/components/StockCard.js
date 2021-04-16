@@ -133,7 +133,7 @@ function StockCard(props) {
             }}
           >
             {props.time} 
-            <p style={{ marginLeft:'100px'}}>{shares} Shares </p>
+            <span style={{ marginLeft:'100px'}}>{shares} Shares </span>
           </Card.Text>
         </Card.Body>
       </Card> 
