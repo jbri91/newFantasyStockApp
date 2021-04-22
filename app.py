@@ -11,11 +11,12 @@ api = Api(app)
 
 class SearchStock(Resource):
     def get(self, stock):
-        headers = {
-            'token': 'pk_75972e634de441d4a997ed43057a5221',
-            'Accept': 'application.json',
-            'Content-Type': 'application/json'
-        }
+        # headers = {
+        
+        #     'token': 'pk_75972e634de441d4a997ed43057a5221',
+        #     'Accept': 'application.json',
+        #     'Content-Type': 'application/json'
+        # }
         searchStock = requests.get(
             'https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
             .format(stock)).json()
@@ -243,6 +244,7 @@ class NumberOfShares(Resource):
         return jsonify(shares)
 
 
+
 api.add_resource(NumberOfShares, '/api/shares')
 
 
@@ -322,5 +324,6 @@ class UpdateStocks(Resource):
 
 
 api.add_resource(UpdateStocks, '/api/updatestocks')
+
 
 app.run(debug=True)
