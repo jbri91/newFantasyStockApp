@@ -44,12 +44,49 @@ function ReportPage() {
     };
     fetch('/api/deleteall', requestOptions)
     .then( res => {
+      fetch("/api/allsymbols")
+      .then((res) => res.json())
+      .then((data) => setAllSymbols(data))
+      .catch(error => console.log(error));
       fetch('/api/stockreport')
       .then(res => res.json())
       .then(data => setStockReport(data))
+      .catch(error => console.log(error)) 
+      fetch("/api/shares")
+      .then((res) => res.json())
+      .then((data) => setNumberShares(data))
+      .catch(error => console.log(error));
+      fetch("/api/invested")
+      .then((res) => res.json())
+      .then((data) => setTotalInvested(data))
+      .catch(error => console.log(error));
+      fetch("/api/totalPortfolio")
+      .then((res) => res.json())
+      .then((data) => setTotalPortfolioSum(data))
+      .catch(error => console.log(error));
+
+      let stockRows = [];
+      for (let i = 0; i < stockReport.length; i++) {
+        stockRows.push(
+          <tr key={i}>
+            <td> {stockReport[i][0]} </td>
+            <td> {stockReport[i][1]} </td>
+            <td> ${(numberShares[i] * totalInvested[i]).toFixed(2)} </td>
+            <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
+            <td>
+              <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
+                Sell All
+              </button>
+            </td>
+          </tr>
+        );
+      }
     })
+     
+     
+
     }
-console.log(stockReport)
+
 
 
 // console.log(index)
@@ -57,16 +94,8 @@ console.log(stockReport)
       // Delete item based on the index
       // One state which includes symbols and shares
     
- 
-
-
- 
 
    
-
-
-
-
   let stockRows = [];
   for (let i = 0; i < stockReport.length; i++) {
     stockRows.push(
