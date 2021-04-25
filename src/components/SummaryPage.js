@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
 function SummaryPage() {
-  const [buyingPower, setBuyingPower] = useState("");
+  const [buyingPower, setBuyingPower] = useState('');
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -20,6 +20,7 @@ function SummaryPage() {
   const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
+  const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
 
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
@@ -45,14 +46,18 @@ function SummaryPage() {
       .then((res) => res.json())
       .then((data) => setApple(data))
       .catch((error) => console.log(error));
+    fetch("/api/sumofallstockspurchased")
+      .then((res) => res.json())
+      .then((data) => setSumOfAllStocksPurchased(data))
+      .catch((error) => console.log(error));
     fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-    setBuyingPower(20000 - sumofPurchasedStocks);
-    setAccountValue(buyingPower + sumofPurchasedStocks);
+      setBuyingPower(20000 - sumOfAllStocksPurchased)
+    setAccountValue(buyingPower + sumOfAllStocksPurchased);
   }, []);
-  console.log(sumofPurchasedStocks);
+  console.log(sumOfAllStocksPurchased);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -104,10 +109,8 @@ function SummaryPage() {
           left: "-10px",
         }}
       >
-        <h3>
-          Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}
-        </h3>
-        <h3>Account Value: ${accountValue}</h3>
+        <h3>Buying Power: ${buyingPower}</h3>
+        <h3>Account Value: ${accountValue + sumOfAllStocksPurchased}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>

@@ -6,7 +6,6 @@ function ReportPage() {
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
   const [stockReport, setStockReport] = useState([])
 
-
   useEffect(() => {
        fetch("/api/allsymbols")
       .then((res) => res.json())
@@ -28,10 +27,10 @@ function ReportPage() {
       fetch('/api/stockreport')
       .then(res => res.json())
       .then(data => setStockReport(data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error)) 
   }, []);
 
-
+console.log(totalInvested)
 
   function handleDelete(e) {
     console.log(e.target.id)

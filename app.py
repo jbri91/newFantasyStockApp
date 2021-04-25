@@ -12,7 +12,7 @@ api = Api(app)
 class SearchStock(Resource):
     def get(self, stock):
         # headers = {
-        
+
         #     'token': 'pk_75972e634de441d4a997ed43057a5221',
         #     'Accept': 'application.json',
         #     'Content-Type': 'application/json'
@@ -244,7 +244,6 @@ class NumberOfShares(Resource):
         return jsonify(shares)
 
 
-
 api.add_resource(NumberOfShares, '/api/shares')
 
 
@@ -264,6 +263,26 @@ class TotalInvested(Resource):
 
 
 api.add_resource(TotalInvested, '/api/invested')
+
+
+class SumOfAllStocksPurchased(Resource):
+    def get(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        cur.execute(
+            "SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock) AS x"
+        )
+        sum = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(sum)
+
+
+api.add_resource(SumOfAllStocksPurchased, '/api/sumofallstockspurchased')
 
 
 class TotalPortfolio(Resource):
@@ -324,6 +343,5 @@ class UpdateStocks(Resource):
 
 
 api.add_resource(UpdateStocks, '/api/updatestocks')
-
 
 app.run(debug=True)
