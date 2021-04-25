@@ -54,7 +54,7 @@ function ReviewOrder(props) {
     } else if (selected === "Sell") {
 
       let soldStock = shares - quantity;
-      if (soldStock > 1) {
+      if (soldStock >= 1) {
         const requestOptions = {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
