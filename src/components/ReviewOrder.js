@@ -52,40 +52,41 @@ function ReviewOrder(props) {
         props.setBuyingPower(props.buyingPower - props.stockSum);
       }
     } else if (selected === "Sell") {
+      
       let soldStock = shares - quantity;
-if(soldStock > 1) {
-      const requestOptions = {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          shares: soldStock,
-          stock_id: stockId
-        }),
-      };
-      fetch("/api/updatestocks", requestOptions)
-        .then((res) => res.json())
-        .then((data) => setQuantity(data))
-        .catch((error) => console.log(error));
+      if (soldStock > 1) {
+        const requestOptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            shares: soldStock,
+            stock_id: stockId,
+          }),
+        };
+        fetch("/api/updatestocks", requestOptions)
+          .then((res) => res.json())
+          .then((data) => setQuantity(data))
+          .catch((error) => console.log(error));
 
-        fetch("/api/purchased")
-      .then((res) => res.json())
-      .then((data) => props.setPurchasedStocks(data))
-      .catch((error) => console.log(error));
- } else {
-      const requestOptions = {
-        method: "DELETE",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          stock_id: props.stockId,
-        }),
-      };
-      fetch("/api/deleterow", requestOptions).then(() =>
         fetch("/api/purchased")
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error))
-      );
- }
+          .catch((error) => console.log(error));
+      } else {
+        const requestOptions = {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            stock_id: props.stockId,
+          }),
+        };
+        fetch("/api/deleterow", requestOptions).then(() =>
+          fetch("/api/purchased")
+            .then((res) => res.json())
+            .then((data) => props.setPurchasedStocks(data))
+            .catch((error) => console.log(error))
+        );
+      }
       props.setBuyingPower(props.buyingPower + props.stockSum);
     }
     // fetch("/api/purchased")

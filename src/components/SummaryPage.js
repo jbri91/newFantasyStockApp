@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
 function SummaryPage() {
-  const [buyingPower, setBuyingPower] = useState(20000);
+  const [buyingPower, setBuyingPower] = useState("");
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -21,7 +21,6 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
 
-  
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
@@ -30,32 +29,30 @@ function SummaryPage() {
     fetch("/api/sum")
       .then((res) => res.json())
       .then((data) => setSumofPurchasedStocks(data));
-      fetch("/api/tesla")
+    fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
       .catch((error) => console.log(error));
-      fetch("/api/amazon")
+    fetch("/api/amazon")
       .then((res) => res.json())
       .then((data) => setAmazon(data))
       .catch((error) => console.log(error));
-      fetch("/api/microsoft")
+    fetch("/api/microsoft")
       .then((res) => res.json())
       .then((data) => setMicrosoft(data))
       .catch((error) => console.log(error));
-      fetch("/api/apple")
+    fetch("/api/apple")
       .then((res) => res.json())
       .then((data) => setApple(data))
       .catch((error) => console.log(error));
-      fetch("/api/purchased")
+    fetch("/api/purchased")
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-      setAccountValue(
-        buyingPower + sumofPurchasedStocks)
-        setBuyingPower(buyingPower)
+    setBuyingPower(20000 - sumofPurchasedStocks);
+    setAccountValue(buyingPower + sumofPurchasedStocks);
   }, []);
-
-
+  console.log(sumofPurchasedStocks);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -105,9 +102,11 @@ function SummaryPage() {
           position: "relative",
           top: "-70px",
           left: "-10px",
-        }} 
+        }}
       >
-        <h3>Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}</h3>
+        <h3>
+          Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}
+        </h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
@@ -214,8 +213,8 @@ function SummaryPage() {
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
-          buyingPower = {buyingPower}
-          setBuyingPower = {setBuyingPower}
+          buyingPower={buyingPower}
+          setBuyingPower={setBuyingPower}
         />
       </div>
     </div>
