@@ -128,11 +128,11 @@ function ReviewOrder(props) {
                   {props.selected === "Buy"
                     ? (
                         props.buyingPower -
-                        props.sumofPurchasedStocks -
+                        props.sumOfAllStocksPurchased -
                         props.stockSum
                       ).toFixed(2)
                     : props.buyingPower -
-                      props.sumofPurchasedStocks +
+                      props.sumOfAllStocksPurchased +
                       props.stockSum}
                 </p>
               </div>
