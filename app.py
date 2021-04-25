@@ -341,7 +341,20 @@ class UpdateStocks(Resource):
         cur.close()
         conn.close()
 
-
 api.add_resource(UpdateStocks, '/api/updatestocks')
+
+
+# class InsertTransaction(Resource):
+#     def post(self)
+#     conn = psycopg2.connect(dbname='stock_application',
+#                                 user='postgres',
+#                                 password='databasePassword',
+#                                 host='localhost')
+#     cur = conn.cursor()
+#     json_data = request.get_json()
+#     transaction_type = json_data['selected']
+#     transaction_date = json_data['transactionDate']
+    
+
 
 app.run(debug=True)
