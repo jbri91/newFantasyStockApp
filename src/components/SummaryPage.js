@@ -55,7 +55,6 @@ function SummaryPage() {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
       setBuyingPower(20000 - sumOfAllStocksPurchased)
-    setAccountValue(buyingPower + sumOfAllStocksPurchased);
   }, []);
   console.log(sumOfAllStocksPurchased);
 
@@ -110,7 +109,7 @@ function SummaryPage() {
         }}
       >
         <h3>Buying Power: ${buyingPower}</h3>
-        <h3>Account Value: ${accountValue + sumOfAllStocksPurchased}</h3>
+        <h3>Account Value: ${((parseFloat(buyingPower) - parseFloat(sumOfAllStocksPurchased)) + parseFloat(sumOfAllStocksPurchased))}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>
