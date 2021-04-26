@@ -12,7 +12,7 @@ function App() {
 
 
   const fakeAuth = {
-    isAuthenticated: false,
+    isAuthenticated: true,
     authenticate(cb) {
       this.isAuthenticated = true;
       setTimeout(cb, 100); // fake async
@@ -23,7 +23,6 @@ function App() {
     },
   };
 
-  fakeAuth.isAuthenticated = true;
 
 
   function PrivateRoute({ children, ...rest }) {
