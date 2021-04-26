@@ -52,7 +52,6 @@ function ReviewOrder(props) {
         props.setBuyingPower(props.buyingPower - props.stockSum);
       }
     } else if (selected === "Sell") {
-
       let soldStock = shares - quantity;
       if (soldStock >= 1) {
         const requestOptions = {
