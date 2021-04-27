@@ -22,7 +22,7 @@ function SummaryPage() {
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
   
-  
+  const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
@@ -111,7 +111,7 @@ function SummaryPage() {
         }}
       >
         <h3>
-          Buying Power: ${(buyingPower - sumOfAllStocksPurchased).toFixed(2)}
+          Buying Power: ${updatedBalance}
         </h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
