@@ -56,6 +56,7 @@ function SummaryPage() {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
     setBuyingPower(20000);
+    setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
   }, []);
   console.log(sumOfAllStocksPurchased);
 

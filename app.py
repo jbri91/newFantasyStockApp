@@ -254,7 +254,7 @@ class TotalInvested(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT SUM(price) FROM purchased_stock GROUP BY symbol")
+        cur.execute("SELECT DISTINCT(symbol), price FROM purchased_stock GROUP BY symbol")
         invested = cur.fetchall()
         conn.commit()
         cur.close()
