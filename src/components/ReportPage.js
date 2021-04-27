@@ -29,9 +29,9 @@ function ReportPage() {
       .then(data => setStockReport(data))
       .catch(error => console.log(error)) 
   }, []);
-console.log(stockReport)
-console.log(totalInvested)
-console.log(numberShares)
+// console.log(stockReport)
+// console.log(totalInvested)
+// console.log(numberShares)
 // console.log(totalPortfolioSum)
 
   function handleDelete(e) {
