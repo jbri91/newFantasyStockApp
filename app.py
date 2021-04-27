@@ -199,7 +199,7 @@ class AllSymbols(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT DISTINCT symbol FROM purchased_stock;')
+        cur.execute('SELECT symbol FROM purchased_stock GROUP BY symbol, price;')
         symbols = cur.fetchall()
         conn.commit()
         cur.close()

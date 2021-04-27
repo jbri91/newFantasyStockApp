@@ -17,15 +17,13 @@ function ReviewOrder(props) {
     }
   });
 
-  console.log(stockId);
-  console.log(shares);
+
 
   function handlePlaceOrder() {
     if (selected === "Buy") {
       if (props.stockSum > props.buyingPower) {
         alert("You do not have enough buy power!");
       } else {
-        console.log(props.quantity);
         const requestOptions = {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -41,13 +39,13 @@ function ReviewOrder(props) {
         };
         fetch("/api/buystock", requestOptions)
           .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((error) => console.log(error));
-
-        fetch("/api/purchased")
+          .then((data) =>
+          fetch("/api/purchased")
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error)));
+
+       
 
         props.setBuyingPower(props.buyingPower - props.stockSum);
       }

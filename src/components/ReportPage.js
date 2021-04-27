@@ -34,6 +34,7 @@ function ReportPage() {
 // console.log(numberShares)
 // console.log(totalPortfolioSum)
 
+
   function handleDelete(e) {
     console.log(e.target.id)
     const requestOptions = {
@@ -67,7 +68,7 @@ function ReportPage() {
       .catch(error => console.log(error));
 
       let stockRows = [];
-      for (let i = 0; i < stockReport.length; i++) {
+      for (let i = 0; i < numberShares.length; i++) {
         stockRows.push(
           <tr key={i}>
         <td> {stockReport[i][0]} </td>
