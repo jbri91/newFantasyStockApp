@@ -3,7 +3,7 @@ import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
 function SummaryPage() {
-  const [buyingPower, setBuyingPower] = useState(20000);
+  const [buyingPower, setBuyingPower] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -21,7 +21,8 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
-console.log(sumofPurchasedStocks)
+  
+  
   // useEffect(() => {
   //   setProfitDebt((accountValue - buyingPower).toFixed(2));
   // }, []);
@@ -54,7 +55,7 @@ console.log(sumofPurchasedStocks)
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-    setBuyingPower(20000 - sumOfAllStocksPurchased);
+    setBuyingPower(20000);
   }, []);
   console.log(sumOfAllStocksPurchased);
 
@@ -109,7 +110,7 @@ console.log(sumofPurchasedStocks)
         }}
       >
         <h3>
-          Buying Power: ${(buyingPower).toFixed(2)}
+          Buying Power: ${(buyingPower - sumOfAllStocksPurchased).toFixed(2)}
         </h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
