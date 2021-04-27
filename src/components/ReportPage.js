@@ -33,7 +33,7 @@ function ReportPage() {
 // console.log(totalInvested)
 // console.log(numberShares)
 // console.log(totalPortfolioSum)
-
+// console.log(allSymbols)
 
   function handleDelete(e) {
     console.log(e.target.id)
