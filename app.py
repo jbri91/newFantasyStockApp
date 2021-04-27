@@ -218,7 +218,7 @@ class StockReport(Resource):
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            'SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol;')
+            'SELECT symbol, SUM(shares), price FROM purchased_stock GROUP BY symbol, price;')
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -236,7 +236,7 @@ class NumberOfShares(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT SUM(shares) FROM purchased_stock GROUP BY symbol")
+        cur.execute("SELECT SUM(shares), symbol FROM purchased_stock GROUP BY symbol, price")
         shares = cur.fetchall()
         conn.commit()
         cur.close()
@@ -254,7 +254,7 @@ class TotalInvested(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT DISTINCT(symbol), price FROM purchased_stock GROUP BY symbol")
+        cur.execute("SELECT SUM(shares), price FROM purchased_stock GROUP BY symbol, price")
         invested = cur.fetchall()
         conn.commit()
         cur.close()

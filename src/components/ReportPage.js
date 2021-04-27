@@ -31,7 +31,8 @@ function ReportPage() {
   }, []);
 console.log(stockReport)
 console.log(totalInvested)
-console.log(totalPortfolioSum)
+console.log(numberShares)
+// console.log(totalPortfolioSum)
 
   function handleDelete(e) {
     console.log(e.target.id)
@@ -69,16 +70,16 @@ console.log(totalPortfolioSum)
       for (let i = 0; i < stockReport.length; i++) {
         stockRows.push(
           <tr key={i}>
-            <td> {stockReport[i][0]} </td>
-            <td> {stockReport[i][1]} </td>
-            <td> ${(numberShares[i] * totalInvested[i]).toFixed(2)} </td>
-            <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
-            <td>
-              <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
-                Sell All
-              </button>
-            </td>
-          </tr>
+        <td> {stockReport[i][0]} </td>
+        <td> {stockReport[i][1]} </td>
+        <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
+        <td> {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}% </td>
+        <td>
+          <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
+            Sell All
+          </button>
+        </td>
+      </tr>
         );
       }
     })
@@ -102,8 +103,8 @@ console.log(totalPortfolioSum)
       <tr key={i}>
         <td> {stockReport[i][0]} </td>
         <td> {stockReport[i][1]} </td>
-        <td> ${(numberShares[i] * totalInvested[i]).toFixed(2)} </td>
-        <td> {((totalInvested[i] / totalPortfolioSum) * 100).toFixed(2)}% </td>
+        <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
+        <td> {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
           <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
             Sell All

@@ -58,7 +58,7 @@ function SummaryPage() {
     setBuyingPower(20000);
     setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
   }, []);
-  console.log(sumOfAllStocksPurchased);
+
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
