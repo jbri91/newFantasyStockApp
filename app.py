@@ -199,7 +199,7 @@ class AllSymbols(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol, price) AS x')
+        cur.execute('SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol, price) AS symbol_name')
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
