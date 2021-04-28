@@ -13,20 +13,15 @@ function NavigationBar() {
   const handlePassword = (event) => setPassword(event.target.value);
 
   const handleCredentials = () => {
-    // console.log(userName)
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         usernameCredential: usernameCredential,
+        password: password
       }),
     };
     fetch("/api/username", requestOptions)
-      .then((res) => res.json())
-      .then((data) => setUsernameCredential(data))
-      .catch((error) => console.log(error));
-
-      // console.log(userName)
   };
 
   return (

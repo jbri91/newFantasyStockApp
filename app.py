@@ -361,12 +361,15 @@ class ValidateCredentials(Resource):
         cur = conn.cursor()
         json_data = request.get_json()
         usernameCredential = json_data['usernameCredential']
-        cur.execute('SELECT username FROM user_credentials WHERE username = %s', (usernameCredential))
-        # print(userName)
+        password = json_data['password']
+        cur.execute(
+            "SELECT username, password FROM user_credentials WHERE username = %s AND password = %s",
+            (usernameCredential, password,))
+        account = cur.fetchone()
         conn.commit()
         cur.close()
         conn.close()
-        return jsonify(usernameCredential)
+        return jsonify(usernameCredential, password)
 
 
 api.add_resource(ValidateCredentials, '/api/username')
