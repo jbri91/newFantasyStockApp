@@ -99,6 +99,8 @@ function ReportPage() {
 
    
   let stockRows = [];
+
+   
   for (let i = 0; i < stockReport.length; i++) {
     stockRows.push(
       <tr key={i}>

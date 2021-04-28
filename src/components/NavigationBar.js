@@ -1,26 +1,38 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink } from "react-router-dom";
 
-
 function NavigationBar() {
-  const [userAuthentication, setUserAuthentication] = useState([]);
-  const handleChange = event => setUserAuthentication(event.target.value);
+  const [usernameCredential, setUsernameCredential] = useState("");
+  const [password, setPassword] = useState("");
 
-  // useEffect(() => {
-  //   fetch("/api/userCredentials")
-  //     .then((res) => res.json())
-  //     .then((data) => setUserAuthentication(data))
-  //     .catch((error) => console.log(error));
-  // }, []);
+  const [userAuthentication, setUserAuthentication] = useState([]);
+  const handleUsername = (event) => setUsernameCredential(event.target.value);
+  const handlePassword = (event) => setPassword(event.target.value);
+
+  const handleCredentials = () => {
+    // console.log(userName)
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        usernameCredential: usernameCredential,
+      }),
+    };
+    fetch("/api/username", requestOptions)
+      .then((res) => res.json())
+      .then((data) => setUsernameCredential(data))
+      .catch((error) => console.log(error));
+
+      // console.log(userName)
+  };
 
   return (
     <div style={{ marginBottom: "70px" }}>
       <Navbar bg="dark" variant="dark">
         <Navbar.Brand href="/">
-          
           <img src={bullMarketIcon} alt="Bull Market" />
         </Navbar.Brand>
         <Nav className="mr-auto">
@@ -69,8 +81,12 @@ function NavigationBar() {
             </div>
             <div className="modal-body">
               <div>
-                <input placeholder="User ID"  onChange={handleChange} />
-                <input placeholder="Password" type="password" />
+                <input placeholder="User ID" onChange={handleUsername} />
+                <input
+                  placeholder="Password"
+                  onChange={handlePassword}
+                  type="password"
+                />
               </div>
             </div>
             <div
@@ -78,9 +94,9 @@ function NavigationBar() {
               style={{ display: "flex", justifyContent: "space-between" }}
             >
               <NavLink
-              to="/createAccount"
-              href="createAccount"
-              className="btn btn-link"
+                to="/createAccount"
+                href="createAccount"
+                className="btn btn-link"
               >
                 Create Account
               </NavLink>
@@ -92,7 +108,7 @@ function NavigationBar() {
                   border: "solid",
                   borderColor: "skyblue",
                 }}
-                onClick={() => console.log(userAuthentication)}
+                onClick={handleCredentials}
               >
                 Submit
               </button>

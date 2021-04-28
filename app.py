@@ -199,7 +199,9 @@ class AllSymbols(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol, price) AS symbol_name')
+        cur.execute(
+            'SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol, price) AS symbol_name'
+        )
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -218,7 +220,8 @@ class StockReport(Resource):
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            'SELECT symbol, SUM(shares), price FROM purchased_stock GROUP BY symbol, price;')
+            'SELECT symbol, SUM(shares), price FROM purchased_stock GROUP BY symbol, price;'
+        )
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -236,7 +239,9 @@ class NumberOfShares(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT SUM(shares), symbol FROM purchased_stock GROUP BY symbol, price")
+        cur.execute(
+            "SELECT SUM(shares), symbol FROM purchased_stock GROUP BY symbol, price"
+        )
         shares = cur.fetchall()
         conn.commit()
         cur.close()
@@ -254,7 +259,9 @@ class TotalInvested(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT SUM(shares), price FROM purchased_stock GROUP BY symbol, price")
+        cur.execute(
+            "SELECT SUM(shares), price FROM purchased_stock GROUP BY symbol, price"
+        )
         invested = cur.fetchall()
         conn.commit()
         cur.close()
@@ -341,20 +348,27 @@ class UpdateStocks(Resource):
         cur.close()
         conn.close()
 
+
 api.add_resource(UpdateStocks, '/api/updatestocks')
 
 
-# class InsertTransaction(Resource):
-#     def post(self)
-#     conn = psycopg2.connect(dbname='stock_application',
-#                                 user='postgres',
-#                                 password='databasePassword',
-#                                 host='localhost')
-#     cur = conn.cursor()
-#     json_data = request.get_json()
-#     transaction_type = json_data['selected']
-#     transaction_date = json_data['transactionDate']
-    
+class ValidateCredentials(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        usernameCredential = json_data['usernameCredential']
+        cur.execute('SELECT username FROM user_credentials WHERE username = %s', (usernameCredential))
+        # print(userName)
+        conn.commit()
+        cur.close()
+        conn.close()
+        # return jsonify(usernameCredential)
 
+
+api.add_resource(ValidateCredentials, '/api/username')
 
 app.run(debug=True)
