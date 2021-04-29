@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavigationBar from "./components/NavigationBar";
@@ -9,10 +9,9 @@ import SummaryPage from "./components/SummaryPage";
 import CreateAccount from "./components/CreateAccount";
 
 function App() {
+  let [authentication, setAuthentication] = useState("");
 
-  let [authentication, setAuthentication] = useState('');
-
-  const fakeAuth = {
+  const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
       this.isAuthenticated = true;
@@ -24,14 +23,12 @@ function App() {
     },
   };
 
-
-
   function PrivateRoute({ children, ...rest }) {
     return (
       <Route
         {...rest}
         render={() => {
-          return fakeAuth.isAuthenticated === true ? (
+          return userAuthorization.isAuthenticated === true ? (
             children
           ) : (
             <Redirect to="/" />
@@ -46,8 +43,9 @@ function App() {
       <header className="App-header">
         <BrowserRouter>
           <NavigationBar
-          setAuthentication={setAuthentication}
-          authentication={authentication} />
+            setAuthentication={setAuthentication}
+            authentication={authentication}
+          />
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">

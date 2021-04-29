@@ -28,10 +28,9 @@ function NavigationBar(props) {
   };
 
   let handleAuthentication = () => {
-    setAuthentication(false)
-    console.log(authentication)
-
-  }
+    setAuthentication(false);
+    console.log(authentication);
+  };
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -59,8 +58,11 @@ function NavigationBar(props) {
           </div>
         </Nav>
         {authentication ? (
-          <button style={{ color: "black" }} className="btn btn-info btn-lg"
-          onClick={handleAuthentication}>
+          <button
+            style={{ color: "black" }}
+            className="btn btn-info btn-lg"
+            onClick={handleAuthentication}
+          >
             Log Out
           </button>
         ) : (
