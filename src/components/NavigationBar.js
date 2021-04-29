@@ -10,8 +10,15 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleUsername = (event) => setUsernameCredential(event.target.value);
-  const handlePassword = (event) => setPassword(event.target.value);
+
+function handleUsername(event) {
+  setUsernameCredential(event.target.value)
+}
+
+function handlePassword(event) {
+  setPassword(event.target.value);
+}
+
 
   const handleCredentials = () => {
     const requestOptions = {
@@ -29,7 +36,6 @@ function NavigationBar(props) {
 
   let handleAuthentication = () => {
     setAuthentication(false);
-    console.log(authentication);
   };
 
   return (
@@ -87,7 +93,7 @@ function NavigationBar(props) {
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title"> Login to your account</h4>
+              <h4 className="modal-title"> Log in to your account</h4>
               <button type="button" className="close" data-dismiss="modal">
                 &times;
               </button>
