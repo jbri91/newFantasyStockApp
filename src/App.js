@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState} from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavigationBar from "./components/NavigationBar";
@@ -10,9 +10,10 @@ import CreateAccount from "./components/CreateAccount";
 
 function App() {
 
+  const [authentication, setAuthentication] = useState('');
 
   const fakeAuth = {
-    isAuthenticated: true,
+    isAuthenticated: authentication,
     authenticate(cb) {
       this.isAuthenticated = true;
       setTimeout(cb, 100); // fake async
@@ -44,7 +45,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <BrowserRouter>
-          <NavigationBar />
+          <NavigationBar
+          setAuthentication={setAuthentication}
+          authentication={authentication} />
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">

@@ -4,7 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink } from "react-router-dom";
 
-function NavigationBar() {
+function NavigationBar(props) {
+  const { setAuthentication } = props;
+  const { authentication } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,6 +24,11 @@ function NavigationBar() {
       }),
     };
     fetch("/api/username", requestOptions)
+    .then(res => res.json())
+    .then(data => setAuthentication(data))
+    console.log(authentication)
+    // console.log(userAuthentication)
+    // setAuthentication(userAuthentication)
   };
 
   return (

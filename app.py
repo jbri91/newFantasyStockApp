@@ -369,7 +369,10 @@ class ValidateCredentials(Resource):
         conn.commit()
         cur.close()
         conn.close()
-        return jsonify(usernameCredential, password)
+        if account:
+            return True
+        else:
+            return  False
 
 
 api.add_resource(ValidateCredentials, '/api/username')
