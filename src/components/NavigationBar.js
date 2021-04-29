@@ -18,6 +18,13 @@ function handleUsername(event) {
 function handlePassword(event) {
   setPassword(event.target.value);
 }
+/* 
+No repeated Username in database
+Must be able to Re-type password, one number, 
+one upperCase, more than 6 characters 
+ */
+
+
 
 
   const handleCredentials = () => {
