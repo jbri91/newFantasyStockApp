@@ -5,8 +5,8 @@ import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink } from "react-router-dom";
 
 function NavigationBar(props) {
-  const { setAuthentication } = props;
-  const { authentication } = props;
+  let { setAuthentication } = props;
+  let { authentication } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,13 +19,19 @@ function NavigationBar(props) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         usernameCredential: usernameCredential,
-        password: password
+        password: password,
       }),
     };
     fetch("/api/username", requestOptions)
-    .then(res => res.json())
-    .then(data => setAuthentication(data))
+      .then((res) => res.json())
+      .then((data) => setAuthentication(data));
   };
+
+  let handleAuthentication = () => {
+    setAuthentication(false)
+    console.log(authentication)
+
+  }
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -52,15 +58,22 @@ function NavigationBar(props) {
             </NavLink>
           </div>
         </Nav>
-        <button
-          style={{ color: "black" }}
-          className="btn btn-info btn-lg"
-          data-toggle="modal"
-          data-target="#myModal"
-          href="#login"
-        >
-          Login/Register
-        </button>
+        {authentication ? (
+          <button style={{ color: "black" }} className="btn btn-info btn-lg"
+          onClick={handleAuthentication}>
+            Log Out
+          </button>
+        ) : (
+          <button
+            style={{ color: "black" }}
+            className="btn btn-info btn-lg"
+            data-toggle="modal"
+            data-target="#myModal"
+            href="#login"
+          >
+            Login/Register
+          </button>
+        )}
       </Navbar>
 
       <div

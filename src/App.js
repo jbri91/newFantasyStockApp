@@ -10,7 +10,7 @@ import CreateAccount from "./components/CreateAccount";
 
 function App() {
 
-  const [authentication, setAuthentication] = useState('');
+  let [authentication, setAuthentication] = useState('');
 
   const fakeAuth = {
     isAuthenticated: authentication,
