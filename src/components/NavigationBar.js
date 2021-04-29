@@ -10,7 +10,6 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
-  const [userAuthentication, setUserAuthentication] = useState([]);
   const handleUsername = (event) => setUsernameCredential(event.target.value);
   const handlePassword = (event) => setPassword(event.target.value);
 
@@ -26,9 +25,6 @@ function NavigationBar(props) {
     fetch("/api/username", requestOptions)
     .then(res => res.json())
     .then(data => setAuthentication(data))
-    console.log(authentication)
-    // console.log(userAuthentication)
-    // setAuthentication(userAuthentication)
   };
 
   return (
@@ -111,6 +107,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
+                data-dismiss="modal"
               >
                 Submit
               </button>
