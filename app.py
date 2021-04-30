@@ -389,25 +389,4 @@ class ValidateCredentials(Resource):
 
 api.add_resource(ValidateCredentials, '/api/username')
 
-# class UserId(Resource):
-#     def get(self):
-#         conn = psycopg2.connect(dbname='stock_application',
-#                                 user='postgres',
-#                                 password='databasePassword',
-#                                 host='localhost')
-#         cur = conn.cursor()
-#         json_data = request.get_json()
-#         usernameCredential = json_data['usernameCredential']
-#         password = json_data['password']
-#         cur.execute(
-#             "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
-#             (usernameCredential, password,))
-#         account = cur.fetchone()
-#         conn.commit()
-#         cur.close()
-#         conn.close()
-#         return jsonify(account)
-
-# api.add_resource(UserId, '/userid/stocks')
-
 app.run(debug=True)

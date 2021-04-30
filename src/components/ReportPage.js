@@ -4,114 +4,115 @@ function ReportPage(props) {
   const [numberShares, setNumberShares] = useState([]);
   const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
-  const [stockReport, setStockReport] = useState([])
+  const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
 
   useEffect(() => {
-       fetch(`/api/allsymbols/${userId}`)
+    fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => setAllSymbols(data))
-      .catch(error => console.log(error));
-      fetch(`/api/shares/${userId}`)
+      .catch((error) => console.log(error));
+    fetch(`/api/shares/${userId}`)
       .then((res) => res.json())
       .then((data) => setNumberShares(data))
-      .catch(error => console.log(error));
-      fetch(`/api/invested/${userId}`)
+      .catch((error) => console.log(error));
+    fetch(`/api/invested/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalInvested(data))
-      .catch(error => console.log(error));
-      fetch(`/api/totalPortfolio/${userId}`)
+      .catch((error) => console.log(error));
+    fetch(`/api/totalPortfolio/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data))
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
 
-      fetch(`/api/stockreport/${userId}`)
-      .then(res => res.json())
-      .then(data => setStockReport(data))
-      .catch(error => console.log(error)) 
+    fetch(`/api/stockreport/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setStockReport(data))
+      .catch((error) => console.log(error));
   }, []);
-// console.log(stockReport)
-// console.log(totalInvested)
-// console.log(numberShares)
-// console.log(totalPortfolioSum)
-// console.log(allSymbols)
 
+  console.log(totalInvested);
+  console.log(totalPortfolioSum);
   function handleDelete(e) {
-    console.log(e.target.id)
+    console.log(e.target.id);
     const requestOptions = {
-      method: 'DELETE',
-      headers: {'Content-Type': 'application/json' },
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         stock_symbol: e.target.id,
-        userId: parseInt(userId)
-      })
+        userId: parseInt(userId),
+      }),
     };
-    fetch('/api/deleteall', requestOptions)
-    .then( res => {
+    fetch("/api/deleteall", requestOptions).then((res) => {
       fetch(`/api/allsymbols/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setAllSymbols(data))
-      .catch(error => console.log(error));
+        .then((res) => res.json())
+        .then((data) => setAllSymbols(data))
+        .catch((error) => console.log(error));
       fetch(`/api/stockreport/${userId}`)
-      .then(res => res.json())
-      .then(data => setStockReport(data))
-      .catch(error => console.log(error)) 
+        .then((res) => res.json())
+        .then((data) => setStockReport(data))
+        .catch((error) => console.log(error));
       fetch(`/api/shares/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setNumberShares(data))
-      .catch(error => console.log(error));
+        .then((res) => res.json())
+        .then((data) => setNumberShares(data))
+        .catch((error) => console.log(error));
       fetch(`/api/invested/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setTotalInvested(data))
-      .catch(error => console.log(error));
+        .then((res) => res.json())
+        .then((data) => setTotalInvested(data))
+        .catch((error) => console.log(error));
       fetch(`/api/totalPortfolio/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setTotalPortfolioSum(data))
-      .catch(error => console.log(error));
+        .then((res) => res.json())
+        .then((data) => setTotalPortfolioSum(data))
+        .catch((error) => console.log(error));
 
       let stockRows = [];
       for (let i = 0; i < numberShares.length; i++) {
         stockRows.push(
           <tr key={i}>
-        <td> {stockReport[i][0]} </td>
-        <td> {stockReport[i][1]} </td>
-        <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
-        <td> {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}% </td>
-        <td>
-          <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
-            Sell All
-          </button>
-        </td>
-      </tr>
+            <td> {stockReport[i][0]} </td>
+            <td> {stockReport[i][1]} </td>
+            <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
+            <td>
+              {" "}
+              {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(
+                2
+              )}%{" "}
+            </td>
+            <td>
+              <button
+                id={allSymbols[i]}
+                type="button"
+                onClick={handleDelete}
+                className="btn btn-secondary"
+              >
+                Sell All
+              </button>
+            </td>
+          </tr>
         );
       }
-    })
-     
-     
+    });
+  }
 
-    }
-
-
-
-// console.log(index)
-      // Find index of item I want to delete
-      // Delete item based on the index
-      // One state which includes symbols and shares
-    
-
-   
   let stockRows = [];
 
-   
   for (let i = 0; i < stockReport.length; i++) {
     stockRows.push(
       <tr key={i}>
         <td> {stockReport[i][0]} </td>
         <td> {stockReport[i][1]} </td>
         <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
-        <td> {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}% </td>
         <td>
-          <button id={allSymbols[i]} type="button" onClick={handleDelete} className="btn btn-secondary">
+          {" "}
+          {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
+        </td>
+        <td>
+          <button
+            id={allSymbols[i]}
+            type="button"
+            onClick={handleDelete}
+            className="btn btn-secondary"
+          >
             Sell All
           </button>
         </td>
@@ -131,9 +132,7 @@ function ReportPage(props) {
             <th>Quick Sell</th>
           </tr>
         </thead>
-        <tbody>
-          {stockRows}
-        </tbody>
+        <tbody>{stockRows}</tbody>
       </table>
     </div>
   );
