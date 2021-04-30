@@ -48,7 +48,7 @@ function SummaryPage(props) {
       .then((res) => res.json())
       .then((data) => setSumOfAllStocksPurchased(data))
       .catch((error) => console.log(error));
-    fetch("/api/purchased")
+    fetch(`/api/purchased/${userId}`)
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));

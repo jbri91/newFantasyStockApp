@@ -80,13 +80,13 @@ api.add_resource(Microsoft, '/api/microsoft')
 
 
 class PurchasedStock(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT * FROM purchased_stock;')
+        cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s', (userId, ))
         purchasedStock = cur.fetchall()
         conn.commit()
         cur.close()
@@ -94,7 +94,7 @@ class PurchasedStock(Resource):
         return jsonify(purchasedStock)
 
 
-api.add_resource(PurchasedStock, '/api/purchased')
+api.add_resource(PurchasedStock, '/api/purchased/<userId>')
 
 
 class SumOfPurchasedStock(Resource):
