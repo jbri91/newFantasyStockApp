@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useImperativeHandle, useState } from "react";
 import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
@@ -7,6 +7,7 @@ function ReviewOrder(props) {
   const { stockId } = props;
   const { setQuantity } = props;
   const { purchasedStocks } = props;
+  const { userId } = props;
   const [shares, setShares] = useState([]);
 
   useEffect(() => {
@@ -18,7 +19,7 @@ function ReviewOrder(props) {
   });
 
 
-
+console.log(parseInt(userId))
   function handlePlaceOrder() {
     if (selected === "Buy") {
       if (props.stockSum > props.buyingPower) {
@@ -35,6 +36,7 @@ function ReviewOrder(props) {
             percentage_change: props.percentageChange,
             date: props.date,
             shares: quantity,
+            userId: parseInt(userId)
           }),
         };
         fetch("/api/buystock", requestOptions)

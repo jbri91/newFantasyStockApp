@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
-function SummaryPage() {
+function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
@@ -21,12 +21,9 @@ function SummaryPage() {
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
-  
+  const { userId } = props;
   const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
-  // useEffect(() => {
-  //   setProfitDebt((accountValue - buyingPower).toFixed(2));
-  // }, []);
-
+ 
   useEffect(() => {
     fetch("/api/sum")
       .then((res) => res.json())
@@ -221,6 +218,7 @@ function SummaryPage() {
           stockId={stockId}
           buyingPower={buyingPower}
           setBuyingPower={setBuyingPower}
+          userId={userId}
         />
       </div>
     </div>

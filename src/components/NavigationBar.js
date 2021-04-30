@@ -7,6 +7,8 @@ import { NavLink } from "react-router-dom";
 function NavigationBar(props) {
   let { setAuthentication } = props;
   let { authentication } = props;
+  const { setUserId } = props;
+  const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,12 +40,14 @@ one upperCase, more than 6 characters
     };
     fetch("/api/username", requestOptions)
       .then((res) => res.json())
-      .then((data) => setAuthentication(data));
+      .then((data) => setAuthentication(data[1]) & setUserId(data[0]));
   };
 
   let handleAuthentication = () => {
     setAuthentication(false);
   };
+console.log(authentication)
+console.log(userId)
 
   return (
     <div style={{ marginBottom: "70px" }}>

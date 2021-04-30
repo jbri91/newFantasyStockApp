@@ -153,16 +153,17 @@ class AddStocksToTable(Resource):
         percentage_change = json_data['percentage_change']
         date = json_data['date']
         shares = json_data['shares']
+        userId = json_data['userId']
         cur.execute(
-            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares) VALUES(%s, %s, %s, %s, %s, %s, %s)",
+            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
             (symbol, stockName, price, day_change, percentage_change, date,
-             shares))
+             shares, userId))
         conn.commit()
         print('Records Inserted....')
         cur.close()
         conn.close()
         return jsonify(symbol, stockName, price, day_change, percentage_change,
-                       date, shares)
+                       date, shares, userId)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
@@ -363,18 +364,41 @@ class ValidateCredentials(Resource):
         usernameCredential = json_data['usernameCredential']
         password = json_data['password']
         cur.execute(
-            "SELECT username, password FROM user_credentials WHERE username = %s AND password = %s",
+            "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
             (usernameCredential, password,))
         account = cur.fetchone()
+        print(account)
         conn.commit()
         cur.close()
         conn.close()
         if account:
-            return True
+            return jsonify(account, True)
         else:
             return  False
 
 
 api.add_resource(ValidateCredentials, '/api/username')
+
+# class UserId(Resource):
+#     def get(self):
+#         conn = psycopg2.connect(dbname='stock_application',
+#                                 user='postgres',
+#                                 password='databasePassword',
+#                                 host='localhost')
+#         cur = conn.cursor()
+#         json_data = request.get_json()
+#         usernameCredential = json_data['usernameCredential']
+#         password = json_data['password']
+#         cur.execute(
+#             "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
+#             (usernameCredential, password,))
+#         account = cur.fetchone()
+#         conn.commit()
+#         cur.close()
+#         conn.close()
+#         return jsonify(account)
+
+# api.add_resource(UserId, '/userid/stocks')
+
 
 app.run(debug=True)

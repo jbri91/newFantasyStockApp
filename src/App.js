@@ -10,7 +10,7 @@ import CreateAccount from "./components/CreateAccount";
 
 function App() {
   let [authentication, setAuthentication] = useState("");
-
+  const [userId, setUserId] = useState("");
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
@@ -45,6 +45,8 @@ function App() {
           <NavigationBar
             setAuthentication={setAuthentication}
             authentication={authentication}
+            setUserId={setUserId}
+            userId={userId}
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
@@ -52,7 +54,7 @@ function App() {
               <ReportPage />
             </PrivateRoute>
             <PrivateRoute path="/summary">
-              <SummaryPage />
+              <SummaryPage userId={userId} />
             </PrivateRoute>
             <Route path="/createAccount" component={CreateAccount} />
           </Switch>
