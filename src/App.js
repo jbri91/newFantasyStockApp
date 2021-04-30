@@ -51,7 +51,7 @@ function App() {
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">
-              <ReportPage />
+              <ReportPage userId={userId} />
             </PrivateRoute>
             <PrivateRoute path="/summary">
               <SummaryPage userId={userId} />

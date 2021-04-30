@@ -1,30 +1,31 @@
 import React, { useEffect, useState } from "react";
-function ReportPage() {
+function ReportPage(props) {
   const [allSymbols, setAllSymbols] = useState([]);
   const [numberShares, setNumberShares] = useState([]);
   const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
   const [stockReport, setStockReport] = useState([])
+  const { userId } = props;
 
   useEffect(() => {
-       fetch("/api/allsymbols")
+       fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => setAllSymbols(data))
       .catch(error => console.log(error));
-      fetch("/api/shares")
+      fetch(`/api/shares/${userId}`)
       .then((res) => res.json())
       .then((data) => setNumberShares(data))
       .catch(error => console.log(error));
-      fetch("/api/invested")
+      fetch(`/api/invested/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalInvested(data))
       .catch(error => console.log(error));
-      fetch("/api/totalPortfolio")
+      fetch(`/api/totalPortfolio/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data))
       .catch(error => console.log(error));
 
-      fetch('/api/stockreport')
+      fetch(`/api/stockreport/${userId}`)
       .then(res => res.json())
       .then(data => setStockReport(data))
       .catch(error => console.log(error)) 
@@ -42,27 +43,28 @@ function ReportPage() {
       headers: {'Content-Type': 'application/json' },
       body: JSON.stringify({
         stock_symbol: e.target.id,
+        userId: parseInt(userId)
       })
     };
     fetch('/api/deleteall', requestOptions)
     .then( res => {
-      fetch("/api/allsymbols")
+      fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => setAllSymbols(data))
       .catch(error => console.log(error));
-      fetch('/api/stockreport')
+      fetch(`/api/stockreport/${userId}`)
       .then(res => res.json())
       .then(data => setStockReport(data))
       .catch(error => console.log(error)) 
-      fetch("/api/shares")
+      fetch(`/api/shares/${userId}`)
       .then((res) => res.json())
       .then((data) => setNumberShares(data))
       .catch(error => console.log(error));
-      fetch("/api/invested")
+      fetch(`/api/invested/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalInvested(data))
       .catch(error => console.log(error));
-      fetch("/api/totalPortfolio")
+      fetch(`/api/totalPortfolio/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data))
       .catch(error => console.log(error));

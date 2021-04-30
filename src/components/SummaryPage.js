@@ -25,7 +25,7 @@ function SummaryPage(props) {
   const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
  
   useEffect(() => {
-    fetch("/api/sum")
+    fetch(`/api/sum/${userId}`)
       .then((res) => res.json())
       .then((data) => setSumofPurchasedStocks(data));
     fetch("/api/tesla")
@@ -44,7 +44,7 @@ function SummaryPage(props) {
       .then((res) => res.json())
       .then((data) => setApple(data))
       .catch((error) => console.log(error));
-    fetch("/api/sumofallstockspurchased")
+    fetch(`/api/sumofallstockspurchased/${userId}`)
       .then((res) => res.json())
       .then((data) => setSumOfAllStocksPurchased(data))
       .catch((error) => console.log(error));
@@ -56,7 +56,7 @@ function SummaryPage(props) {
     setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
   }, []);
 
-
+console.log(sumOfAllStocksPurchased)
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }

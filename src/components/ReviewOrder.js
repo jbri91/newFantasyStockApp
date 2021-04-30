@@ -1,5 +1,4 @@
 import React, { useEffect, useImperativeHandle, useState } from "react";
-import { Alert } from "react-bootstrap";
 
 function ReviewOrder(props) {
   const { selected } = props;
@@ -42,7 +41,7 @@ console.log(parseInt(userId))
         fetch("/api/buystock", requestOptions)
           .then((res) => res.json())
           .then((data) =>
-          fetch("/api/purchased")
+          fetch(`/api/purchased/${userId}`)
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error)));
@@ -67,7 +66,7 @@ console.log(parseInt(userId))
           .then((data) => setQuantity(data))
           .catch((error) => console.log(error));
 
-        fetch("/api/purchased")
+        fetch(`/api/purchased/${userId}`)
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
           .catch((error) => console.log(error));
@@ -80,7 +79,7 @@ console.log(parseInt(userId))
           }),
         };
         fetch("/api/deleterow", requestOptions).then(() =>
-          fetch("/api/purchased")
+          fetch(`/api/purchased/${userId}`)
             .then((res) => res.json())
             .then((data) => props.setPurchasedStocks(data))
             .catch((error) => console.log(error))
@@ -88,10 +87,6 @@ console.log(parseInt(userId))
       }
       props.setBuyingPower(props.buyingPower + props.stockSum);
     }
-    // fetch("/api/purchased")
-    //   .then((res) => res.json())
-    //   .then((data) => props.setPurchasedStocks(data))
-    //   .catch((error) => console.log(error));
   }
 
   return (

@@ -86,7 +86,8 @@ class PurchasedStock(Resource):
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s', (userId, ))
+        cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s',
+                    (userId, ))
         purchasedStock = cur.fetchall()
         conn.commit()
         cur.close()
@@ -98,13 +99,15 @@ api.add_resource(PurchasedStock, '/api/purchased/<userId>')
 
 
 class SumOfPurchasedStock(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute('SELECT SUM(price) FROM purchased_stock')
+        cur.execute(
+            'SELECT SUM(price) FROM purchased_stock WHERE user_id = %s',
+            (userId, ))
         sum = cur.fetchall()
         conn.commit()
         cur.close()
@@ -112,7 +115,7 @@ class SumOfPurchasedStock(Resource):
         return jsonify(sum)
 
 
-api.add_resource(SumOfPurchasedStock, '/api/sum')
+api.add_resource(SumOfPurchasedStock, '/api/sum/<userId>')
 
 
 class UserCredentials(Resource):
@@ -194,15 +197,15 @@ api.add_resource(DeleteRow, '/api/deleterow')
 
 
 class AllSymbols(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            'SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock GROUP BY symbol, price) AS symbol_name'
-        )
+            'SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price) AS symbol_name',
+            (userId, ))
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -210,19 +213,19 @@ class AllSymbols(Resource):
         return jsonify(symbols)
 
 
-api.add_resource(AllSymbols, '/api/allsymbols')
+api.add_resource(AllSymbols, '/api/allsymbols/<userId>')
 
 
 class StockReport(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            'SELECT symbol, SUM(shares), price FROM purchased_stock GROUP BY symbol, price;'
-        )
+            'SELECT symbol, SUM(shares), price FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price, user_id;',
+            (userId, ))
         symbols = cur.fetchall()
         conn.commit()
         cur.close()
@@ -230,19 +233,19 @@ class StockReport(Resource):
         return jsonify(symbols)
 
 
-api.add_resource(StockReport, '/api/stockreport')
+api.add_resource(StockReport, '/api/stockreport/<userId>')
 
 
 class NumberOfShares(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            "SELECT SUM(shares), symbol FROM purchased_stock GROUP BY symbol, price"
-        )
+            "SELECT SUM(shares), symbol FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price",
+            (userId, ))
         shares = cur.fetchall()
         conn.commit()
         cur.close()
@@ -250,19 +253,19 @@ class NumberOfShares(Resource):
         return jsonify(shares)
 
 
-api.add_resource(NumberOfShares, '/api/shares')
+api.add_resource(NumberOfShares, '/api/shares/<userId>')
 
 
 class TotalInvested(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            "SELECT SUM(shares), price FROM purchased_stock GROUP BY symbol, price"
-        )
+            "SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY symbol, price",
+            (userId, ))
         invested = cur.fetchall()
         conn.commit()
         cur.close()
@@ -270,19 +273,19 @@ class TotalInvested(Resource):
         return jsonify(invested)
 
 
-api.add_resource(TotalInvested, '/api/invested')
+api.add_resource(TotalInvested, '/api/invested/<userId>')
 
 
 class SumOfAllStocksPurchased(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            "SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock) AS x"
-        )
+            "SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x",
+            (userId, ))
         sum = cur.fetchall()
         conn.commit()
         cur.close()
@@ -290,17 +293,20 @@ class SumOfAllStocksPurchased(Resource):
         return jsonify(sum)
 
 
-api.add_resource(SumOfAllStocksPurchased, '/api/sumofallstockspurchased')
+api.add_resource(SumOfAllStocksPurchased,
+                 '/api/sumofallstockspurchased/<userId>')
 
 
 class TotalPortfolio(Resource):
-    def get(self):
+    def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
                                 password='databasePassword',
                                 host='localhost')
         cur = conn.cursor()
-        cur.execute("SELECT SUM(price) FROM purchased_stock")
+        cur.execute(
+            "SELECT SUM(price) FROM purchased_stock WHERE user_id = %s",
+            (userId, ))
         totalPortfolio = cur.fetchall()
         conn.commit()
         cur.close()
@@ -308,7 +314,7 @@ class TotalPortfolio(Resource):
         return jsonify(totalPortfolio)
 
 
-api.add_resource(TotalPortfolio, '/api/totalPortfolio')
+api.add_resource(TotalPortfolio, '/api/totalPortfolio/<userId>')
 
 
 class DeleteAllStocks(Resource):
@@ -320,13 +326,14 @@ class DeleteAllStocks(Resource):
         cur = conn.cursor()
         json_data = request.get_json()
         stock_symbol = json_data['stock_symbol']
-        cur.execute('DELETE FROM purchased_stock WHERE symbol = %s',
-                    (stock_symbol, ))
-
+        userId = json_data['userId']
+        cur.execute(
+            'DELETE FROM purchased_stock WHERE symbol = %s AND user_id = %s',
+            (stock_symbol, userId))
         conn.commit()
         cur.close()
         print('Deleted')
-        return jsonify(stock_symbol)
+        return jsonify(stock_symbol, userId)
 
 
 api.add_resource(DeleteAllStocks, '/api/deleteall')
@@ -365,7 +372,10 @@ class ValidateCredentials(Resource):
         password = json_data['password']
         cur.execute(
             "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
-            (usernameCredential, password,))
+            (
+                usernameCredential,
+                password,
+            ))
         account = cur.fetchone()
         print(account)
         conn.commit()
@@ -374,7 +384,7 @@ class ValidateCredentials(Resource):
         if account:
             return jsonify(account, True)
         else:
-            return  False
+            return False
 
 
 api.add_resource(ValidateCredentials, '/api/username')
@@ -399,6 +409,5 @@ api.add_resource(ValidateCredentials, '/api/username')
 #         return jsonify(account)
 
 # api.add_resource(UserId, '/userid/stocks')
-
 
 app.run(debug=True)
