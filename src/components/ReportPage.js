@@ -43,7 +43,8 @@ function ReportPage(props) {
         userId: parseInt(userId),
       }),
     };
-    fetch("/api/deleteall", requestOptions).then((res) => {
+    fetch("/api/deleteall", requestOptions)
+    .then((res) => {
       fetch(`/api/allsymbols/${userId}`)
         .then((res) => res.json())
         .then((data) => setAllSymbols(data))
@@ -91,6 +92,9 @@ function ReportPage(props) {
           </tr>
         );
       }
+      
+
+
     });
   }
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useImperativeHandle, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function ReviewOrder(props) {
   const { selected } = props;
@@ -21,6 +21,15 @@ function ReviewOrder(props) {
 
   console.log(parseInt(userId));
   function handlePlaceOrder() {
+    let boughtStock = buyingPower - props.stockSum;
+        const putOptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+            boughtStock: boughtStock,
+          }),
+        };
     if (selected === "Buy") {
       if (props.stockSum > buyingPower) {
         alert("You do not have enough buy power!");
@@ -46,31 +55,23 @@ function ReviewOrder(props) {
               .then((res) => res.json())
               .then((data) => props.setPurchasedStocks(data))
               .catch((error) => console.log(error))
-          );
-
-        let boughtStock = buyingPower - props.stockSum;
-        console.log(boughtStock, "stockSum", props.stockSum);
-        const putOptions = {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-            boughtStock: boughtStock,
-          }),
-        };
-        fetch("/api/boughtStock", putOptions).then(
-          fetch("/api/userbalance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: userId,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => setBuyingPower(data))
-            .catch((error) => console.log(error))
-        );
-        // props.setBuyingPower(props.buyingPower - props.stockSum);
+          )
+              fetch("/api/boughtStock", putOptions).then(
+                (res) => res.json())
+                .then(data => 
+                fetch("/api/userbalance", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    userId: userId,
+                  }),
+                })
+                  .then((res) => res.json())
+                  .then((data) => setBuyingPower(data))
+                  .catch((error) => console.log(error))
+              )
+          
+         
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
@@ -107,7 +108,29 @@ function ReviewOrder(props) {
             .catch((error) => console.log(error))
         );
       }
-      props.setBuyingPower(props.buyingPower + props.stockSum);
+
+      let sellingStock = buyingPower + props.stockSum; 
+        fetch("/api/boughtstock", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+            boughtStock: sellingStock,
+          }),
+        }).then(res => 
+          fetch("/api/userbalance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: userId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => setBuyingPower(data))
+            .catch((error) => console.log(error))
+        );
+      
+      // props.setBuyingPower(props.buyingPower + props.stockSum);
     }
   }
 
