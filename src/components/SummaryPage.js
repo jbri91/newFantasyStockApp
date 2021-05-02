@@ -22,7 +22,7 @@ function SummaryPage(props) {
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
   const { userId } = props;
-  const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
+  // const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
  
   useEffect(() => {
     fetch(`/api/sum/${userId}`)
@@ -52,11 +52,21 @@ function SummaryPage(props) {
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-    setBuyingPower(20000);
+
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({
+        userId: userId
+      }),
+    };
+    fetch('/api/userbalance', requestOptions)
+    .then(res => res.json())
+    .then(data => setBuyingPower(data))
     setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
   }, []);
 
-console.log(sumOfAllStocksPurchased)
+
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
@@ -108,7 +118,7 @@ console.log(sumOfAllStocksPurchased)
         }}
       >
         <h3>
-          Buying Power: ${updatedBalance}
+          Buying Power: ${buyingPower}
         </h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>

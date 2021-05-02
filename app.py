@@ -11,12 +11,6 @@ api = Api(app)
 
 class SearchStock(Resource):
     def get(self, stock):
-        # headers = {
-
-        #     'token': 'pk_75972e634de441d4a997ed43057a5221',
-        #     'Accept': 'application.json',
-        #     'Content-Type': 'application/json'
-        # }
         searchStock = requests.get(
             'https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
             .format(stock)).json()
@@ -388,5 +382,48 @@ class ValidateCredentials(Resource):
 
 
 api.add_resource(ValidateCredentials, '/api/username')
+
+
+class UserBalance(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        userId = json_data['userId']
+        cur.execute(
+            'SELECT user_balance FROM user_credentials WHERE user_id = %s',
+            (userId))
+        balance = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(balance)
+
+
+api.add_resource(UserBalance, '/api/userbalance')
+
+
+class UpdateBalance(Resource):
+    def put(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        userId = json_data['userId']
+        bought_stock = json_data['boughtStock']
+        cur.execute(
+            'UPDATE user_credentials SET user_balance = %s WHERE user_id = %s',
+            (bought_stock, userId))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+api.add_resource(UpdateBalance, '/api/boughtStock')
 
 app.run(debug=True)

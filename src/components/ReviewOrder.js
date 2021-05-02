@@ -7,6 +7,8 @@ function ReviewOrder(props) {
   const { setQuantity } = props;
   const { purchasedStocks } = props;
   const { userId } = props;
+  const { buyingPower } = props;
+  const { setBuyingPower } = props;
   const [shares, setShares] = useState([]);
 
   useEffect(() => {
@@ -17,11 +19,10 @@ function ReviewOrder(props) {
     }
   });
 
-
-console.log(parseInt(userId))
+  console.log(parseInt(userId));
   function handlePlaceOrder() {
     if (selected === "Buy") {
-      if (props.stockSum > props.buyingPower) {
+      if (props.stockSum > buyingPower) {
         alert("You do not have enough buy power!");
       } else {
         const requestOptions = {
@@ -35,20 +36,41 @@ console.log(parseInt(userId))
             percentage_change: props.percentageChange,
             date: props.date,
             shares: quantity,
-            userId: parseInt(userId)
+            userId: parseInt(userId),
           }),
         };
         fetch("/api/buystock", requestOptions)
           .then((res) => res.json())
           .then((data) =>
-          fetch(`/api/purchased/${userId}`)
-          .then((res) => res.json())
-          .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error)));
+            fetch(`/api/purchased/${userId}`)
+              .then((res) => res.json())
+              .then((data) => props.setPurchasedStocks(data))
+              .catch((error) => console.log(error))
+          );
 
-       
-
-        props.setBuyingPower(props.buyingPower - props.stockSum);
+        let boughtStock = buyingPower - props.stockSum;
+        console.log(boughtStock, "stockSum", props.stockSum);
+        const putOptions = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+            boughtStock: boughtStock,
+          }),
+        };
+        fetch("/api/boughtStock", putOptions).then(
+          fetch("/api/userbalance", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: userId,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => setBuyingPower(data))
+            .catch((error) => console.log(error))
+        );
+        // props.setBuyingPower(props.buyingPower - props.stockSum);
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
