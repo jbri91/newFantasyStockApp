@@ -177,12 +177,9 @@ class DeleteRow(Resource):
         stock_id = json_data['stock_id']
         cur.execute('DELETE FROM purchased_stock WHERE stock_id = %s',
                     (stock_id, ))
-        rows_deleted = cur.rowcount
-        print(rows_deleted)
         conn.commit()
         cur.close()
-        print('Deleted')
-        return jsonify(stock_id)
+        conn.close()
 
 
 api.add_resource(DeleteRow, '/api/deleterow')
