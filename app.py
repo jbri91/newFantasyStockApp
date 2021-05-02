@@ -424,26 +424,3 @@ class UpdateBalance(Resource):
 api.add_resource(UpdateBalance, '/api/boughtstock')
 
 app.run(debug=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

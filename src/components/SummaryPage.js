@@ -62,7 +62,7 @@ function SummaryPage(props) {
     };
     fetch('/api/userbalance', requestOptions)
     .then(res => res.json())
-    .then(data => setBuyingPower(data))
+    .then(data => setBuyingPower(parseFloat(data)))
     setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
   }, []);
 
