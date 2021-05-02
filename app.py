@@ -424,6 +424,29 @@ class UpdateBalance(Resource):
         conn.close()
 
 
-api.add_resource(UpdateBalance, '/api/boughtStock')
+api.add_resource(UpdateBalance, '/api/boughtstock')
 
 app.run(debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
