@@ -323,11 +323,35 @@ class DeleteAllStocks(Resource):
             (stock_symbol, userId))
         conn.commit()
         cur.close()
+        conn.close()
         print('Deleted')
         return jsonify(stock_symbol, userId)
 
 
 api.add_resource(DeleteAllStocks, '/api/deleteall')
+
+
+class InvestedTotal(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password='databasePassword',
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        stock_symbol = json_data['stock_symbol']
+        userId = json_data['userId']
+        cur.execute(
+            "SELECT SUM(shares*price)  AS total_price FROM purchased_stock WHERE symbol = %s AND user_id = %s GROUP BY symbol;",
+            (stock_symbol, userId))
+        total = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(total)
+
+
+api.add_resource(InvestedTotal, '/api/investedtotal')
 
 
 class UpdateStocks(Resource):

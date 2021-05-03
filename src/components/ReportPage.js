@@ -17,10 +17,6 @@ function ReportPage(props) {
       .then((res) => res.json())
       .then((data) => setNumberShares(data))
       .catch((error) => console.log(error));
-    fetch(`/api/invested/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setTotalInvested(data))
-      .catch((error) => console.log(error));
     fetch(`/api/totalPortfolio/${userId}`)
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data))
@@ -43,10 +39,26 @@ function ReportPage(props) {
       .catch((error) => console.log(error));
   }, []);
 
-  console.log(allSymbols);
-  console.log("Stock Report", stockReport);
   function handleDelete(e) {
-    console.log(e.target.id);
+    // fetch('/api/investedtotal', {
+    //   method: 'POST',
+    //   headers: {'Content-Type':'application/json'},
+    //   body: JSON.stringify({
+    //     userId: parseInt(userId),
+    //     stock_symbol: e.target.id,
+    //   })
+    // }).then(res => res.json())
+    // .then(data => setTotalInvested(parseInt(data)))
+    // fetch('/api/boughtstock', {
+    //   method: 'PUT',
+    //   headers: {'Content-Type':'application/json'},
+    //   body: JSON.stringify({
+    //     userId: parseInt(userId),
+    //     boughtStock: totalInvested,
+    //   })
+    // })
+
+
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -68,30 +80,15 @@ function ReportPage(props) {
         .then((res) => res.json())
         .then((data) => setNumberShares(data))
         .catch((error) => console.log(error));
-      fetch(`/api/invested/${userId}`)
-        .then((res) => res.json())
-        .then((data) => setTotalInvested(data))
-        .catch((error) => console.log(error));
       fetch(`/api/totalPortfolio/${userId}`)
         .then((res) => res.json())
         .then((data) => setTotalPortfolioSum(data))
         .catch((error) => console.log(error));
 
+        
+        
       let stockRows = [];
       for (let i = 0; i < numberShares.length; i++) {
-        const stockDeleted =
-          parseInt(buyingPower) + parseInt((stockReport[i][1] * totalInvested[i][1]).toFixed(2));
-        console.log(stockDeleted);
-        const deleteAll = {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            bought_stock: stockDeleted,
-            userId: userId,
-          }),
-        };
-        fetch("/api/boughtstock", deleteAll);
-       
         stockRows.push(
           <tr key={i}>
             <td> {stockReport[i][0]} </td>
