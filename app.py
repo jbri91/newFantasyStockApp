@@ -342,7 +342,7 @@ class InvestedTotal(Resource):
         stock_symbol = json_data['stock_symbol']
         userId = json_data['userId']
         cur.execute(
-            "SELECT SUM(shares*price)  AS total_price FROM purchased_stock WHERE symbol = %s AND user_id = %s GROUP BY symbol;",
+            "SELECT SUM(shares*price) FROM purchased_stock WHERE symbol != %s AND user_id = %s;",
             (stock_symbol, userId))
         total = cur.fetchone()
         conn.commit()

@@ -40,25 +40,6 @@ function ReportPage(props) {
   }, []);
 
   function handleDelete(e) {
-    // fetch('/api/investedtotal', {
-    //   method: 'POST',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify({
-    //     userId: parseInt(userId),
-    //     stock_symbol: e.target.id,
-    //   })
-    // }).then(res => res.json())
-    // .then(data => setTotalInvested(parseInt(data)))
-    // fetch('/api/boughtstock', {
-    //   method: 'PUT',
-    //   headers: {'Content-Type':'application/json'},
-    //   body: JSON.stringify({
-    //     userId: parseInt(userId),
-    //     boughtStock: totalInvested,
-    //   })
-    // })
-
-
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
