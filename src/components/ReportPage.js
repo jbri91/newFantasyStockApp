@@ -6,6 +6,7 @@ function ReportPage(props) {
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
   const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
+  const [buyingPower, setBuyingPower] = useState("");
 
   useEffect(() => {
     fetch(`/api/allsymbols/${userId}`)
@@ -29,10 +30,21 @@ function ReportPage(props) {
       .then((res) => res.json())
       .then((data) => setStockReport(data))
       .catch((error) => console.log(error));
+
+    fetch("/api/userbalance", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setBuyingPower(data))
+      .catch((error) => console.log(error));
   }, []);
 
-  console.log(totalInvested);
-  console.log(totalPortfolioSum);
+  console.log(allSymbols);
+  console.log("Stock Report", stockReport);
   function handleDelete(e) {
     console.log(e.target.id);
     const requestOptions = {
@@ -43,8 +55,7 @@ function ReportPage(props) {
         userId: parseInt(userId),
       }),
     };
-    fetch("/api/deleteall", requestOptions)
-    .then((res) => {
+    fetch("/api/deleteall", requestOptions).then((res) => {
       fetch(`/api/allsymbols/${userId}`)
         .then((res) => res.json())
         .then((data) => setAllSymbols(data))
@@ -68,20 +79,33 @@ function ReportPage(props) {
 
       let stockRows = [];
       for (let i = 0; i < numberShares.length; i++) {
+        const stockDeleted =
+          parseInt(buyingPower) + parseInt((stockReport[i][1] * totalInvested[i][1]).toFixed(2));
+        console.log(stockDeleted);
+        const deleteAll = {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bought_stock: stockDeleted,
+            userId: userId,
+          }),
+        };
+        fetch("/api/boughtstock", deleteAll);
+       
         stockRows.push(
           <tr key={i}>
             <td> {stockReport[i][0]} </td>
             <td> {stockReport[i][1]} </td>
-            <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
+            <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
             <td>
               {" "}
-              {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(
+              {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(
                 2
               )}%{" "}
             </td>
             <td>
               <button
-                id={allSymbols[i]}
+                id={stockReport[i][0]}
                 type="button"
                 onClick={handleDelete}
                 className="btn btn-secondary"
@@ -92,27 +116,23 @@ function ReportPage(props) {
           </tr>
         );
       }
-      
-
-
     });
   }
 
   let stockRows = [];
-
   for (let i = 0; i < stockReport.length; i++) {
     stockRows.push(
       <tr key={i}>
         <td> {stockReport[i][0]} </td>
         <td> {stockReport[i][1]} </td>
-        <td> ${(numberShares[i][0] * totalInvested[i][1]).toFixed(2)} </td>
+        <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
         <td>
           {" "}
-          {((totalInvested[i][1] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
+          {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
         </td>
         <td>
           <button
-            id={allSymbols[i]}
+            id={stockReport[i][0]}
             type="button"
             onClick={handleDelete}
             className="btn btn-secondary"

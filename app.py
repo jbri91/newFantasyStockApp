@@ -255,7 +255,7 @@ class TotalInvested(Resource):
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            "SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY symbol, price",
+            "SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY price",
             (userId, ))
         invested = cur.fetchall()
         conn.commit()
