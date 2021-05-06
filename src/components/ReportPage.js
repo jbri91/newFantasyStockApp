@@ -72,14 +72,24 @@ function ReportPage(props) {
         let amountInvested = -1;
         for(let i =0; i < stockReport.length; i++){
           if(stockReport[i][0] == e.target.id) {
-            amountInvested = stockReport[i][2];
+            amountInvested = stockReport[i][2] * stockReport[i][1];
             break;
           }
         }
-        let updatedBalance = buyingPower + amountInvested
+        console.log(stockReport)
+        console.log(amountInvested)
+        let updatedBalance = Number(buyingPower) + amountInvested
         console.log(amountInvested, updatedBalance)
-        setBuyingPower(updatedBalance)
-        
+        // setBuyingPower(updatedBalance)
+        fetch('/api/boughtstock', {
+          method: 'PUT',
+          headers: { 'Content-Type' : 'application/json' },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+            boughtStock: updatedBalance.toFixed(2),
+          })
+        })
+       
         // Add to buyingPower
         // Update buying Power in database for User
         
@@ -112,16 +122,6 @@ function ReportPage(props) {
     });
   }
 
-  useEffect(() => {
-    fetch('/api/boughtstock', {
-      method: 'PUT',
-      headers: { 'Content-Type' : 'application/json' },
-      body: JSON.stringify({
-        userId: parseInt(userId),
-        boughtStock: Number(buyingPower),
-      })
-    })
-  }, [buyingPower])
 
   let stockRows = [];
   for (let i = 0; i < stockReport.length; i++) {
