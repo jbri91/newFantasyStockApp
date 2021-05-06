@@ -66,7 +66,22 @@ function ReportPage(props) {
         .then((data) => setTotalPortfolioSum(data))
         .catch((error) => console.log(error));
 
+        // Total of deleted Symbol
+        console.log(e.target.id) 
+        // 'TSLA'
+        let amountInvested = -1;
+        for(let i =0; i < stockReport.length; i++){
+          if(stockReport[i][0] == e.target.id) {
+            amountInvested = stockReport[i][2];
+            break;
+          }
+        }
+        let updatedBalance = parseFloat(buyingPower) + amountInvested
+        console.log(amountInvested, updatedBalance)
+        setBuyingPower(updatedBalance)
         
+        // Add to buyingPower
+        // Update buying Power in database for User
         
       let stockRows = [];
       for (let i = 0; i < numberShares.length; i++) {
@@ -96,6 +111,17 @@ function ReportPage(props) {
       }
     });
   }
+
+  useEffect(() => {
+    fetch('/api/boughtstock', {
+      method: 'PUT',
+      headers: { 'Content-Type' : 'application/json' },
+      body: JSON.stringify({
+        userId: parseInt(userId),
+        boughtStock: parseFloat(buyingPower),
+      })
+    })
+  }, [buyingPower])
 
   let stockRows = [];
   for (let i = 0; i < stockReport.length; i++) {
