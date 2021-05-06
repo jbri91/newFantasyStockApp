@@ -2,15 +2,14 @@ import React from "react";
 import { Card } from "react-bootstrap";
 
 function StockCard(props) {
-  const {price} = props;
-  const {stockName} = props;
-  const {symbol} = props;
-  const {time} = props;
-  const {dayChange} = props;
-  const {percentChange} = props;
-  const {stockId} = props;
-  
-
+  const { price } = props;
+  const { stockName } = props;
+  const { symbol } = props;
+  const { time } = props;
+  const { dayChange } = props;
+  const { percentChange } = props;
+  const { stockId } = props;
+  const { shares } = props;
 
   function handleClick() {
     props.setPrice(price);
@@ -22,17 +21,17 @@ function StockCard(props) {
     props.setStockId(stockId);
   }
 
-  const greenStock={
-    fontSize: "12px", 
-    fontWeight: "bold", 
-    color: "green"
-  }
+  const greenStock = {
+    fontSize: "12px",
+    fontWeight: "bold",
+    color: "green",
+  };
 
-  const redStock={
-    fontSize: "12px", 
-    fontWeight: "bold", 
-    color: "red"
-  }
+  const redStock = {
+    fontSize: "12px",
+    fontWeight: "bold",
+    color: "red",
+  };
 
   return (
     <div>
@@ -115,9 +114,7 @@ function StockCard(props) {
                 {" "}
                 ${props.price}{" "}
               </Card.Text>
-              <Card.Text
-                style={ props.dayChange >= 0 ? greenStock : redStock }
-              >
+              <Card.Text style={props.dayChange >= 0 ? greenStock : redStock}>
                 {" "}
                 {props.dayChange} ({props.percentChange}%){" "}
               </Card.Text>
@@ -132,9 +129,12 @@ function StockCard(props) {
             }}
           >
             {props.time}
+            <span style={{ marginLeft: "100px" }}>
+              {shares ? shares + " Shares" : null}
+            </span>
           </Card.Text>
         </Card.Body>
-      </Card> 
+      </Card>
     </div>
   );
 }

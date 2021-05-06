@@ -5,13 +5,15 @@ function StockModal(props) {
   const [selected, setSelected] = useState("");
   const [quantity, setQuantity] = useState("");
   const [stockSum, setStockSum] = useState([]);
+  const { userId } = props;
+  console.log(userId)
 
   function handleStockSum() {
     if (quantity <= 0 || selected === "" || selected === 'Select') {
       console.log('Please Fill Out All Fields')
     } else {
-      let price = props.stockPrice;
-      setStockSum(price * quantity);
+      let price = props.stockPrice * quantity;
+      setStockSum(price);
     }
   }
 
@@ -98,13 +100,14 @@ function StockModal(props) {
         percentageChange={props.percentageChange}
         date={props.date}
         quantity={quantity}
+        setQuantity={setQuantity}
         selected={selected}
-        buyingPower={props.buyingPower}
-        sumofPurchasedStocks={props.sumofPurchasedStocks}
+        sumOfAllStocksPurchased={props.sumOfAllStocksPurchased}
         purchasedStocks={props.purchasedStocks}
         setPurchasedStocks={props.setPurchasedStocks}
         buyingPower = {props.buyingPower}
         setBuyingPower = {props.setBuyingPower}
+        userId={userId}
       />
     </div>
   );

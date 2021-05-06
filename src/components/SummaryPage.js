@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
-function SummaryPage() {
-  const [buyingPower, setBuyingPower] = useState(20000);
+function SummaryPage(props) {
+  const [buyingPower, setBuyingPower] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -20,65 +20,53 @@ function SummaryPage() {
   const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
-
-  
-
-  // useEffect(() => {
-  //   setProfitDebt((accountValue - buyingPower).toFixed(2));
-  // }, []);
+  const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
+  const { userId } = props;
+  // const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
 
   useEffect(() => {
-    fetch("/api/sum")
+    fetch(`/api/sum/${userId}`)
       .then((res) => res.json())
       .then((data) => setSumofPurchasedStocks(data));
-  }, []);
-
-  useEffect(() => {
     fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
     fetch("/api/amazon")
       .then((res) => res.json())
       .then((data) => setAmazon(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
     fetch("/api/microsoft")
       .then((res) => res.json())
       .then((data) => setMicrosoft(data))
       .catch((error) => console.log(error));
-  }, []);
-  useEffect(() => {
     fetch("/api/apple")
       .then((res) => res.json())
       .then((data) => setApple(data))
       .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    fetch("/api/purchased")
+    fetch(`/api/sumofallstockspurchased/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setSumOfAllStocksPurchased(data))
+      .catch((error) => console.log(error));
+    fetch(`/api/purchased/${userId}`)
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-  }, []);
 
-  useEffect(() => {
-    setAccountValue(
-      buyingPower + sumofPurchasedStocks
-    );
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId,
+      }),
+    };
+    fetch("/api/userbalance", requestOptions)
+      .then((res) => res.json())
+      .then((data) => setBuyingPower(data));
+    setAccountValue(20000 - sumOfAllStocksPurchased + sumOfAllStocksPurchased);
   }, []);
-
-  useEffect(() => {
-    setBuyingPower(buyingPower)
-  }, [])
 
   function handleSearch(e) {
-    console.log(e.target.value);
     setSearchStock(e.target.value);
   }
 
@@ -102,6 +90,7 @@ function SummaryPage() {
         dayChange={purchasedStocks[i][4]}
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
+        shares={purchasedStocks[i][7]}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
@@ -125,9 +114,9 @@ function SummaryPage() {
           position: "relative",
           top: "-70px",
           left: "-10px",
-        }} 
+        }}
       >
-        <h3>Buying Power: ${(buyingPower - sumofPurchasedStocks).toFixed(2)}</h3>
+        <h3>Buying Power: ${buyingPower}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
@@ -139,7 +128,7 @@ function SummaryPage() {
           <StockCard
             symbol={searchStock.symbol}
             stockName={searchStock.companyName}
-            price={searchStock.latestPrice}
+            price={searchStock.latestPrice.toFixed(2)}
             dayChange={searchStock.change}
             percentChange={searchStock.changePercent}
             time={searchStock.latestTime}
@@ -166,7 +155,9 @@ function SummaryPage() {
         <StockCard
           symbol={tesla.symbol}
           stockName={tesla.companyName}
-          price={tesla.latestPrice}
+          price={
+            tesla.latestPrice ? tesla.latestPrice.toFixed(2) : tesla.latestPrice
+          }
           dayChange={tesla.change}
           percentChange={tesla.changePercent}
           time={tesla.latestTime}
@@ -181,7 +172,11 @@ function SummaryPage() {
         <StockCard
           symbol={amazon.symbol}
           stockName={amazon.companyName}
-          price={amazon.latestPrice}
+          price={
+            amazon.latestPrice
+              ? amazon.latestPrice.toFixed(2)
+              : amazon.latestPrice
+          }
           dayChange={amazon.change}
           percentChange={amazon.changePercent}
           time={amazon.latestTime}
@@ -196,7 +191,9 @@ function SummaryPage() {
         <StockCard
           symbol={apple.symbol}
           stockName={apple.companyName}
-          price={apple.latestPrice}
+          price={
+            apple.latestPrice ? apple.latestPrice.toFixed(2) : apple.latestPrice
+          }
           dayChange={apple.change}
           percentChange={apple.changePercent}
           time={apple.latestTime}
@@ -211,7 +208,11 @@ function SummaryPage() {
         <StockCard
           symbol={microsoft.symbol}
           stockName={microsoft.companyName}
-          price={microsoft.latestPrice}
+          price={
+            microsoft.latestPrice
+              ? microsoft.latestPrice.toFixed(2)
+              : microsoft.latestPrice
+          }
           dayChange={microsoft.change}
           percentChange={microsoft.changePercent}
           time={microsoft.latestTime}
@@ -230,13 +231,13 @@ function SummaryPage() {
           dayChange={dayChange}
           date={date}
           percentageChange={percentageChange}
-          buyingPower={buyingPower}
-          sumofPurchasedStocks={sumofPurchasedStocks}
+          sumOfAllStocksPurchased={sumOfAllStocksPurchased}
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
-          buyingPower = {buyingPower}
-          setBuyingPower = {setBuyingPower}
+          buyingPower={buyingPower}
+          setBuyingPower={setBuyingPower}
+          userId={userId}
         />
       </div>
     </div>
