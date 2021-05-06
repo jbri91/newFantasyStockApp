@@ -74,6 +74,7 @@ console.log(userId)
             </NavLink>
           </div>
         </Nav>
+        <div style={{marginRight: '20px',}}>{authentication ? 'Welcome ' + usernameCredential : null}</div>
         {authentication ? (
           <button
             style={{ color: "black" }}
