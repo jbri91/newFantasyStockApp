@@ -23,7 +23,7 @@ function SummaryPage(props) {
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
   const { userId } = props;
   // const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
- 
+
   useEffect(() => {
     fetch(`/api/sum/${userId}`)
       .then((res) => res.json())
@@ -54,18 +54,17 @@ function SummaryPage(props) {
       .catch((error) => console.log(error));
 
     const requestOptions = {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId
+        userId: userId,
       }),
     };
-    fetch('/api/userbalance', requestOptions)
-    .then(res => res.json())
-    .then(data => setBuyingPower(parseFloat(data)))
-    setAccountValue((20000 - sumOfAllStocksPurchased) + sumOfAllStocksPurchased)
+    fetch("/api/userbalance", requestOptions)
+      .then((res) => res.json())
+      .then((data) => setBuyingPower(data));
+    setAccountValue(20000 - sumOfAllStocksPurchased + sumOfAllStocksPurchased);
   }, []);
-
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -117,9 +116,7 @@ function SummaryPage(props) {
           left: "-10px",
         }}
       >
-        <h3>
-          Buying Power: ${buyingPower}
-        </h3>
+        <h3>Buying Power: ${buyingPower}</h3>
         <h3>Account Value: ${accountValue}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
@@ -131,7 +128,7 @@ function SummaryPage(props) {
           <StockCard
             symbol={searchStock.symbol}
             stockName={searchStock.companyName}
-            price={searchStock.latestPrice}
+            price={searchStock.latestPrice.toFixed(2)}
             dayChange={searchStock.change}
             percentChange={searchStock.changePercent}
             time={searchStock.latestTime}
@@ -158,7 +155,9 @@ function SummaryPage(props) {
         <StockCard
           symbol={tesla.symbol}
           stockName={tesla.companyName}
-          price={tesla.latestPrice}
+          price={
+            tesla.latestPrice ? tesla.latestPrice.toFixed(2) : tesla.latestPrice
+          }
           dayChange={tesla.change}
           percentChange={tesla.changePercent}
           time={tesla.latestTime}
@@ -173,7 +172,11 @@ function SummaryPage(props) {
         <StockCard
           symbol={amazon.symbol}
           stockName={amazon.companyName}
-          price={amazon.latestPrice}
+          price={
+            amazon.latestPrice
+              ? amazon.latestPrice.toFixed(2)
+              : amazon.latestPrice
+          }
           dayChange={amazon.change}
           percentChange={amazon.changePercent}
           time={amazon.latestTime}
@@ -188,7 +191,9 @@ function SummaryPage(props) {
         <StockCard
           symbol={apple.symbol}
           stockName={apple.companyName}
-          price={apple.latestPrice}
+          price={
+            apple.latestPrice ? apple.latestPrice.toFixed(2) : apple.latestPrice
+          }
           dayChange={apple.change}
           percentChange={apple.changePercent}
           time={apple.latestTime}
@@ -203,7 +208,11 @@ function SummaryPage(props) {
         <StockCard
           symbol={microsoft.symbol}
           stockName={microsoft.companyName}
-          price={microsoft.latestPrice}
+          price={
+            microsoft.latestPrice
+              ? microsoft.latestPrice.toFixed(2)
+              : microsoft.latestPrice
+          }
           dayChange={microsoft.change}
           percentChange={microsoft.changePercent}
           time={microsoft.latestTime}

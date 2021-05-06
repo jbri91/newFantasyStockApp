@@ -12,8 +12,8 @@ function StockModal(props) {
     if (quantity <= 0 || selected === "" || selected === 'Select') {
       console.log('Please Fill Out All Fields')
     } else {
-      let price = props.stockPrice;
-      setStockSum(price * quantity);
+      let price = props.stockPrice * quantity;
+      setStockSum(price);
     }
   }
 

@@ -76,7 +76,7 @@ function ReportPage(props) {
             break;
           }
         }
-        let updatedBalance = parseFloat(buyingPower) + amountInvested
+        let updatedBalance = buyingPower + amountInvested
         console.log(amountInvested, updatedBalance)
         setBuyingPower(updatedBalance)
         
@@ -118,7 +118,7 @@ function ReportPage(props) {
       headers: { 'Content-Type' : 'application/json' },
       body: JSON.stringify({
         userId: parseInt(userId),
-        boughtStock: parseFloat(buyingPower),
+        boughtStock: Number(buyingPower),
       })
     })
   }, [buyingPower])

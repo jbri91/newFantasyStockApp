@@ -19,31 +19,24 @@ function ReviewOrder(props) {
     }
   });
 
-  console.log(parseInt(userId));
   function handlePlaceOrder() {
-    let boughtStock = parseFloat(buyingPower) - parseFloat(props.stockSum);
-    let sellingStock = parseFloat(buyingPower) + parseFloat(props.stockSum);
+    let boughtStock = buyingPower - props.stockSum;
+    let sellingStock = Number(buyingPower) + props.stockSum;
     const sellStock = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: parseInt(userId),
-        boughtStock: parseFloat(sellingStock),
+        boughtStock: sellingStock,
       }),
     };
-    const updateBalance = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: parseInt(userId),
-      }),
-    };
+
     const buyStock = {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: parseInt(userId),
-        boughtStock: parseFloat(boughtStock),
+        boughtStock: boughtStock.toFixed(2),
       }),
     };
 
@@ -144,6 +137,8 @@ function ReviewOrder(props) {
     }
   }
 
+  let boughtStock = buyingPower - props.stockSum;
+    let sellingStock = Number(buyingPower) + Number(props.stockSum);
   return (
     <div>
       <div
@@ -175,14 +170,8 @@ function ReviewOrder(props) {
                   {" "}
                   Remaining Buy Power: $
                   {props.selected === "Buy"
-                    ? (
-                        props.buyingPower -
-                        props.sumOfAllStocksPurchased -
-                        props.stockSum
-                      ).toFixed(2)
-                    : props.buyingPower -
-                      props.sumOfAllStocksPurchased +
-                      props.stockSum}
+                    ? boughtStock.toFixed(2)
+                    : sellingStock.toFixed(2)}
                 </p>
               </div>
             </div>
