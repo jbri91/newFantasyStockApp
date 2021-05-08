@@ -9,6 +9,9 @@ app = Flask(__name__)
 api = Api(app)
 
 
+
+
+
 class SearchStock(Resource):
     def get(self, stock):
         searchStock = requests.get(
@@ -25,6 +28,7 @@ class Tesla(Resource):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/TSLA/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
         ).json()
+        print(popular)
         return jsonify(popular)
 
 
