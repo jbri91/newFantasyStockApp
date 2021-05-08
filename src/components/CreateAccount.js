@@ -6,8 +6,8 @@ function CreateAccount() {
   const [error, setError] = useState("");
   const [passwordRequirements, setPasswordRequirements] = useState("");
   const [copyPassword, setCopyPassword] = useState("");
-  const [ noMatch, setNoMatch ] = useState('');
-  const [ fieldsCheck, setFieldsCheck ] = useState('')
+  const [noMatch, setNoMatch] = useState("");
+  const [fieldsCheck, setFieldsCheck] = useState("");
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -22,7 +22,7 @@ function CreateAccount() {
   }
 
   console.log(copyPassword);
- 
+
   function handleSubmit(e) {
     e.preventDefault();
     const requestOptions = {
@@ -37,30 +37,42 @@ function CreateAccount() {
     let checkPassword = password;
     let regex = new RegExp(/[A-Z]/ && /[0-9]/);
     let result = regex.test(checkPassword);
-    
+
     console.log(result);
-    if(username && password) {
-    if ((password.length > 8, result)) {
-      if (copyPassword == password) {
-        fetch("api/createaccount", requestOptions)
-          .then((res) => res.json())
-          .then((data) => console.log(data))
-          .catch((error) => setError(error));
-      } else{
-        setNoMatch(<p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>Password does not match</p>)
+    if (username && password) {
+      setFieldsCheck('')
+      if ((password.length > 8, result)) {
+        setNoMatch('')
+        setPasswordRequirements('')
+        if (copyPassword == password) {
+          setNoMatch('')
+          fetch("api/createaccount", requestOptions)
+            .then((res) => res.json())
+            .then((data) => console.log(data))
+            .catch((error) => setError(error));
+        } else {
+          setNoMatch(
+            <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+              Password does not match
+            </p>
+          );
+        }
+      } else {
+        setPasswordRequirements(
+          <ul style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+            <li>Password must be 8 or more characters</li>
+            <li>Password must have atleast one uppercase letter</li>
+            <li>Password must have atleast one Number</li>
+          </ul>
+        );
       }
     } else {
-      setPasswordRequirements(
-        <ul style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
-          <li>Password must be 8 or more characters</li>
-          <li>Password must have atleast one uppercase letter</li>
-          <li>Password must have atleast one Number</li>
-        </ul>
+      setFieldsCheck(
+        <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+          Please Fill In All Fields
+        </p>
       );
     }
-  } else {
-    setFieldsCheck(<p  style={{ fontSize: "15px", color: "red", marginRight: "30px" }} >Please Fill In All Fields</p>)
-  }
   }
 
   return (
