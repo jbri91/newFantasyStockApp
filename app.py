@@ -4,19 +4,17 @@ from flask_restful import Api, Resource, reqparse
 import psycopg2
 import simplejson as json
 import decimal
+import config
 
 app = Flask(__name__)
 api = Api(app)
 
 
-
-
-
 class SearchStock(Resource):
     def get(self, stock):
         searchStock = requests.get(
-            'https://cloud.iexapis.com/stable/stock/{}/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
-            .format(stock)).json()
+            'https://cloud.iexapis.com/stable/stock/{}/quote?token={}&period=annual'
+            .format(stock, SECRET_TOKEN)).json()
         return jsonify(searchStock)
 
 
@@ -26,8 +24,8 @@ api.add_resource(SearchStock, '/api/searchStock/<string:stock>')
 class Tesla(Resource):
     def get(self):
         popular = requests.get(
-            'https://cloud.iexapis.com/stable/stock/TSLA/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
-        ).json()
+            'https://cloud.iexapis.com/stable/stock/TSLA/quote?token={}&period=annual'
+        ).format(SECRET_TOKEN).json()
         print(popular)
         return jsonify(popular)
 
@@ -38,8 +36,8 @@ api.add_resource(Tesla, '/api/tesla')
 class Apple(Resource):
     def get(self):
         popular = requests.get(
-            'https://cloud.iexapis.com/stable/stock/AAPL/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
-        ).json()
+            'https://cloud.iexapis.com/stable/stock/AAPL/quote?token={}&period=annual'
+        ).format(SECRET_TOKEN).json()
         return jsonify(popular)
 
 
@@ -49,8 +47,8 @@ api.add_resource(Apple, '/api/apple')
 class Amazon(Resource):
     def get(self):
         popular = requests.get(
-            'https://cloud.iexapis.com/stable/stock/AMZN/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
-        ).json()
+            'https://cloud.iexapis.com/stable/stock/AMZN/quote?token={}&period=annual'
+        ).format(SECRET_TOKEN).json()
         return jsonify(popular)
 
 
@@ -60,15 +58,15 @@ api.add_resource(Amazon, '/api/amazon')
 class Microsoft(Resource):
     def get(self):
         popular = requests.get(
-            'https://cloud.iexapis.com/stable/stock/MSFT/quote?token=pk_75972e634de441d4a997ed43057a5221&period=annual'
-        ).json()
+            'https://cloud.iexapis.com/stable/stock/MSFT/quote?token={}&period=annual'
+        ).format(SECRET_TOKEN).json()
         return jsonify(popular)
 
 
 api.add_resource(Microsoft, '/api/microsoft')
 
 # # Connecting with Database
-# conn = psycopg2.connect(dbname='stock_application', user='postgres', password='databasePassword', host='localhost')
+# conn = psycopg2.connect(dbname='stock_application', user='postgres', password='DB_PASSWORD', host='localhost')
 # cur = conn.cursor()
 # cur.execute('SELECT * FROM purchased_stock;')
 # purchasedStock = cur.fetchall()
@@ -81,7 +79,7 @@ class PurchasedStock(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s',
@@ -100,7 +98,7 @@ class SumOfPurchasedStock(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -120,7 +118,7 @@ class UserCredentials(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -143,7 +141,7 @@ class AddStocksToTable(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -174,7 +172,7 @@ class DeleteRow(Resource):
     def delete(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -195,7 +193,7 @@ class AllSymbols(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -215,7 +213,7 @@ class StockReport(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -235,7 +233,7 @@ class NumberOfShares(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -255,7 +253,7 @@ class TotalInvested(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -275,7 +273,7 @@ class SumOfAllStocksPurchased(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -296,7 +294,7 @@ class TotalPortfolio(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
@@ -316,7 +314,7 @@ class DeleteAllStocks(Resource):
     def delete(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -339,7 +337,7 @@ class InvestedTotal(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -362,7 +360,7 @@ class UpdateStocks(Resource):
     def put(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -383,7 +381,7 @@ class ValidateCredentials(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -413,7 +411,7 @@ class UserBalance(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -435,7 +433,7 @@ class UpdateBalance(Resource):
     def put(self):
         conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
-                                password='databasePassword',
+                                password='DB_PASSWORD',
                                 host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
