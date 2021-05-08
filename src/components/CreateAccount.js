@@ -3,20 +3,26 @@ import React, { useEffect, useState } from "react";
 function CreateAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const [copyPassword, setCopyPassword] = useState('');
+  const [error, setError] = useState("");
+  const [passwordRequirements, setPasswordRequirements] = useState("");
+  const [copyPassword, setCopyPassword] = useState("");
+  const [ noMatch, setNoMatch ] = useState('');
+  const [ fieldsCheck, setFieldsCheck ] = useState('')
 
   function handleUsername(e) {
-      setUsername(e.target.value);
+    setUsername(e.target.value);
   }
 
   function handlePassword(e) {
     setPassword(e.target.value);
   }
 
-  // function handleCopyPassword(e) {
-  //     setCopyPassword(e.target.value)
-  // };
+  function handleCopyPassword(e) {
+    setCopyPassword(e.target.value);
+  }
 
+  console.log(copyPassword);
+ 
   function handleSubmit(e) {
     e.preventDefault();
     const requestOptions = {
@@ -27,10 +33,34 @@ function CreateAccount() {
         password: password,
       }),
     };
-    fetch("api/createaccount", requestOptions)
-      .then((res) => res.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.log('Username is already taken'));
+
+    let checkPassword = password;
+    let regex = new RegExp(/[A-Z]/ && /[0-9]/);
+    let result = regex.test(checkPassword);
+    
+    console.log(result);
+    if(username && password) {
+    if ((password.length > 8, result)) {
+      if (copyPassword == password) {
+        fetch("api/createaccount", requestOptions)
+          .then((res) => res.json())
+          .then((data) => console.log(data))
+          .catch((error) => setError(error));
+      } else{
+        setNoMatch(<p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>Password does not match</p>)
+      }
+    } else {
+      setPasswordRequirements(
+        <ul style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+          <li>Password must be 8 or more characters</li>
+          <li>Password must have atleast one uppercase letter</li>
+          <li>Password must have atleast one Number</li>
+        </ul>
+      );
+    }
+  } else {
+    setFieldsCheck(<p  style={{ fontSize: "15px", color: "red", marginRight: "30px" }} >Please Fill In All Fields</p>)
+  }
   }
 
   return (
@@ -48,12 +78,18 @@ function CreateAccount() {
           Create An Account
         </h1>
         <form onSubmit={handleSubmit}>
+          {fieldsCheck}
           <input
             className="form-control"
             onChange={handleUsername}
             style={{ marginBottom: "20px" }}
             placeholder="Username"
           />
+          {error ? (
+            <p style={{ fontSize: "15px", color: "red" }}>
+              Username is already taken
+            </p>
+          ) : null}
           <input
             className="form-control"
             onChange={handlePassword}
@@ -63,10 +99,13 @@ function CreateAccount() {
           />
           <input
             className="form-control"
+            onChange={handleCopyPassword}
             type="password"
             style={{ marginBottom: "20px" }}
-            placeholder="Re-type Password"
+            placeholder={"Re-type Password"}
           />
+          {noMatch}
+          {passwordRequirements}
           <button type="submit" className="btn btn-info">
             Create Account
           </button>
