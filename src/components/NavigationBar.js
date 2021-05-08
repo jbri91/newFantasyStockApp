@@ -20,12 +20,6 @@ function handleUsername(event) {
 function handlePassword(event) {
   setPassword(event.target.value);
 }
-/* 
-No repeated Username in database
-Must be able to Re-type password, one number, 
-one upperCase, more than 6 characters 
- */
-
 
 
 
@@ -46,8 +40,7 @@ one upperCase, more than 6 characters
   let handleAuthentication = () => {
     setAuthentication(false);
   };
-console.log(authentication)
-console.log(userId)
+
 
   return (
     <div style={{ marginBottom: "70px" }}>

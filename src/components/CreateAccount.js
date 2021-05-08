@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -40,16 +40,18 @@ function CreateAccount() {
 
     console.log(result);
     if (username && password) {
-      setFieldsCheck('')
+      setFieldsCheck("");
       if ((password.length > 8, result)) {
-        setNoMatch('')
-        setPasswordRequirements('')
+        setNoMatch("");
+        setPasswordRequirements("");
         if (copyPassword == password) {
-          setNoMatch('')
+          setNoMatch("");
           fetch("api/createaccount", requestOptions)
             .then((res) => res.json())
             .then((data) => console.log(data))
             .catch((error) => setError(error));
+
+          window.location.href = "/";
         } else {
           setNoMatch(
             <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
