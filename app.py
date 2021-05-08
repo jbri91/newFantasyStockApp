@@ -9,6 +9,8 @@ import config
 app = Flask(__name__)
 api = Api(app)
 
+SECRET_TOKEN=config.SECRET_TOKEN
+DB_PASSWORD=config.DB_PASSWORD
 
 class SearchStock(Resource):
     def get(self, stock):
