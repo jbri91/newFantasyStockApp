@@ -41,6 +41,7 @@ function handlePassword(event) {
     setAuthentication(false);
   };
 
+   console.log(authentication)
 
   return (
     <div style={{ marginBottom: "70px" }}>
