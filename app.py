@@ -13,6 +13,21 @@ SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
 
 
+class TEST(Resource):
+    def get(self):
+        popular = requests.get(
+            'https://cloud.iexapis.com/stable/data-points/TSLA/QUOTE-LATESTPRICE'
+        .format(SECRET_TOKEN)).json()
+        print(popular)
+        return jsonify(popular)
+
+
+api.add_resource(TEST, '/test')
+
+
+
+
+
 class SearchStock(Resource):
     def get(self, stock):
         searchStock = requests.get(
