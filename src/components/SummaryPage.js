@@ -17,12 +17,11 @@ function SummaryPage(props) {
   const [symbol, setSymbol] = useState("");
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
-  const [accountValue, setAccountValue] = useState(0);
+  // const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
   const { userId } = props;
-  // const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
 
   useEffect(() => {
     fetch(`/api/sum/${userId}`)
@@ -63,28 +62,12 @@ function SummaryPage(props) {
     fetch("/api/userbalance", requestOptions)
       .then((res) => res.json())
       .then((data) => setBuyingPower(data));
-     let value = parseFloat(buyingPower) + parseFloat(sumOfAllStocksPurchased[0]) 
-    setAccountValue(value);
-  }, []);
-console.log('Buying Power', buyingPower, 'Total Purchased', sumOfAllStocksPurchased)
-  function handleSearch(e) {
-    setSearchStock(e.target.value);
-  }
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    fetch(`/api/searchStock/${searchStock}`)
-      .then((res) => res.json())
-      .then((data) => setSearchStock(data))
-      .catch((error) => console.log(error));
-  }
-
-  useEffect(() => { 
-    fetch(`/api/allsymbols/${userId}`)
+      fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
-          fetch(`/test/${data[i]}`)
+          fetch(`/api/searchStock/${data[i]}`)
             .then((res) => res.json())
             .then( data => 
               fetch('/api/lateststocks', {
@@ -102,7 +85,22 @@ console.log('Buying Power', buyingPower, 'Total Purchased', sumOfAllStocksPurcha
             );
         }
       });
+    
+    // setAccountValue(value);
   }, []);
+
+  let value = parseFloat(buyingPower) + parseFloat(sumofPurchasedStocks[0])
+  function handleSearch(e) {
+    setSearchStock(e.target.value);
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    fetch(`/api/searchStock/${searchStock}`)
+      .then((res) => res.json())
+      .then((data) => setSearchStock(data))
+      .catch((error) => console.log(error));
+  }
 
   let stocksPurchased = [];
   for (let i = 0; i < purchasedStocks.length; i++) {
@@ -143,7 +141,7 @@ console.log('Buying Power', buyingPower, 'Total Purchased', sumOfAllStocksPurcha
         }}
       >
         <h3>Buying Power: ${buyingPower}</h3>
-        <h3>Account Value: ${accountValue}</h3>
+        <h3>Account Value: ${value ? value : null}</h3>
         <h3>Profit/Debt: ${profitDebt}</h3>
       </div>
       <form onSubmit={handleSubmit}>

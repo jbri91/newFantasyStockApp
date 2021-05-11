@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 import requests
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import config
@@ -10,18 +10,6 @@ api = Api(app)
 
 SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
-
-
-class Test(Resource):
-    def get(self, stock):
-        test = requests.get(
-            'https://cloud.iexapis.com/stable/stock/{}/quote?token={}&period=annual'
-            .format(stock, SECRET_TOKEN)).json()
-        return jsonify(test)
-
-
-api.add_resource(Test, '/test/<string:stock>')
-
 
 class SearchStock(Resource):
     def get(self, stock):
@@ -39,7 +27,6 @@ class Tesla(Resource):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/TSLA/quote?token={}&period=annual'
             .format(SECRET_TOKEN)).json()
-        print(popular)
         return jsonify(popular)
 
 
@@ -77,15 +64,6 @@ class Microsoft(Resource):
 
 
 api.add_resource(Microsoft, '/api/microsoft')
-
-# # Connecting with Database
-# conn = psycopg2.connect(dbname='stock_application', user='postgres', password='DB_PASSWORD', host='localhost')
-# cur = conn.cursor()
-# cur.execute('SELECT * FROM purchased_stock;')
-# purchasedStock = cur.fetchall()
-# conn.commit()
-# cur.close()
-# conn.close()
 
 
 class PurchasedStock(Resource):
@@ -141,7 +119,6 @@ class UserCredentials(Resource):
             'INSERT INTO user_credentials (username, password) VALUES(%s, %s)',
             (username, password))
         conn.commit()
-        print('User Inserted...')
         cur.close()
         conn.close()
         return jsonify(username, password)
@@ -171,7 +148,6 @@ class AddStocksToTable(Resource):
             (symbol, stockName, price, day_change, percentage_change, date,
              shares, userId))
         conn.commit()
-        print('Records Inserted....')
         cur.close()
         conn.close()
         return jsonify(symbol, stockName, price, day_change, percentage_change,
@@ -339,7 +315,6 @@ class DeleteAllStocks(Resource):
         conn.commit()
         cur.close()
         conn.close()
-        print('Deleted')
         return jsonify(stock_symbol, userId)
 
 
@@ -431,7 +406,6 @@ class ValidateCredentials(Resource):
                 password,
             ))
         account = cur.fetchone()
-        print(account)
         conn.commit()
         cur.close()
         conn.close()
