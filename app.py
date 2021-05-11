@@ -23,9 +23,6 @@ class Test(Resource):
 api.add_resource(Test, '/test/<string:stock>')
 
 
-
-
-
 class SearchStock(Resource):
     def get(self, stock):
         searchStock = requests.get(
@@ -41,7 +38,7 @@ class Tesla(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/TSLA/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         print(popular)
         return jsonify(popular)
 
@@ -53,7 +50,7 @@ class Apple(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/AAPL/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -64,7 +61,7 @@ class Amazon(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/AMZN/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -75,7 +72,7 @@ class Microsoft(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/MSFT/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -391,6 +388,30 @@ class UpdateStocks(Resource):
 
 
 api.add_resource(UpdateStocks, '/api/updatestocks')
+
+
+class UpdateLatestStockPrices(Resource):
+    def put(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        symbol = json_data['symbol']
+        stock_price = json_data['stockPrice']
+        day_change = json_data['dayChange']
+        percentage_change = json_data['percentageChange']
+        user_id = json_data['userId']
+        cur.execute(
+            'UPDATE purchased_stock SET price = %s, day_change = %s, percentage_change = %s WHERE user_id = %s AND symbol = %s',
+            (stock_price, day_change, percentage_change, user_id, symbol))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+api.add_resource(UpdateLatestStockPrices, '/api/lateststocks')
 
 
 class ValidateCredentials(Resource):

@@ -78,14 +78,27 @@ function SummaryPage(props) {
       .catch((error) => console.log(error));
   }
 
-  useEffect(() => {
+  useEffect(() => { 
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           fetch(`/test/${data[i]}`)
             .then((res) => res.json())
-            .then((data) => console.log(data.symbol));
+            .then( data => 
+              fetch('/api/lateststocks', {
+                method: 'PUT',
+                headers: { 'Content-Type' : 'application/json'},
+                body: JSON.stringify({
+                  symbol: data.symbol,
+                  stockPrice: data.latestPrice,
+                  dayChange: data.change,
+                  percentageChange: data.changePercent,
+                  userId: parseInt(userId)
+                })
+              }
+              )
+            );
         }
       });
   }, []);
