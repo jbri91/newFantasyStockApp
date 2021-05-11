@@ -12,15 +12,15 @@ SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
 
 
-# class Test(Resource):
-#     def get(self, stock):
-#         test = requests.get(
-#             'https://cloud.iexapis.com/stable/stock/{}/quote?token={}&period=annual'
-#             .format(stock, SECRET_TOKEN)).json()
-#         return jsonify(test)
+class Test(Resource):
+    def get(self, stock):
+        test = requests.get(
+            'https://cloud.iexapis.com/stable/stock/{}/quote?token={}&period=annual'
+            .format(stock, SECRET_TOKEN)).json()
+        return jsonify(test)
 
 
-# api.add_resource(Test, '/test/<string:stock>')
+api.add_resource(Test, '/test/<string:stock>')
 
 
 

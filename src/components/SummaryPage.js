@@ -78,6 +78,18 @@ function SummaryPage(props) {
       .catch((error) => console.log(error));
   }
 
+  useEffect(() => {
+    fetch(`/api/allsymbols/${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          fetch(`/test/${data[i]}`)
+            .then((res) => res.json())
+            .then((data) => console.log(data.symbol));
+        }
+      });
+  }, []);
+
   let stocksPurchased = [];
   for (let i = 0; i < purchasedStocks.length; i++) {
     stocksPurchased.push(
