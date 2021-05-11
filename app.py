@@ -3,7 +3,6 @@ import requests
 from flask_restful import Api, Resource, reqparse
 import psycopg2
 import simplejson as json
-import decimal
 import config
 
 app = Flask(__name__)
@@ -13,16 +12,15 @@ SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
 
 
-class TEST(Resource):
-    def get(self):
-        popular = requests.get(
-            'https://cloud.iexapis.com/stable/data-points/TSLA/QUOTE-LATESTPRICE'
-        .format(SECRET_TOKEN)).json()
-        print(popular)
-        return jsonify(popular)
+# class Test(Resource):
+#     def get(self, stock):
+#         test = requests.get(
+#             'https://cloud.iexapis.com/stable/stock/{}/quote?token={}&period=annual'
+#             .format(stock, SECRET_TOKEN)).json()
+#         return jsonify(test)
 
 
-api.add_resource(TEST, '/test')
+# api.add_resource(Test, '/test/<string:stock>')
 
 
 
