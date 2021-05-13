@@ -10,6 +10,7 @@ function StockCard(props) {
   const { percentChange } = props;
   const { stockId } = props;
   const { shares } = props;
+  const { initialPrice } = props;
 
   function handleClick() {
     props.setPrice(price);
@@ -69,6 +70,9 @@ function StockCard(props) {
           >
             {" "}
             {props.stockName}
+            <Card.Text style={{ marginLeft: "10px" }}>
+              {initialPrice ? "Purchased At $" + initialPrice : null}
+            </Card.Text>
           </Card.Text>
           <div style={{ display: "grid", justifyContent: "left" }}>
             <div

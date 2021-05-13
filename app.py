@@ -143,15 +143,16 @@ class AddStocksToTable(Resource):
         date = json_data['date']
         shares = json_data['shares']
         userId = json_data['userId']
+        initial_price = json_data['initialPrice']
         cur.execute(
-            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
+            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id, initial_price) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (symbol, stockName, price, day_change, percentage_change, date,
-             shares, userId))
+             shares, userId, initial_price))
         conn.commit()
         cur.close()
         conn.close()
         return jsonify(symbol, stockName, price, day_change, percentage_change,
-                       date, shares, userId)
+                       date, shares, userId, initial_price)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')

@@ -56,6 +56,7 @@ function ReviewOrder(props) {
             date: props.date,
             shares: quantity,
             userId: parseInt(userId),
+            initialPrice: props.stockPrice,
           }),
         };
         fetch("/api/buystock", requestOptions).then((data) =>

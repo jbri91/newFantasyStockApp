@@ -20,6 +20,7 @@ function SummaryPage(props) {
   const [symbol, setSymbol] = useState("");
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
+  const [initialPrice, setInitialPrice] = useState('');
   // const [accountValue, setAccountValue] = useState(0);
   const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   const [profitDebt, setProfitDebt] = useState(0);
@@ -117,6 +118,7 @@ function SummaryPage(props) {
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
         shares={purchasedStocks[i][7]}
+        initialPrice={purchasedStocks[i][9]}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
@@ -127,7 +129,7 @@ function SummaryPage(props) {
       />
     );
   }
-
+console.log(purchasedStocks)
   return (
     <div>
       <div
