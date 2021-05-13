@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
+//Add the initial price of the stock to show whether you are 
+// gaining or lossing in that stock to help decide whether to sell or not.
+
 function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
@@ -63,33 +66,32 @@ function SummaryPage(props) {
       .then((res) => res.json())
       .then((data) => setBuyingPower(data));
 
-      fetch(`/api/allsymbols/${userId}`)
+    fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => {
         for (let i = 0; i < data.length; i++) {
           fetch(`/api/searchStock/${data[i]}`)
             .then((res) => res.json())
-            .then( data => 
-              fetch('/api/lateststocks', {
-                method: 'PUT',
-                headers: { 'Content-Type' : 'application/json'},
+            .then((data) =>
+              fetch("/api/lateststocks", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
                   symbol: data.symbol,
                   stockPrice: data.latestPrice,
                   dayChange: data.change,
                   percentageChange: data.changePercent,
-                  userId: parseInt(userId)
-                })
-              }
-              )
+                  userId: parseInt(userId),
+                }),
+              })
             );
         }
       });
-    
+
     // setAccountValue(value);
   }, []);
 
-  let value = parseFloat(buyingPower) + parseFloat(sumofPurchasedStocks[0])
+  let value = parseFloat(buyingPower) + parseFloat(sumofPurchasedStocks[0]);
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
