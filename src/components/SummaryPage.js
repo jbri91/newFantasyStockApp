@@ -151,7 +151,7 @@ function SummaryPage(props) {
         }}
       >
         <h3>Buying Power: ${buyingPower}</h3>
-        <h3>Account Value: ${accountValue ? accountValue : null}</h3>
+        <h3>Account Value: ${accountValue ? accountValue.toFixed(2) : null}</h3>
         <h3 style={profits < 0 ? red : green }>Gain/Loss: ${profits.toFixed(2)}</h3>
       </div>
       <form onSubmit={handleSubmit}>
