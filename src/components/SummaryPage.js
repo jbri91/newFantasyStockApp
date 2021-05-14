@@ -129,7 +129,7 @@ function SummaryPage(props) {
       />
     );
   }
-console.log(purchasedStocks)
+
   return (
     <div>
       <div

@@ -51,7 +51,7 @@ function CreateAccount() {
             .then((data) => console.log(data))
             .catch((error) => setError(error));
 
-          window.location.href = "/";
+          // window.location.href = "/";
         } else {
           setNoMatch(
             <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
@@ -124,7 +124,7 @@ function CreateAccount() {
             Create Account
           </button>
         </form>
-      </div>
+      </div>    
     </div>
   );
 }
