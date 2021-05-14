@@ -166,7 +166,7 @@ function ReviewOrder(props) {
                   {props.stockName})
                 </p>
                 <p> Limit at ${props.stockPrice}</p>
-                <p>Estimated Total: ${props.stockSum}</p>
+                <p>Estimated Total: ${Number(props.stockSum).toFixed(2)}</p>
                 <p>
                   {" "}
                   Remaining Buy Power: $

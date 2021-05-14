@@ -120,7 +120,7 @@ function StockCard(props) {
               </Card.Text>
               <Card.Text style={props.dayChange >= 0 ? greenStock : redStock}>
                 {" "}
-                {props.dayChange} ({props.percentChange}%){" "}
+                {props.dayChange} ({props.percentChange?.toFixed(2)}%){" "}
               </Card.Text>
             </div>
           </div>
