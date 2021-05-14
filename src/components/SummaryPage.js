@@ -87,12 +87,11 @@ function SummaryPage(props) {
               })
             );
         }
-      });
-
-    // setAccountValue(value);
+      }); 
   }, []);
 
-  let value = parseFloat(buyingPower) + parseFloat(sumofPurchasedStocks[0]);
+  let accountValue = parseFloat(buyingPower) + parseFloat(sumofPurchasedStocks[0]);
+  let profits =  accountValue - 20000;
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
@@ -129,6 +128,13 @@ function SummaryPage(props) {
       />
     );
   }
+  const green = {
+    color: "green",
+  };
+
+  const red = {
+    color: "red",
+  };
 
   return (
     <div>
@@ -145,8 +151,8 @@ function SummaryPage(props) {
         }}
       >
         <h3>Buying Power: ${buyingPower}</h3>
-        <h3>Account Value: ${value ? value : null}</h3>
-        <h3>Profit/Debt: ${profitDebt}</h3>
+        <h3>Account Value: ${accountValue ? accountValue : null}</h3>
+        <h3 style={profits < 0 ? red : green }>Gain/Loss: ${profits.toFixed(2)}</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
