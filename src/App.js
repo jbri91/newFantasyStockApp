@@ -14,6 +14,10 @@ import CreateAccount from "./components/CreateAccount";
 function App() {
   let [authentication, setAuthentication] = useState("");
   const [userId, setUserId] = useState("");
+  const [username, setUsername ] = useState('');
+  const [password, setPassword ] = useState('');
+
+  console.log(username && password)
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
@@ -49,7 +53,7 @@ function App() {
             setAuthentication={setAuthentication}
             authentication={authentication}
             setUserId={setUserId}
-            userId={userId}
+            userId={userId} 
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
@@ -59,7 +63,15 @@ function App() {
             <PrivateRoute path="/summary">
               <SummaryPage userId={userId} />
             </PrivateRoute>
-            <Route path="/createAccount" component={CreateAccount} />
+            <Route path="/createAccount"
+            render={(props) => (
+              <CreateAccount 
+              setAuthentication={setAuthentication}
+              authentication={authentication}
+              setUsername={setUsername}
+              setPassword={setPassword}
+              />
+            )} />
           </Switch>
         </BrowserRouter>
       </header>

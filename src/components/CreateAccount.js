@@ -1,6 +1,9 @@
 import React, { useState } from "react";
+import { useHistory } from 'react-router-dom'
 
-function CreateAccount() {
+function CreateAccount(props) {
+
+  let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -48,10 +51,9 @@ function CreateAccount() {
           setNoMatch("");
           fetch("api/createaccount", requestOptions)
             .then((res) => res.json())
-            .then((data) => console.log(data))
+            .then(props.setPassword(password) && props.setUsername(username) && history.push('/summary'))
             .catch((error) => setError(error));
 
-          // window.location.href = "/";
         } else {
           setNoMatch(
             <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
