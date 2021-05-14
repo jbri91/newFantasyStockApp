@@ -13,16 +13,13 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
+  function handleUsername(event) {
+    setUsernameCredential(event.target.value);
+  }
 
-function handleUsername(event) {
-  setUsernameCredential(event.target.value)
-}
-
-function handlePassword(event) {
-  setPassword(event.target.value);
-}
-
-
+  function handlePassword(event) {
+    setPassword(event.target.value);
+  }
 
   const handleCredentials = () => {
     const requestOptions = {
@@ -36,16 +33,14 @@ function handlePassword(event) {
     fetch("/api/username", requestOptions)
       .then((res) => res.json())
       .then((data) => setAuthentication(data[1]) & setUserId(data[0]));
-
-     
   };
 
   let handleAuthentication = () => {
     setAuthentication(false);
   };
 
-   console.log(authentication)
-   authentication ? history.push('/summary') : console.log('Please Login')
+  console.log(authentication);
+  authentication ? history.push("/summary") : console.log("Please Login");
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -72,7 +67,9 @@ function handlePassword(event) {
             </NavLink>
           </div>
         </Nav>
-        <div style={{marginRight: '20px',}}>{authentication ? 'Welcome ' + usernameCredential : null}</div>
+        <div style={{ marginRight: "20px" }}>
+          {authentication ? "Welcome " + usernameCredential : null}
+        </div>
         {authentication ? (
           <button
             style={{ color: "black" }}

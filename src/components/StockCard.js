@@ -36,7 +36,7 @@ function StockCard(props) {
 
   return (
     <div>
-      <Card style={{ width: "18rem", height: "11rem", margin: "20px" }}>
+      <Card style={{ width: "18rem", height: "12rem", margin: "20px" }}>
         <Card.Header
           style={{
             color: "black",
@@ -70,8 +70,8 @@ function StockCard(props) {
           >
             {" "}
             {props.stockName}
-            <Card.Text style={{ marginLeft: "10px" }}>
-              {initialPrice ? "Purchased At $" + initialPrice : null}
+            <Card.Text style={{ marginLeft: "5px" }}>
+              {initialPrice ? "Cost $" + initialPrice : null}
             </Card.Text>
           </Card.Text>
           <div style={{ display: "grid", justifyContent: "left" }}>
