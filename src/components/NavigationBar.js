@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function NavigationBar(props) {
+  let history = useHistory();
   let { setAuthentication } = props;
   let { authentication } = props;
   const { setUserId } = props;
@@ -35,6 +36,8 @@ function handlePassword(event) {
     fetch("/api/username", requestOptions)
       .then((res) => res.json())
       .then((data) => setAuthentication(data[1]) & setUserId(data[0]));
+
+     
   };
 
   let handleAuthentication = () => {
@@ -42,6 +45,7 @@ function handlePassword(event) {
   };
 
    console.log(authentication)
+   authentication ? history.push('/summary') : console.log('Please Login')
 
   return (
     <div style={{ marginBottom: "70px" }}>
