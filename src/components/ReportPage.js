@@ -102,7 +102,7 @@ function ReportPage(props) {
             <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
             <td>
               {" "}
-              {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(
+              {((stockReport[i][1] * stockReport[i][2]) / totalPortfolioSum * 100).toFixed(
                 2
               )}%{" "}
             </td>
@@ -132,11 +132,11 @@ function ReportPage(props) {
         <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
         <td>
           {" "}
-          {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
+          {(((stockReport[i][1] * stockReport[i][2]) / totalPortfolioSum) * 100).toFixed(2)}%{" "}
         </td>
         <td>
           <button
-            id={stockReport[i][0]}
+            id={stockReport[i][2]}
             type="button"
             onClick={handleDelete}
             className="btn btn-secondary"
@@ -147,6 +147,7 @@ function ReportPage(props) {
       </tr>
     );
   }
+ 
 
   return (
     <div className="App">

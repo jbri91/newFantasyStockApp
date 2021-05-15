@@ -22,6 +22,7 @@ function SummaryPage(props) {
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   // const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
+  
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
