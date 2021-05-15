@@ -11,6 +11,7 @@ api = Api(app)
 SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
 
+
 class SearchStock(Resource):
     def get(self, stock):
         searchStock = requests.get(
@@ -278,6 +279,28 @@ class SumOfAllStocksPurchased(Resource):
 
 api.add_resource(SumOfAllStocksPurchased,
                  '/api/sumofallstockspurchased/<userId>')
+
+
+class AccountValue(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        user_id = json_data['userId']
+        cur.execute(
+            "SELECT ((SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + (SELECT user_balance FROM user_Credentials WHERE user_id = %s)) AS account_value",
+            (user_id, user_id))
+        accountValue = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(accountValue)
+
+
+api.add_resource(AccountValue, '/api/accountvalue')
 
 
 class TotalPortfolio(Resource):
