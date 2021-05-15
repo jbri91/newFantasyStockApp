@@ -1,9 +1,8 @@
 from flask import Flask, jsonify, request
 import requests
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
-import decimal
 import config
 
 app = Flask(__name__)
@@ -11,21 +10,6 @@ api = Api(app)
 
 SECRET_TOKEN = config.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
-
-
-class TEST(Resource):
-    def get(self):
-        popular = requests.get(
-            'https://cloud.iexapis.com/stable/data-points/TSLA/QUOTE-LATESTPRICE'
-        .format(SECRET_TOKEN)).json()
-        print(popular)
-        return jsonify(popular)
-
-
-api.add_resource(TEST, '/test')
-
-
-
 
 
 class SearchStock(Resource):
@@ -43,8 +27,7 @@ class Tesla(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/TSLA/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
-        print(popular)
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -55,7 +38,7 @@ class Apple(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/AAPL/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -66,7 +49,7 @@ class Amazon(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/AMZN/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
@@ -77,20 +60,11 @@ class Microsoft(Resource):
     def get(self):
         popular = requests.get(
             'https://cloud.iexapis.com/stable/stock/MSFT/quote?token={}&period=annual'
-        .format(SECRET_TOKEN)).json()
+            .format(SECRET_TOKEN)).json()
         return jsonify(popular)
 
 
 api.add_resource(Microsoft, '/api/microsoft')
-
-# # Connecting with Database
-# conn = psycopg2.connect(dbname='stock_application', user='postgres', password='DB_PASSWORD', host='localhost')
-# cur = conn.cursor()
-# cur.execute('SELECT * FROM purchased_stock;')
-# purchasedStock = cur.fetchall()
-# conn.commit()
-# cur.close()
-# conn.close()
 
 
 class PurchasedStock(Resource):
@@ -146,7 +120,6 @@ class UserCredentials(Resource):
             'INSERT INTO user_credentials (username, password) VALUES(%s, %s)',
             (username, password))
         conn.commit()
-        print('User Inserted...')
         cur.close()
         conn.close()
         return jsonify(username, password)
@@ -171,16 +144,16 @@ class AddStocksToTable(Resource):
         date = json_data['date']
         shares = json_data['shares']
         userId = json_data['userId']
+        initial_price = json_data['initialPrice']
         cur.execute(
-            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)",
+            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id, initial_price) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
             (symbol, stockName, price, day_change, percentage_change, date,
-             shares, userId))
+             shares, userId, initial_price))
         conn.commit()
-        print('Records Inserted....')
         cur.close()
         conn.close()
         return jsonify(symbol, stockName, price, day_change, percentage_change,
-                       date, shares, userId)
+                       date, shares, userId, initial_price)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
@@ -308,6 +281,28 @@ api.add_resource(SumOfAllStocksPurchased,
                  '/api/sumofallstockspurchased/<userId>')
 
 
+class AccountValue(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        user_id = json_data['userId']
+        cur.execute(
+            "SELECT ((SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + (SELECT user_balance FROM user_Credentials WHERE user_id = %s)) AS account_value",
+            (user_id, user_id))
+        accountValue = cur.fetchall()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(accountValue)
+
+
+api.add_resource(AccountValue, '/api/accountvalue')
+
+
 class TotalPortfolio(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
@@ -316,7 +311,7 @@ class TotalPortfolio(Resource):
                                 host='localhost')
         cur = conn.cursor()
         cur.execute(
-            "SELECT SUM(price) FROM purchased_stock WHERE user_id = %s",
+            "SELECT SUM(price * shares) FROM purchased_stock WHERE user_id = %s",
             (userId, ))
         totalPortfolio = cur.fetchall()
         conn.commit()
@@ -344,34 +339,10 @@ class DeleteAllStocks(Resource):
         conn.commit()
         cur.close()
         conn.close()
-        print('Deleted')
         return jsonify(stock_symbol, userId)
 
 
 api.add_resource(DeleteAllStocks, '/api/deleteall')
-
-
-class InvestedTotal(Resource):
-    def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
-        cur = conn.cursor()
-        json_data = request.get_json()
-        stock_symbol = json_data['stock_symbol']
-        userId = json_data['userId']
-        cur.execute(
-            "SELECT SUM(shares*price) FROM purchased_stock WHERE symbol != %s AND user_id = %s;",
-            (stock_symbol, userId))
-        total = cur.fetchone()
-        conn.commit()
-        cur.close()
-        conn.close()
-        return jsonify(total)
-
-
-api.add_resource(InvestedTotal, '/api/investedtotal')
 
 
 class UpdateStocks(Resource):
@@ -395,6 +366,30 @@ class UpdateStocks(Resource):
 api.add_resource(UpdateStocks, '/api/updatestocks')
 
 
+class UpdateLatestStockPrices(Resource):
+    def put(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        symbol = json_data['symbol']
+        stock_price = json_data['stockPrice']
+        day_change = json_data['dayChange']
+        percentage_change = json_data['percentageChange']
+        user_id = json_data['userId']
+        cur.execute(
+            'UPDATE purchased_stock SET price = %s, day_change = %s, percentage_change = %s WHERE user_id = %s AND symbol = %s',
+            (stock_price, day_change, percentage_change, user_id, symbol))
+        conn.commit()
+        cur.close()
+        conn.close()
+
+
+api.add_resource(UpdateLatestStockPrices, '/api/lateststocks')
+
+
 class ValidateCredentials(Resource):
     def post(self):
         conn = psycopg2.connect(dbname='stock_application',
@@ -412,7 +407,6 @@ class ValidateCredentials(Resource):
                 password,
             ))
         account = cur.fetchone()
-        print(account)
         conn.commit()
         cur.close()
         conn.close()

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function NavigationBar(props) {
+  let history = useHistory();
   let { setAuthentication } = props;
   let { authentication } = props;
   const { setUserId } = props;
@@ -12,16 +13,13 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
+  function handleUsername(event) {
+    setUsernameCredential(event.target.value);
+  }
 
-function handleUsername(event) {
-  setUsernameCredential(event.target.value)
-}
-
-function handlePassword(event) {
-  setPassword(event.target.value);
-}
-
-
+  function handlePassword(event) {
+    setPassword(event.target.value);
+  }
 
   const handleCredentials = () => {
     const requestOptions = {
@@ -41,7 +39,8 @@ function handlePassword(event) {
     setAuthentication(false);
   };
 
-   console.log(authentication)
+  console.log(authentication);
+  authentication ? history.push("/summary") : console.log("Please Login");
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -68,7 +67,9 @@ function handlePassword(event) {
             </NavLink>
           </div>
         </Nav>
-        <div style={{marginRight: '20px',}}>{authentication ? 'Welcome ' + usernameCredential : null}</div>
+        <div style={{ marginRight: "20px" }}>
+          {authentication ? "Welcome " + usernameCredential : null}
+        </div>
         {authentication ? (
           <button
             style={{ color: "black" }}

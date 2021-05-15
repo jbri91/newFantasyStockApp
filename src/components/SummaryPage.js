@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
+//Add the initial price of the stock to show whether you are
+// gaining or lossing in that stock to help decide whether to sell or not.
+
 function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState([]);
   const [purchasedStocks, setPurchasedStocks] = useState([]);
@@ -18,16 +21,17 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-  const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
+  // const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
+  
   const [profitDebt, setProfitDebt] = useState(0);
-  const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState("");
+  const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
-  // const updatedBalance = (buyingPower - sumOfAllStocksPurchased).toFixed(2);
 
   useEffect(() => {
-    fetch(`/api/sum/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setSumofPurchasedStocks(data));
+    
+    // fetch(`/api/sum/${userId}`)
+    //   .then((res) => res.json())
+    //   .then((data) => setSumofPurchasedStocks(data));
     fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
@@ -53,6 +57,7 @@ function SummaryPage(props) {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
 
+      
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -63,8 +68,43 @@ function SummaryPage(props) {
     fetch("/api/userbalance", requestOptions)
       .then((res) => res.json())
       .then((data) => setBuyingPower(data));
-    setAccountValue(20000 - sumOfAllStocksPurchased + sumOfAllStocksPurchased);
+
+    fetch('/api/accountvalue', {
+      method: 'POST',
+      headers: { 'Content-Type' : 'application/json'},
+      body: JSON.stringify({
+        userId: parseInt(userId),
+      })
+    }).then(res => res.json())
+    .then(data => setAccountValue(data))
+    .catch(error => console.log(error))
+
+    fetch(`/api/allsymbols/${userId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        for (let i = 0; i < data.length; i++) {
+          fetch(`/api/searchStock/${data[i]}`)
+            .then((res) => res.json())
+            .then((data) =>
+              fetch("/api/lateststocks", {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  symbol: data.symbol,
+                  stockPrice: data.latestPrice,
+                  dayChange: data.change,
+                  percentageChange: data.changePercent,
+                  userId: parseInt(userId),
+                }),
+              })
+            );
+        }
+      });
+     
+      
+
   }, []);
+
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -91,6 +131,7 @@ function SummaryPage(props) {
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
         shares={purchasedStocks[i][7]}
+        initialPrice={purchasedStocks[i][9]}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
@@ -101,6 +142,13 @@ function SummaryPage(props) {
       />
     );
   }
+  const green = {
+    color: "green",
+  };
+
+  const red = {
+    color: "red",
+  };
 
   return (
     <div>
@@ -116,9 +164,9 @@ function SummaryPage(props) {
           left: "-10px",
         }}
       >
-        <h3>Buying Power: ${buyingPower}</h3>
+        <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${accountValue}</h3>
-        <h3>Profit/Debt: ${profitDebt}</h3>
+        {/* <h3 style={profits < 0 ? red : green }>Gain/Loss: ${profits.toFixed(2)}</h3> */}
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
