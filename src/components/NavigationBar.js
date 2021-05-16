@@ -8,13 +8,14 @@ function NavigationBar(props) {
   let history = useHistory();
   let { setAuthentication } = props;
   let { authentication } = props;
+  const { setFetchBuyingPower } = props;
   const { createPassword } = props;
   const { createUsername } = props;
   const { setUserId } = props;
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  console.log(createPassword, createUsername);
+  
   function handleUsername(event) {
     setUsernameCredential(event.target.value);
   }
@@ -23,18 +24,19 @@ function NavigationBar(props) {
     setPassword(event.target.value);
   }
 
-useEffect(() => {
-  if(createUsername & createPassword) {
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      usernameCredential: createUsername,
-      password: createPassword,
-    }),};
-  fetch("/api/username", requestOptions)
-  }
-})
+  useEffect(() => {
+    if (createUsername & createPassword) {
+      const requestOptions = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          usernameCredential: createUsername,
+          password: createPassword,
+        }),
+      };
+      fetch("/api/username", requestOptions);
+    }
+  });
 
   const handleCredentials = () => {
     const requestOptions = {
@@ -50,7 +52,9 @@ useEffect(() => {
       .then(
         (data) =>
           setAuthentication(data[1]) &
-          setUserId(data[0]), localStorage.id = userId
+          setUserId(data[0]) &
+          setFetchBuyingPower(data[2]),
+        (localStorage.id = userId)
       );
   };
 
@@ -59,7 +63,6 @@ useEffect(() => {
     localStorage.clear();
   };
 
-  console.log(authentication);
   authentication ? history.push("/summary") : console.log("Please Login");
 
   return (
@@ -88,7 +91,10 @@ useEffect(() => {
           </div>
         </Nav>
         <div style={{ marginRight: "20px" }}>
-          {authentication ? "Welcome " + (usernameCredential ? usernameCredential : createUsername) : null}
+          {authentication
+            ? "Welcome " +
+              (usernameCredential ? usernameCredential : createUsername)
+            : null}
         </div>
         {authentication ? (
           <button

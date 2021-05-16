@@ -13,6 +13,7 @@ function App() {
   const [userId, setUserId] = useState("");
   const [createUsername, setCreateUsername] = useState("");
   const [createPassword, setCreatePassword] = useState("");
+  const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
 
   useEffect(() => {
     if (localStorage.getItem("id")) {
@@ -27,9 +28,14 @@ function App() {
         .then((data) =>
           setCreateUsername(
             data[1],
-            setCreatePassword(data[2], setUserId(data[0]))
+            setCreatePassword(
+              data[2],
+              setUserId(data[0]),
+              setFetchBuyingPower(data[3])
+            )
           )
-        ).catch(error => console.log(error))
+        )
+        .catch((error) => console.log(error));
 
       setAuthentication(true);
     }
@@ -73,6 +79,7 @@ function App() {
             userId={userId}
             createUsername={createUsername}
             createPassword={createPassword}
+            setFetchBuyingPower={setFetchBuyingPower}
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
@@ -80,7 +87,10 @@ function App() {
               <ReportPage userId={userId} />
             </PrivateRoute>
             <PrivateRoute path="/summary">
-              <SummaryPage userId={userId} />
+              <SummaryPage
+                userId={userId}
+                fetchBuyingPower={fetchBuyingPower}
+              />
             </PrivateRoute>
             <Route
               path="/createAccount"

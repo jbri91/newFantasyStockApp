@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
-//Add the initial price of the stock to show whether you are
-// gaining or lossing in that stock to help decide whether to sell or not.
+
 
 function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState([]);
@@ -21,6 +20,7 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
+  const { fetchBuyingPower } = props;
   
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
@@ -61,7 +61,7 @@ function SummaryPage(props) {
     };
     fetch("/api/userbalance", requestOptions)
       .then((res) => res.json())
-      .then((data) => setBuyingPower(data));
+      .then((data) => setBuyingPower(fetchBuyingPower));
 
     fetch('/api/accountvalue', {
       method: 'POST',
