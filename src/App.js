@@ -14,10 +14,10 @@ import CreateAccount from "./components/CreateAccount";
 function App() {
   let [authentication, setAuthentication] = useState("");
   const [userId, setUserId] = useState("");
-  const [username, setUsername ] = useState('');
-  const [password, setPassword ] = useState('');
+  const [createUsername, setCreateUsername ] = useState('');
+  const [createPassword, setCreatePassword ] = useState('');
 
-  console.log(username && password)
+
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
@@ -53,7 +53,9 @@ function App() {
             setAuthentication={setAuthentication}
             authentication={authentication}
             setUserId={setUserId}
-            userId={userId} 
+            userId={userId}
+            createUsername={createUsername}
+            createPassword={createPassword}
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
@@ -67,9 +69,10 @@ function App() {
             render={(props) => (
               <CreateAccount 
               setAuthentication={setAuthentication}
+              setUserId={setUserId}
               authentication={authentication}
-              setUsername={setUsername}
-              setPassword={setPassword}
+              setCreateUsername={setCreateUsername}
+              setCreatePassword={setCreatePassword}
               />
             )} />
           </Switch>

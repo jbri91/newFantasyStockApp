@@ -21,17 +21,12 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-  // const [sumofPurchasedStocks, setSumofPurchasedStocks] = useState(0);
   
   const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
 
   useEffect(() => {
-    
-    // fetch(`/api/sum/${userId}`)
-    //   .then((res) => res.json())
-    //   .then((data) => setSumofPurchasedStocks(data));
     fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
@@ -8,11 +8,13 @@ function NavigationBar(props) {
   let history = useHistory();
   let { setAuthentication } = props;
   let { authentication } = props;
+  const { createPassword } = props;
+  const { createUsername } = props;
   const { setUserId } = props;
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-
+  console.log(createPassword, createUsername);
   function handleUsername(event) {
     setUsernameCredential(event.target.value);
   }
@@ -32,11 +34,16 @@ function NavigationBar(props) {
     };
     fetch("/api/username", requestOptions)
       .then((res) => res.json())
-      .then((data) => setAuthentication(data[1]) & setUserId(data[0]));
+      .then(
+        (data) =>
+          setAuthentication(data[1]) &
+          setUserId(data[0]), localStorage.clear(), localStorage.id = userId
+      );
   };
 
   let handleAuthentication = () => {
     setAuthentication(false);
+    localStorage.clear();
   };
 
   console.log(authentication);

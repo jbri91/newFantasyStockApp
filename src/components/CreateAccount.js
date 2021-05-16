@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { useHistory } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
 
 function CreateAccount(props) {
-
+  console.log(props);
   let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -23,8 +23,6 @@ function CreateAccount(props) {
   function handleCopyPassword(e) {
     setCopyPassword(e.target.value);
   }
-
-  console.log(copyPassword);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -49,11 +47,25 @@ function CreateAccount(props) {
         setPasswordRequirements("");
         if (copyPassword == password) {
           setNoMatch("");
-          fetch("api/createaccount", requestOptions)
-            .then((res) => res.json())
-            .then(props.setPassword(password) && props.setUsername(username) && history.push('/summary'))
-            .catch((error) => setError(error));
+          fetch("api/createaccount", requestOptions);
+          
+            fetch("/api/username", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                usernameCredential: username,
+                password: password,
+              }),
+            })
+              .then((res) => res.json())
+              .then(
+                (data) =>
+                  props.setAuthentication(data[1]) &
+                  props.setUserId(data[0]) 
+              );
+          
 
+          history.push("/summary");
         } else {
           setNoMatch(
             <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
@@ -126,7 +138,7 @@ function CreateAccount(props) {
             Create Account
           </button>
         </form>
-      </div>    
+      </div>
     </div>
   );
 }

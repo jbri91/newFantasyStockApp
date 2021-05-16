@@ -4,6 +4,7 @@ from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import config
+import math
 
 app = Flask(__name__)
 api = Api(app)
@@ -295,7 +296,7 @@ class AccountValue(Resource):
             (user_id, user_id))
         accountValue = cur.fetchall()
         conn.commit()
-        cur.close()
+        cur.close() 
         conn.close()
         return jsonify(accountValue)
 
