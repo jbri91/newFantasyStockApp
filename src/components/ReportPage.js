@@ -66,9 +66,7 @@ function ReportPage(props) {
         .then((data) => setTotalPortfolioSum(data))
         .catch((error) => console.log(error));
 
-        // Total of deleted Symbol
-        console.log(e.target.id) 
-        // 'TSLA'
+
         let amountInvested = -1;
         for(let i =0; i < stockReport.length; i++){
           if(stockReport[i][0] == e.target.id) {
@@ -90,8 +88,7 @@ function ReportPage(props) {
           })
         })
        
-        // Add to buyingPower
-        // Update buying Power in database for User
+
         
       let stockRows = [];
       for (let i = 0; i < numberShares.length; i++) {
@@ -102,7 +99,7 @@ function ReportPage(props) {
             <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
             <td>
               {" "}
-              {((stockReport[i][1] * stockReport[i][2]) / totalPortfolioSum * 100).toFixed(
+              {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(
                 2
               )}%{" "}
             </td>
@@ -132,11 +129,11 @@ function ReportPage(props) {
         <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
         <td>
           {" "}
-          {(((stockReport[i][1] * stockReport[i][2]) / totalPortfolioSum) * 100).toFixed(2)}%{" "}
+          {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
         </td>
         <td>
           <button
-            id={stockReport[i][2]}
+            id={stockReport[i][0]}
             type="button"
             onClick={handleDelete}
             className="btn btn-secondary"
@@ -147,7 +144,6 @@ function ReportPage(props) {
       </tr>
     );
   }
- 
 
   return (
     <div className="App">

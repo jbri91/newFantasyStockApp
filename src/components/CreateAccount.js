@@ -45,7 +45,7 @@ function CreateAccount(props) {
       if ((password.length > 8, result)) {
         setNoMatch("");
         setPasswordRequirements("");
-        if (copyPassword == password) {
+        if (copyPassword === password) {
           setNoMatch("");
           fetch("api/createaccount", requestOptions);
           

@@ -4,7 +4,6 @@ function ReviewOrder(props) {
   const { selected } = props;
   const { quantity } = props;
   const { stockId } = props;
-  const { setQuantity } = props;
   const { purchasedStocks } = props;
   const { userId } = props;
   const { buyingPower } = props;
@@ -17,7 +16,7 @@ function ReviewOrder(props) {
         setShares(purchasedStocks[i][7]);
       }
     }
-  });
+  }, []);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;

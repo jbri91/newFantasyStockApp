@@ -33,7 +33,7 @@ function App() {
 
       setAuthentication(true);
     }
-  });
+  }, []);
 
   const userAuthorization = {
     isAuthenticated: authentication,

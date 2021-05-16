@@ -22,7 +22,6 @@ function SummaryPage(props) {
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   
-  const [profitDebt, setProfitDebt] = useState(0);
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
 
@@ -98,7 +97,7 @@ function SummaryPage(props) {
      
       
 
-  }, []);
+  }, [userId]);
 
 
   function handleSearch(e) {
@@ -137,13 +136,7 @@ function SummaryPage(props) {
       />
     );
   }
-  const green = {
-    color: "green",
-  };
-
-  const red = {
-    color: "red",
-  };
+  
 
   return (
     <div>
@@ -161,7 +154,6 @@ function SummaryPage(props) {
       >
         <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${accountValue}</h3>
-        {/* <h3 style={profits < 0 ? red : green }>Gain/Loss: ${profits.toFixed(2)}</h3> */}
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />

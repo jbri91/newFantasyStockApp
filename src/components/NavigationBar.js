@@ -50,7 +50,7 @@ useEffect(() => {
       .then(
         (data) =>
           setAuthentication(data[1]) &
-          setUserId(data[0]), localStorage.clear(), localStorage.id = userId
+          setUserId(data[0]), localStorage.id = userId
       );
   };
 
