@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavigationBar from "./components/NavigationBar";
@@ -8,15 +8,32 @@ import ReportPage from "./components/ReportPage";
 import SummaryPage from "./components/SummaryPage";
 import CreateAccount from "./components/CreateAccount";
 
-
- 
-
 function App() {
   let [authentication, setAuthentication] = useState("");
   const [userId, setUserId] = useState("");
-  const [createUsername, setCreateUsername ] = useState('');
-  const [createPassword, setCreatePassword ] = useState('');
+  const [createUsername, setCreateUsername] = useState("");
+  const [createPassword, setCreatePassword] = useState("");
 
+  useEffect(() => {
+    if (localStorage.getItem("id")) {
+      fetch("/api/credentials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: localStorage.getItem("id"),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) =>
+          setCreateUsername(
+            data[1],
+            setCreatePassword(data[2], setUserId(data[0]))
+          )
+        ).catch(error => console.log(error))
+
+      setAuthentication(true);
+    }
+  });
 
   const userAuthorization = {
     isAuthenticated: authentication,
@@ -65,16 +82,18 @@ function App() {
             <PrivateRoute path="/summary">
               <SummaryPage userId={userId} />
             </PrivateRoute>
-            <Route path="/createAccount"
-            render={(props) => (
-              <CreateAccount 
-              setAuthentication={setAuthentication}
-              setUserId={setUserId}
-              authentication={authentication}
-              setCreateUsername={setCreateUsername}
-              setCreatePassword={setCreatePassword}
-              />
-            )} />
+            <Route
+              path="/createAccount"
+              render={(props) => (
+                <CreateAccount
+                  setAuthentication={setAuthentication}
+                  setUserId={setUserId}
+                  authentication={authentication}
+                  setCreateUsername={setCreateUsername}
+                  setCreatePassword={setCreatePassword}
+                />
+              )}
+            />
           </Switch>
         </BrowserRouter>
       </header>

@@ -23,6 +23,19 @@ function NavigationBar(props) {
     setPassword(event.target.value);
   }
 
+useEffect(() => {
+  if(createUsername & createPassword) {
+  const requestOptions = {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      usernameCredential: createUsername,
+      password: createPassword,
+    }),};
+  fetch("/api/username", requestOptions)
+  }
+})
+
   const handleCredentials = () => {
     const requestOptions = {
       method: "POST",
@@ -75,7 +88,7 @@ function NavigationBar(props) {
           </div>
         </Nav>
         <div style={{ marginRight: "20px" }}>
-          {authentication ? "Welcome " + usernameCredential : null}
+          {authentication ? "Welcome " + (usernameCredential ? usernameCredential : createUsername) : null}
         </div>
         {authentication ? (
           <button

@@ -1,12 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import homepageCoinImage from "../images/homepageCoinImage.jpg";
 
 function HomePage() {
-  const [ userId, setUserId ] = useState('')
-
-  useEffect(() => {
-     
-  })
 
   return (
     <div className="App">

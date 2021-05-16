@@ -431,7 +431,7 @@ class UserBalance(Resource):
         userId = json_data['userId']
         cur.execute(
             'SELECT user_balance FROM user_credentials WHERE user_id = %s',
-            (userId))
+            (userId, ))
         balance = cur.fetchone()
         conn.commit()
         cur.close()
@@ -461,5 +461,26 @@ class UpdateBalance(Resource):
 
 
 api.add_resource(UpdateBalance, '/api/boughtstock')
+
+
+class UserAndPassword(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        userId = json_data['userId']
+        cur.execute(
+            'SELECT * FROM user_credentials WHERE user_id = %s',
+            (userId, ))
+        credentials = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(credentials)
+api.add_resource(UserAndPassword, '/api/credentials')
+
 
 app.run(debug=True)
