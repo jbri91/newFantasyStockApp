@@ -20,8 +20,7 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-  const { fetchBuyingPower } = props;
-  console.log(fetchBuyingPower)
+
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
 
@@ -50,6 +49,7 @@ function SummaryPage(props) {
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
+    
 
       
     const requestOptions = {

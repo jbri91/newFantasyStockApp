@@ -419,6 +419,28 @@ class ValidateCredentials(Resource):
 
 api.add_resource(ValidateCredentials, '/api/username')
 
+class FindUsername(Resource):
+    def post(self):
+        conn = psycopg2.connect(dbname='stock_application',
+                                user='postgres',
+                                password=DB_PASSWORD,
+                                host='localhost')
+        cur = conn.cursor()
+        json_data = request.get_json()
+        user_id = json_data['userId']
+        cur.execute(
+            'SELECT username FROM user_credentials WHERE user_id = %s', (user_id)
+        )
+        username = cur.fetchone()
+        conn.commit()
+        cur.close()
+        conn.close()
+        return jsonify(username)
+
+api.add_resource(FindUsername, '/api/foundusername')
+
+
+
 
 class UserBalance(Resource):
     def post(self):

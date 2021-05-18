@@ -36,6 +36,16 @@ function NavigationBar(props) {
       };
       fetch("/api/username", requestOptions);
     }
+
+    fetch('/api/foundusername', {
+      method: 'POST',
+      headers: { 'Content-Type':'application/json'},
+      body: JSON.stringify({
+        userId: userId,
+      })
+    }).then(res => res.json())
+    .then(data => setUsernameCredential(data))
+    .catch(error => console.log(error))
   });
 
   const handleCredentials = () => {
