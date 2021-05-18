@@ -296,7 +296,7 @@ class AccountValue(Resource):
             (user_id, user_id))
         accountValue = cur.fetchall()
         conn.commit()
-        cur.close() 
+        cur.close()
         conn.close()
         return jsonify(accountValue)
 
@@ -472,15 +472,15 @@ class UserAndPassword(Resource):
         cur = conn.cursor()
         json_data = request.get_json()
         userId = json_data['userId']
-        cur.execute(
-            'SELECT * FROM user_credentials WHERE user_id = %s',
-            (userId, ))
+        cur.execute('SELECT * FROM user_credentials WHERE user_id = %s',
+                    (userId, ))
         credentials = cur.fetchone()
         conn.commit()
         cur.close()
         conn.close()
         return jsonify(credentials)
-api.add_resource(UserAndPassword, '/api/credentials')
 
+
+api.add_resource(UserAndPassword, '/api/credentials')
 
 app.run(debug=True)

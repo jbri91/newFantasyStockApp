@@ -21,7 +21,7 @@ function SummaryPage(props) {
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const { fetchBuyingPower } = props;
-  
+  console.log(fetchBuyingPower)
   const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
 
@@ -56,12 +56,12 @@ function SummaryPage(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId,
+        userId: parseInt(userId),
       }),
     };
     fetch("/api/userbalance", requestOptions)
       .then((res) => res.json())
-      .then((data) => setBuyingPower(fetchBuyingPower));
+      .then((data) => setBuyingPower(data));
 
     fetch('/api/accountvalue', {
       method: 'POST',
@@ -70,7 +70,7 @@ function SummaryPage(props) {
         userId: parseInt(userId),
       })
     }).then(res => res.json())
-    .then(data => setAccountValue(data))
+    .then(data => setAccountValue(data == 0 ? 20000 : data))
     .catch(error => console.log(error))
 
     fetch(`/api/allsymbols/${userId}`)
@@ -97,7 +97,7 @@ function SummaryPage(props) {
      
       
 
-  }, [userId]);
+  }, []);
 
 
   function handleSearch(e) {
