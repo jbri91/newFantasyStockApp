@@ -61,7 +61,7 @@ function CreateAccount(props) {
               .then(
                 (data) =>
                   props.setAuthentication(data[1]) &
-                  props.setUserId(data[0]) 
+                  props.setUserId(data[0]) & (localStorage.id = data[0]) 
               );
           
 
