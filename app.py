@@ -4,7 +4,6 @@ from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import config
-import math
 
 app = Flask(__name__)
 api = Api(app)

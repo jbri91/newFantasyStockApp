@@ -66,13 +66,21 @@ function NavigationBar(props) {
           setFetchBuyingPower(data[2]),
         (localStorage.id = userId)
       );
+
+      fetch('/api/foundusername', {
+        method: 'POST',
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify({
+          userId: userId,
+        })
+      }).then(res => res.json())
+      .then(data => setUsernameCredential(data))
+      .catch(error => console.log(error))
   };
 
   let handleAuthentication = () => {
     setAuthentication(false);
     localStorage.clear();
-    setUsernameCredential('')
-    setPassword('')
   };
 
   authentication ? history.push("/summary") : console.log("Please Login");
