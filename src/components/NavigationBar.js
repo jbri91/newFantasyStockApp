@@ -46,7 +46,7 @@ function NavigationBar(props) {
     }).then(res => res.json())
     .then(data => setUsernameCredential(data))
     .catch(error => console.log(error))
-  });
+  }, []);
 
   const handleCredentials = () => {
     const requestOptions = {
@@ -71,6 +71,8 @@ function NavigationBar(props) {
   let handleAuthentication = () => {
     setAuthentication(false);
     localStorage.clear();
+    setUsernameCredential('')
+    setPassword('')
   };
 
   authentication ? history.push("/summary") : console.log("Please Login");

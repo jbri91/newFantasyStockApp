@@ -69,7 +69,7 @@ function ReviewOrder(props) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              userId: userId,
+              userId: parseInt(userId),
             }),
           })
             .then((res) => res.json())
@@ -101,7 +101,7 @@ function ReviewOrder(props) {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              userId: userId,
+              userId: parseInt(userId),
             }),
           })
             .then((res) => res.json())
