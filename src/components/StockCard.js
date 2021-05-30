@@ -70,7 +70,13 @@ function StockCard(props) {
           >
             {" "}
             {props.stockName}
-            <Card.Text style={{ marginLeft: "5px" }}>
+            <Card.Text
+              style={{
+                marginLeft: "5px",
+                color: initialPrice >= price ? "green" : "red",
+                fontWeight: 'bold',
+              }}
+            >
               {initialPrice ? "Cost $" + initialPrice : null}
             </Card.Text>
           </Card.Text>
