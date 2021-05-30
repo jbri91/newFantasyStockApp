@@ -49,10 +49,6 @@ function NavigationBar(props) {
   }, []);
 
   const handleCredentials = () => {
-    console.log(userId)
-    if(userId) {
-      setUserId('')
-    } 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -69,7 +65,7 @@ function NavigationBar(props) {
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]),
         (localStorage.id = userId)
-      );
+      ).catch(error => console.log(error));
 
       fetch('/api/foundusername', {
         method: 'POST',

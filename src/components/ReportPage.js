@@ -129,7 +129,7 @@ function ReportPage(props) {
         <td> ${(stockReport[i][1] * stockReport[i][2]).toFixed(2)} </td>
         <td>
           {" "}
-          {((stockReport[i][2] / totalPortfolioSum) * 100).toFixed(2)}%{" "}
+          {(((stockReport[i][2] / totalPortfolioSum) * 100) * stockReport[i][1]).toFixed(2)}%{" "}
         </td>
         <td>
           <button
