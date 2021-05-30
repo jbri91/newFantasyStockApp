@@ -40,7 +40,7 @@ function App() {
       setAuthentication(true);
     }
   }, []);
-
+  console.log(fetchBuyingPower);
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
@@ -84,7 +84,9 @@ function App() {
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">
-              <ReportPage userId={userId} />
+              <ReportPage 
+              userId={userId} 
+              fetchBuyingPower={fetchBuyingPower} />
             </PrivateRoute>
             <PrivateRoute path="/summary">
               <SummaryPage

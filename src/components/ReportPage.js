@@ -7,7 +7,8 @@ function ReportPage(props) {
   const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
   const [buyingPower, setBuyingPower] = useState("");
-
+  const { fetchBuyingPower } = props;
+  
   useEffect(() => {
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
@@ -74,17 +75,16 @@ function ReportPage(props) {
             break;
           }
         }
-        console.log(stockReport)
-        console.log(amountInvested)
-        let updatedBalance = Number(buyingPower) + amountInvested
-        console.log(amountInvested, updatedBalance)
+        let updatedBalance = Number(buyingPower[0] + amountInvested).toFixed(2)
+        console.log(updatedBalance)
+        console.log(buyingPower)
         // setBuyingPower(updatedBalance)
         fetch('/api/boughtstock', {
           method: 'PUT',
           headers: { 'Content-Type' : 'application/json' },
           body: JSON.stringify({
             userId: parseInt(userId),
-            boughtStock: updatedBalance.toFixed(2),
+            boughtStock: updatedBalance,
           })
         })
        
