@@ -16,11 +16,11 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
-  function handleUsername(event) {
+  let handleUsername = (event) => {
     setUsernameCredential(event.target.value);
   }
 
-  function handlePassword(event) {
+  let handlePassword = (event) => {
     setPassword(event.target.value);
   }
 
@@ -45,11 +45,7 @@ function NavigationBar(props) {
       }),
     })
       .then((res) => res.json())
-      .then((data) =>
-        setUsernameCredential(data[0])
-          ? setUsernameCredential(data[0])
-          : setUsernameCredential(data)
-      )
+      .then((data) => setUsernameCredential(data))
       .catch((error) => console.log(error));
   }, [userId]);
 
@@ -80,7 +76,7 @@ function NavigationBar(props) {
           }),
         })
           .then((res) => res.json())
-          .then((data) => setUsernameCredential(data) & console.log(data))
+          .then((data) => setUsernameCredential(data))
           .catch((error) => console.log(error))
       );
   };
