@@ -46,8 +46,7 @@ function NavigationBar(props) {
     })
       .then((res) => res.json())
       .then(
-        (data) => setUsernameCredential(data) & console.log(usernameCredential)
-      )
+        (data) => setUsernameCredential(data[0]))
       .catch((error) => console.log(error));
   }, [userId]);
 
