@@ -45,8 +45,11 @@ function NavigationBar(props) {
       }),
     })
       .then((res) => res.json())
-      .then(
-        (data) => setUsernameCredential(data[0]))
+      .then((data) =>
+        setUsernameCredential(data[0])
+          ? setUsernameCredential(data[0])
+          : setUsernameCredential(data)
+      )
       .catch((error) => console.log(error));
   }, [userId]);
 
@@ -82,7 +85,7 @@ function NavigationBar(props) {
       );
   };
 
-  let handleAuthentication = () => {
+  let handleLogOut = () => {
     setAuthentication(false);
     localStorage.clear();
   };
@@ -124,7 +127,7 @@ function NavigationBar(props) {
           <button
             style={{ color: "black" }}
             className="btn btn-info btn-lg"
-            onClick={handleAuthentication}
+            onClick={handleLogOut}
           >
             Log Out
           </button>

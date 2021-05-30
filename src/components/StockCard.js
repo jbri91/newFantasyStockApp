@@ -73,8 +73,6 @@ function StockCard(props) {
             <Card.Text
               style={{
                 marginLeft: "5px",
-                color: initialPrice >= price ? "green" : "red",
-                fontWeight: 'bold',
               }}
             >
               {initialPrice ? "Cost $" + initialPrice : null}
