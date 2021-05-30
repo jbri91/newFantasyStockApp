@@ -16,12 +16,17 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
 
-  let handleUsername = (event) => {
+  const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
   }
 
-  let handlePassword = (event) => {
+  const handlePassword = (event) => {
     setPassword(event.target.value);
+  }
+
+  const resetInputFields = () => {
+    setUsernameCredential("");
+    setPassword("")
   }
 
   useEffect(() => {
@@ -83,6 +88,7 @@ function NavigationBar(props) {
 
   let handleLogOut = () => {
     setAuthentication(false);
+    resetInputFields();
     localStorage.clear();
   };
 
@@ -156,9 +162,10 @@ function NavigationBar(props) {
             </div>
             <div className="modal-body">
               <div>
-                <input placeholder="User ID" onChange={handleUsername} />
+                <input placeholder="User ID" onChange={handleUsername} value={usernameCredential} />
                 <input
                   placeholder="Password"
+                  value={password}
                   onChange={handlePassword}
                   type="password"
                 />
