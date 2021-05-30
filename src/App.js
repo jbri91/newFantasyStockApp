@@ -40,7 +40,7 @@ function App() {
       setAuthentication(true);
     }
   }, []);
-  console.log(fetchBuyingPower);
+
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {

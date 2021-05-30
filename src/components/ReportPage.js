@@ -76,9 +76,6 @@ function ReportPage(props) {
           }
         }
         let updatedBalance = Number(buyingPower[0] + amountInvested).toFixed(2)
-        console.log(updatedBalance)
-        console.log(buyingPower)
-        // setBuyingPower(updatedBalance)
         fetch('/api/boughtstock', {
           method: 'PUT',
           headers: { 'Content-Type' : 'application/json' },

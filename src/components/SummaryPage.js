@@ -153,7 +153,7 @@ function SummaryPage(props) {
         }}
       >
         <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
-        <h3>Account Value: ${accountValue}</h3>
+        <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />

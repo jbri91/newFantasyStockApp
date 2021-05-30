@@ -5,10 +5,13 @@ function ReviewOrder(props) {
   const { quantity } = props;
   const { stockId } = props;
   const { purchasedStocks } = props;
+  const { setPurchasedStocks } = props;
   const { userId } = props;
   const { buyingPower } = props;
   const { setBuyingPower } = props;
   const [shares, setShares] = useState([]);
+  console.log(purchasedStocks);
+  // console.log(shares)
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
@@ -16,9 +19,19 @@ function ReviewOrder(props) {
         setShares(purchasedStocks[i][7]);
       }
     }
-  }, []);
+
+    fetch(`/api/purchased/${userId}`)
+      .then((res) => res.json())
+      .then((data) => setPurchasedStocks(data))
+      .catch((error) => console.log(error));
+  }, [shares, purchasedStocks]);
 
   function handlePlaceOrder() {
+    // for (let i = 0; i < purchasedStocks.length; i++) {
+    //   if (stockId === purchasedStocks[i][0]) {
+    //     setShares(purchasedStocks[i][7]);
+    //   }
+    // }
     let boughtStock = buyingPower - props.stockSum;
     let sellingStock = Number(buyingPower) + props.stockSum;
     const sellStock = {
@@ -79,6 +92,7 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
+      console.log(shares, quantity, soldStock);
       if (soldStock >= 1) {
         const requestOptions = {
           method: "PUT",
@@ -138,7 +152,7 @@ function ReviewOrder(props) {
   }
 
   let boughtStock = buyingPower - props.stockSum;
-    let sellingStock = Number(buyingPower) + Number(props.stockSum);
+  let sellingStock = Number(buyingPower) + Number(props.stockSum);
   return (
     <div>
       <div
