@@ -15,7 +15,7 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  
+
   function handleUsername(event) {
     setUsernameCredential(event.target.value);
   }
@@ -34,49 +34,53 @@ function NavigationBar(props) {
           password: createPassword,
         }),
       };
-      fetch("/api/username", requestOptions);
-    }
-    fetch('/api/foundusername', {
-      method: 'POST',
-      headers: { 'Content-Type':'application/json'},
-      body: JSON.stringify({
-        userId: userId,
-      })
-    }).then(res => res.json())
-    .then(data => setUsernameCredential(data))
-    .catch(error => console.log(error))
+      fetch("/api/username", requestOptions)
+      }
+      
+        fetch("/api/foundusername", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => setUsernameCredential(data))
+          .catch((error) => console.log(error))
   }, []);
 
-  const handleCredentials = () => {
-    const requestOptions = {
+  let handleCredentials = () => {
+    fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         usernameCredential: usernameCredential,
         password: password,
       }),
-    };
-    fetch("/api/username", requestOptions)
+    })
       .then((res) => res.json())
       .then(
         (data) =>
+        console.log(data) &
           setAuthentication(data[1]) &
           setUserId(data[0]) &
-          setFetchBuyingPower(data[2]), 
-        localStorage.id = userId
-      ).catch(error => console.log(error));
-
-      fetch('/api/foundusername', {
-        method: 'POST',
-        headers: { 'Content-Type':'application/json'},
-        body: JSON.stringify({
-          userId: userId,
+          setFetchBuyingPower(data[2]) &
+          (localStorage.id = data[0])
+      )
+      .then(
+        fetch("/api/foundusername", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: userId,
+          }),
         })
-      }).then(res => res.json())
-      .then(data => setUsernameCredential(data))
-      .catch(error => console.log(error)) 
+          .then((res) => res.json())
+          .then((data) => setUsernameCredential(data) & console.log(data))
+          .catch((error) => console.log(error))
+      );
   };
-  
+
   let handleAuthentication = () => {
     setAuthentication(false);
     localStorage.clear();
