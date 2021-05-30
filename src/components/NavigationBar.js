@@ -36,7 +36,6 @@ function NavigationBar(props) {
       };
       fetch("/api/username", requestOptions);
     }
-
     fetch('/api/foundusername', {
       method: 'POST',
       headers: { 'Content-Type':'application/json'},
@@ -63,8 +62,8 @@ function NavigationBar(props) {
         (data) =>
           setAuthentication(data[1]) &
           setUserId(data[0]) &
-          setFetchBuyingPower(data[2]),
-        (localStorage.id = userId)
+          setFetchBuyingPower(data[2]), 
+        localStorage.id = userId
       ).catch(error => console.log(error));
 
       fetch('/api/foundusername', {
@@ -75,9 +74,9 @@ function NavigationBar(props) {
         })
       }).then(res => res.json())
       .then(data => setUsernameCredential(data))
-      .catch(error => console.log(error))
+      .catch(error => console.log(error)) 
   };
-
+  
   let handleAuthentication = () => {
     setAuthentication(false);
     localStorage.clear();
