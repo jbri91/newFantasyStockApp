@@ -34,20 +34,22 @@ function NavigationBar(props) {
           password: createPassword,
         }),
       };
-      fetch("/api/username", requestOptions)
-      }
-      
-        fetch("/api/foundusername", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => setUsernameCredential(data))
-          .catch((error) => console.log(error))
-  }, []);
+      fetch("/api/username", requestOptions);
+    }
+
+    fetch("/api/foundusername", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: parseInt(userId),
+      }),
+    })
+      .then((res) => res.json())
+      .then(
+        (data) => setUsernameCredential(data) & console.log(usernameCredential)
+      )
+      .catch((error) => console.log(error));
+  }, [userId]);
 
   let handleCredentials = () => {
     fetch("/api/username", {
@@ -61,7 +63,7 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then(
         (data) =>
-        console.log(data) &
+          console.log(data) &
           setAuthentication(data[1]) &
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
@@ -72,7 +74,7 @@ function NavigationBar(props) {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            userId: userId,
+            userId: parseInt(userId),
           }),
         })
           .then((res) => res.json())
