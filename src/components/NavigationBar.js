@@ -49,6 +49,10 @@ function NavigationBar(props) {
   }, []);
 
   const handleCredentials = () => {
+    console.log(userId)
+    if(userId) {
+      setUserId('')
+    } 
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
