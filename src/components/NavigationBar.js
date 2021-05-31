@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
@@ -16,7 +16,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [dismiss, setDismiss] = useState("");
-
+  const [ loginError, setLoginError ] = useState("");
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -43,7 +43,7 @@ function NavigationBar(props) {
       };
       fetch("/api/username", requestOptions);
     }
-
+if(userId > 0) {
     fetch("/api/foundusername", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -54,9 +54,11 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then((data) => setUsernameCredential(data))
       .catch((error) => console.log(error));
+    }
   }, [userId]);
 
   let handleCredentials = () => {
+    
     fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -73,8 +75,7 @@ function NavigationBar(props) {
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
           (localStorage.id = data[0]), setDismiss('modal')
-      );
-    
+      ).catch(error => console.log(error))
 
     fetch("/api/foundusername", {
       method: "POST",
@@ -86,6 +87,8 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then((data) => setUsernameCredential(data))
       .catch((error) => console.log(error));
+
+    
   };
 
   let handleLogOut = () => {
@@ -95,7 +98,7 @@ function NavigationBar(props) {
   };
 
   authentication ? history.push("/summary") : console.log("Please Login");
-
+console.log(loginError)
   return (
     <div style={{ marginBottom: "70px" }}>
       <Navbar bg="dark" variant="dark">
