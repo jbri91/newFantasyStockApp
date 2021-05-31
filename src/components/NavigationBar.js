@@ -15,19 +15,21 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
+  const [dismiss, setDismiss] = useState("");
+
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
-  }
+  };
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
-  }
+  };
 
   const resetInputFields = () => {
     setUsernameCredential("");
-    setPassword("")
-  }
+    setPassword("");
+  };
 
   useEffect(() => {
     if (createUsername & createPassword) {
@@ -70,20 +72,20 @@ function NavigationBar(props) {
           setAuthentication(data[1]) &
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
-          (localStorage.id = data[0])
-      )
-      .then(
-        fetch("/api/foundusername", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-          }),
-        })
-          .then((res) => res.json())
-          .then((data) => setUsernameCredential(data))
-          .catch((error) => console.log(error))
+          (localStorage.id = data[0]), setDismiss('modal')
       );
+    
+
+    fetch("/api/foundusername", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: parseInt(userId),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setUsernameCredential(data))
+      .catch((error) => console.log(error));
   };
 
   let handleLogOut = () => {
@@ -162,7 +164,11 @@ function NavigationBar(props) {
             </div>
             <div className="modal-body">
               <div>
-                <input placeholder="User ID" onChange={handleUsername} value={usernameCredential} />
+                <input
+                  placeholder="User ID"
+                  onChange={handleUsername}
+                  value={usernameCredential}
+                />
                 <input
                   placeholder="Password"
                   value={password}
@@ -191,7 +197,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss="modal"
+                data-dismiss={dismiss}
               >
                 Submit
               </button>

@@ -10,7 +10,7 @@ function ReviewOrder(props) {
   const { buyingPower } = props;
   const { setBuyingPower } = props;
   const [shares, setShares] = useState([]);
-  console.log(purchasedStocks);
+  
   // console.log(shares)
 
   useEffect(() => {
