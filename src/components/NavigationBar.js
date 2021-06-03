@@ -78,7 +78,7 @@ if(userId > 0) {
       ).catch(error => console.log(error))
 
     fetch("/api/foundusername", {
-      method: "POST",
+      method: "POST", 
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: parseInt(userId),
@@ -97,7 +97,7 @@ if(userId > 0) {
     localStorage.clear();
   };
 
-  authentication ? history.push("/summary") : console.log("Please Login");
+  authentication ? history.push("/") : console.log("Please Login");
 console.log(loginError)
   return (
     <div style={{ marginBottom: "70px" }}>

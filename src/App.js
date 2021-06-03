@@ -16,7 +16,7 @@ function App() {
   const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
 
   useEffect(() => {
-    if (localStorage.getItem("id")) {
+    if (localStorage.getItem("id") > 0) {
       fetch("/api/credentials", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

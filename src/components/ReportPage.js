@@ -32,7 +32,7 @@ function ReportPage(props) {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        userId: userId,
+        userId: parseInt(userId),
       }),
     })
       .then((res) => res.json())
@@ -75,7 +75,8 @@ function ReportPage(props) {
             break;
           }
         }
-        let updatedBalance = Number(buyingPower[0] + amountInvested).toFixed(2)
+        let updatedBalance = (Number(buyingPower) + amountInvested).toFixed(2)
+        console.log('buyingPower:', buyingPower,'amountInvested: ', amountInvested, 'updatedBalance: ', updatedBalance)
         fetch('/api/boughtstock', {
           method: 'PUT',
           headers: { 'Content-Type' : 'application/json' },
