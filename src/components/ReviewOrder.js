@@ -27,11 +27,6 @@ function ReviewOrder(props) {
   }, [shares, purchasedStocks]);
 
   function handlePlaceOrder() {
-    // for (let i = 0; i < purchasedStocks.length; i++) {
-    //   if (stockId === purchasedStocks[i][0]) {
-    //     setShares(purchasedStocks[i][7]);
-    //   }
-    // }
     let boughtStock = buyingPower - props.stockSum;
     let sellingStock = Number(buyingPower) + props.stockSum;
     const sellStock = {

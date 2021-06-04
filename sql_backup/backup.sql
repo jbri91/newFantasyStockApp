@@ -5,7 +5,7 @@
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-04-25 22:41:24
+-- Started on 2021-06-03 20:24:45
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,7 +19,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- TOC entry 3014 (class 1262 OID 24586)
+-- TOC entry 3002 (class 1262 OID 24586)
 -- Name: stock_application; Type: DATABASE; Schema: -; Owner: postgres
 --
 
@@ -58,7 +58,9 @@ CREATE TABLE public.purchased_stock (
     day_change numeric,
     percentage_change numeric,
     date character varying(50),
-    shares integer
+    shares integer,
+    user_id integer,
+    initial_price numeric
 );
 
 
@@ -81,26 +83,13 @@ CREATE SEQUENCE public.purchased_stock_stock_id_seq
 ALTER TABLE public.purchased_stock_stock_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3015 (class 0 OID 0)
+-- TOC entry 3003 (class 0 OID 0)
 -- Dependencies: 202
 -- Name: purchased_stock_stock_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
 
 ALTER SEQUENCE public.purchased_stock_stock_id_seq OWNED BY public.purchased_stock.stock_id;
 
-
---
--- TOC entry 206 (class 1259 OID 40993)
--- Name: user_balance; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.user_balance (
-    user_id integer,
-    balance integer DEFAULT 20000
-);
-
-
-ALTER TABLE public.user_balance OWNER TO postgres;
 
 --
 -- TOC entry 201 (class 1259 OID 32788)
@@ -110,7 +99,8 @@ ALTER TABLE public.user_balance OWNER TO postgres;
 CREATE TABLE public.user_credentials (
     user_id integer NOT NULL,
     username character varying(50) NOT NULL,
-    password character varying(50) NOT NULL
+    password character varying(50) NOT NULL,
+    user_balance numeric DEFAULT 20000
 );
 
 
@@ -133,7 +123,7 @@ CREATE SEQUENCE public.user_credentials_user_id_seq
 ALTER TABLE public.user_credentials_user_id_seq OWNER TO postgres;
 
 --
--- TOC entry 3016 (class 0 OID 0)
+-- TOC entry 3004 (class 0 OID 0)
 -- Dependencies: 200
 -- Name: user_credentials_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
 --
@@ -142,48 +132,7 @@ ALTER SEQUENCE public.user_credentials_user_id_seq OWNED BY public.user_credenti
 
 
 --
--- TOC entry 204 (class 1259 OID 40977)
--- Name: user_wallet; Type: TABLE; Schema: public; Owner: postgres
---
-
-CREATE TABLE public.user_wallet (
-    transaction_type character varying(5) NOT NULL,
-    transaction_date date,
-    balance integer,
-    id integer NOT NULL,
-    user_id integer
-);
-
-
-ALTER TABLE public.user_wallet OWNER TO postgres;
-
---
--- TOC entry 205 (class 1259 OID 40984)
--- Name: user_wallet_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
---
-
-CREATE SEQUENCE public.user_wallet_id_seq
-    AS integer
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.user_wallet_id_seq OWNER TO postgres;
-
---
--- TOC entry 3017 (class 0 OID 0)
--- Dependencies: 205
--- Name: user_wallet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
---
-
-ALTER SEQUENCE public.user_wallet_id_seq OWNED BY public.user_wallet.id;
-
-
---
--- TOC entry 2868 (class 2604 OID 32801)
+-- TOC entry 2860 (class 2604 OID 32801)
 -- Name: purchased_stock stock_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -191,7 +140,7 @@ ALTER TABLE ONLY public.purchased_stock ALTER COLUMN stock_id SET DEFAULT nextva
 
 
 --
--- TOC entry 2867 (class 2604 OID 32791)
+-- TOC entry 2858 (class 2604 OID 32791)
 -- Name: user_credentials user_id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
@@ -199,15 +148,7 @@ ALTER TABLE ONLY public.user_credentials ALTER COLUMN user_id SET DEFAULT nextva
 
 
 --
--- TOC entry 2869 (class 2604 OID 40986)
--- Name: user_wallet id; Type: DEFAULT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_wallet ALTER COLUMN id SET DEFAULT nextval('public.user_wallet_id_seq'::regclass);
-
-
---
--- TOC entry 2876 (class 2606 OID 32806)
+-- TOC entry 2866 (class 2606 OID 32806)
 -- Name: purchased_stock purchased_stock_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -216,7 +157,7 @@ ALTER TABLE ONLY public.purchased_stock
 
 
 --
--- TOC entry 2872 (class 2606 OID 32793)
+-- TOC entry 2862 (class 2606 OID 32793)
 -- Name: user_credentials user_credentials_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -225,7 +166,7 @@ ALTER TABLE ONLY public.user_credentials
 
 
 --
--- TOC entry 2874 (class 2606 OID 32795)
+-- TOC entry 2864 (class 2606 OID 32795)
 -- Name: user_credentials user_credentials_username_key; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -233,16 +174,7 @@ ALTER TABLE ONLY public.user_credentials
     ADD CONSTRAINT user_credentials_username_key UNIQUE (username);
 
 
---
--- TOC entry 2878 (class 2606 OID 40988)
--- Name: user_wallet user_wallet_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
---
-
-ALTER TABLE ONLY public.user_wallet
-    ADD CONSTRAINT user_wallet_pkey PRIMARY KEY (id);
-
-
--- Completed on 2021-04-25 22:41:24
+-- Completed on 2021-06-03 20:24:45
 
 --
 -- PostgreSQL database dump complete
