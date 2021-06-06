@@ -39,7 +39,7 @@ function App() {
 
       setAuthentication(true);
     }
-  }, []);
+  }, [userId]);
 
   const userAuthorization = {
     isAuthenticated: authentication,

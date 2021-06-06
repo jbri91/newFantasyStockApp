@@ -16,7 +16,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [dismiss, setDismiss] = useState("");
-  const [ loginError, setLoginError ] = useState("");
+  const [loginError, setLoginError] = useState("");
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -43,22 +43,21 @@ function NavigationBar(props) {
       };
       fetch("/api/username", requestOptions);
     }
-if(userId > 0) {
-    fetch("/api/foundusername", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: parseInt(userId),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setUsernameCredential(data))
-      .catch((error) => console.log(error));
+    if (userId > 0) {
+      fetch("/api/foundusername", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setUsernameCredential(data))
+        .catch((error) => console.log(error));
     }
   }, [userId]);
 
   let handleCredentials = () => {
-    
     fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,11 +73,13 @@ if(userId > 0) {
           setAuthentication(data[1]) &
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
-          (localStorage.id = data[0]), setDismiss('modal')
-      ).catch(error => console.log(error))
+          (localStorage.id = data[0]),
+        setDismiss("modal")
+      )
+      .catch((error) => console.log(error));
 
     fetch("/api/foundusername", {
-      method: "POST", 
+      method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: parseInt(userId),
@@ -87,8 +88,6 @@ if(userId > 0) {
       .then((res) => res.json())
       .then((data) => setUsernameCredential(data))
       .catch((error) => console.log(error));
-
-    
   };
 
   let handleLogOut = () => {
@@ -97,8 +96,8 @@ if(userId > 0) {
     localStorage.clear();
   };
 
-  authentication ? history.push("/") : console.log("Please Login");
-console.log(loginError)
+  authentication ? history.push("/summary") : console.log("Please Login");
+
   return (
     <div style={{ marginBottom: "70px" }}>
       <Navbar bg="dark" variant="dark">
