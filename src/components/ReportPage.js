@@ -38,7 +38,7 @@ function ReportPage(props) {
       .then((res) => res.json())
       .then((data) => setBuyingPower(data))
       .catch((error) => console.log(error));
-  }, []);
+  }, [buyingPower]);
 
   function handleDelete(e) {
     const requestOptions = {

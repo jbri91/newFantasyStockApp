@@ -97,7 +97,7 @@ function SummaryPage(props) {
      
       
 
-  }, [buyingPower]);
+  }, []);
 
 
   function handleSearch(e) {
