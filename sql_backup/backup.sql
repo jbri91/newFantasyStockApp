@@ -5,7 +5,7 @@
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 13.2
 
--- Started on 2021-06-03 20:24:45
+-- Started on 2021-06-12 23:30:51
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -174,7 +174,7 @@ ALTER TABLE ONLY public.user_credentials
     ADD CONSTRAINT user_credentials_username_key UNIQUE (username);
 
 
--- Completed on 2021-06-03 20:24:45
+-- Completed on 2021-06-12 23:30:51
 
 --
 -- PostgreSQL database dump complete
