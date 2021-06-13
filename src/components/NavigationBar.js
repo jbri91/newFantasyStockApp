@@ -16,7 +16,7 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState("");
+  const [loginError, setLoginError] = useState(true);
   const [modal, setModal] = useState("")
 
   const handleUsername = (event) => {
