@@ -17,7 +17,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState(true);
-  const [modal, setModal] = useState("")
+  const [modal, setModal] = useState("");
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -59,7 +59,6 @@ function NavigationBar(props) {
   }, [userId]);
 
   let handleCredentials = () => {
-
     fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -69,47 +68,43 @@ function NavigationBar(props) {
       }),
     })
       .then((res) => res.json())
-      .then((data) =>
-        data[1] ? setLoginError(data[1]): setLoginError(false)
-      )   
-      .catch((error) => console.log(error));
+      .then((data) => (data[1] ? setLoginError(data[1]) : setLoginError(false)))
+       
+    if (loginError)  {
+      setModal('modal')
+      fetch("/api/username", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          usernameCredential: usernameCredential,
+          password: password,
+        }),
+      })
+        .then((res) => res.json())
+        .then(
+          (data) =>
+            setAuthentication(data[1]) &
+            setUserId(data[0]) &
+            setFetchBuyingPower(data[2]) &
+            (localStorage.id = data[0])
+        )
+        .then(
 
-      if (loginError) {
- fetch("/api/username", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        usernameCredential: usernameCredential,
-        password: password,
-      }),
-    })
-      .then((res) => res.json())
-      .then(
-        (data) =>
-          console.log(data) &
-          setAuthentication(data[1]) &
-          setUserId(data[0]) &
-          setFetchBuyingPower(data[2]) &
-          (localStorage.id = data[0]) & setModal("modal")
-      )
-      .catch((error) => console.log(error))
-
-    fetch("/api/foundusername", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        userId: parseInt(userId),
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setUsernameCredential(data))
-      .catch((error) => console.log(error));
-
+      fetch("/api/foundusername", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      }))
+        .then((res) => res.json())
+        .then((data) => setUsernameCredential(data)) 
+        .catch((error) => console.log(error));
+        
+    } else {
+      return setModal("");
+    }
     
-      } else {
-        setModal("")
-      }
-
     // fetch("/api/username", {
     //   method: "POST",
     //   headers: { "Content-Type": "application/json" },
@@ -126,6 +121,7 @@ function NavigationBar(props) {
     //       setUserId(data[0]) &
     //       setFetchBuyingPower(data[2]) &
     //       (localStorage.id = data[0]),
+
     //   )
     //   .catch((error) => console.log(error))
 
@@ -257,7 +253,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss= {modal}
+                data-dismiss={modal}
               >
                 Submit
               </button>
