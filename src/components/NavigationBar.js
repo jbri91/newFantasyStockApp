@@ -2,7 +2,7 @@ import React, { useEffect, useReducer, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, NavLink, useHistory } from "react-router-dom";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -187,9 +187,12 @@ function NavigationBar(props) {
                 to="/createAccount"
                 href="createAccount"
                 className="btn btn-link"
+                data-dismiss='modal'
+                onClick ={ () => history.push("/createAccount")}
               >
                 Create Account
               </NavLink>
+           
               <button
                 type="button"
                 className="btn btn-default"

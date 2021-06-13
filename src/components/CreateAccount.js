@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 
 function CreateAccount(props) {
-  console.log(props);
+ 
   let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
