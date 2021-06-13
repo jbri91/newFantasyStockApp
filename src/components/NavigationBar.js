@@ -15,7 +15,6 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [dismiss, setDismiss] = useState("");
   const [loginError, setLoginError] = useState("");
 
   const handleUsername = (event) => {
@@ -74,7 +73,6 @@ function NavigationBar(props) {
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
           (localStorage.id = data[0]),
-        setDismiss("modal")
       )
       .catch((error) => console.log(error));
 
@@ -202,7 +200,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={dismiss}
+                data-dismiss='modal'
               >
                 Submit
               </button>
