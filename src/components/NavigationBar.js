@@ -3,6 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { Link, NavLink, useHistory } from "react-router-dom";
+import { Modal } from "bootstrap";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -16,6 +17,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
+  const [modal, setModal] = useState("")
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -57,7 +59,23 @@ function NavigationBar(props) {
   }, [userId]);
 
   let handleCredentials = () => {
+
     fetch("/api/username", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        usernameCredential: usernameCredential,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) =>
+        data[1] ? setLoginError(data[1]): setLoginError(false)
+      )   
+      .catch((error) => console.log(error));
+
+      if (loginError) {
+ fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -72,9 +90,9 @@ function NavigationBar(props) {
           setAuthentication(data[1]) &
           setUserId(data[0]) &
           setFetchBuyingPower(data[2]) &
-          (localStorage.id = data[0]),
+          (localStorage.id = data[0]) & setModal("modal")
       )
-      .catch((error) => console.log(error));
+      .catch((error) => console.log(error))
 
     fetch("/api/foundusername", {
       method: "POST",
@@ -86,6 +104,41 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then((data) => setUsernameCredential(data))
       .catch((error) => console.log(error));
+
+    
+      } else {
+        setModal("")
+      }
+
+    // fetch("/api/username", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     usernameCredential: usernameCredential,
+    //     password: password,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then(
+    //     (data) =>
+    //       console.log(data) &
+    //       setAuthentication(data[1]) &
+    //       setUserId(data[0]) &
+    //       setFetchBuyingPower(data[2]) &
+    //       (localStorage.id = data[0]),
+    //   )
+    //   .catch((error) => console.log(error))
+
+    // fetch("/api/foundusername", {
+    //   method: "POST",
+    //   headers: { "Content-Type": "application/json" },
+    //   body: JSON.stringify({
+    //     userId: parseInt(userId),
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => setUsernameCredential(data))
+    //   .catch((error) => console.log(error));
   };
 
   let handleLogOut = () => {
@@ -185,12 +238,16 @@ function NavigationBar(props) {
                 to="/createAccount"
                 href="createAccount"
                 className="btn btn-link"
-                data-dismiss='modal'
-                onClick ={ () => history.push("/createAccount")}
+                data-dismiss="modal"
+                onClick={() => history.push("/createAccount")}
               >
                 Create Account
               </NavLink>
-           
+              {loginError ? null : (
+                <p style={{ fontSize: "13px", color: "red" }}>
+                  The username or password is incorrect
+                </p>
+              )}
               <button
                 type="button"
                 className="btn btn-default"
@@ -200,7 +257,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss='modal'
+                data-dismiss= {modal}
               >
                 Submit
               </button>
