@@ -24,7 +24,7 @@ function ReviewOrder(props) {
       .then((res) => res.json())
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
-  }, [shares, purchasedStocks]);
+  }, [shares, ]);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;

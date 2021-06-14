@@ -71,7 +71,7 @@ function NavigationBar(props) {
       .then((data) => (data[1] ? setLoginError(data[1]) : setLoginError(false)))
        
     if (loginError)  {
-      setModal('modal')
+      
       fetch("/api/username", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,8 +97,8 @@ function NavigationBar(props) {
           userId: parseInt(userId),
         }),
       }))
-        .then((res) => res.json())
-        .then((data) => setUsernameCredential(data)) 
+        .then((data) => setUsernameCredential(data))
+        .then(setModal('modal')) 
         .catch((error) => console.log(error));
         
     } else {
