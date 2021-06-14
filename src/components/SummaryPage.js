@@ -2,10 +2,8 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
-
-
 function SummaryPage(props) {
-  const [buyingPower, setBuyingPower] = useState('');
+  const [buyingPower, setBuyingPower] = useState("");
   const [purchasedStocks, setPurchasedStocks] = useState([]);
   const [tesla, setTesla] = useState([]);
   const [apple, setApple] = useState([]);
@@ -28,30 +26,33 @@ function SummaryPage(props) {
     fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
+      .then(
+        fetch("/api/amazon")
+          .then((res) => res.json())
+          .then((data) => setAmazon(data))
+      )
+      .then(
+        fetch("/api/microsoft")
+          .then((res) => res.json())
+          .then((data) => setMicrosoft(data))
+      )
+      .then(
+        fetch("/api/apple")
+          .then((res) => res.json())
+          .then((data) => setApple(data))
+      )
+      .then(
+        fetch(`/api/sumofallstockspurchased/${userId}`)
+          .then((res) => res.json())
+          .then((data) => setSumOfAllStocksPurchased(data))
+      )
+      .then(
+        fetch(`/api/purchased/${userId}`)
+          .then((res) => res.json())
+          .then((data) => setPurchasedStocks(data))
+      )
       .catch((error) => console.log(error));
-    fetch("/api/amazon")
-      .then((res) => res.json())
-      .then((data) => setAmazon(data))
-      .catch((error) => console.log(error));
-    fetch("/api/microsoft")
-      .then((res) => res.json())
-      .then((data) => setMicrosoft(data))
-      .catch((error) => console.log(error));
-    fetch("/api/apple")
-      .then((res) => res.json())
-      .then((data) => setApple(data))
-      .catch((error) => console.log(error));
-    fetch(`/api/sumofallstockspurchased/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setSumOfAllStocksPurchased(data))
-      .catch((error) => console.log(error));
-    fetch(`/api/purchased/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setPurchasedStocks(data))
-      .catch((error) => console.log(error));
-    
 
-      
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -61,17 +62,19 @@ function SummaryPage(props) {
     };
     fetch("/api/userbalance", requestOptions)
       .then((res) => res.json())
-      .then((data) => setBuyingPower(data));
+      .then((data) => setBuyingPower(data))
+      .catch((error) => console.log(error));
 
-    fetch('/api/accountvalue', {
-      method: 'POST',
-      headers: { 'Content-Type' : 'application/json'},
+    fetch("/api/accountvalue", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         userId: parseInt(userId),
-      })
-    }).then(res => res.json())
-    .then(data => setAccountValue(data == 0 ? 20000 : data))
-    .catch(error => console.log(error))
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setAccountValue(data == 0 ? 20000 : data))
+      .catch((error) => console.log(error));
 
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
@@ -93,12 +96,9 @@ function SummaryPage(props) {
               })
             );
         }
-      });
-     
+      }).catch(error => console.log(error));
       
-
   }, []);
-
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -136,7 +136,6 @@ function SummaryPage(props) {
       />
     );
   }
-  
 
   return (
     <div>

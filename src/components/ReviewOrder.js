@@ -87,7 +87,7 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
-      console.log(shares, quantity, soldStock);
+      
       if (soldStock >= 1) {
         const requestOptions = {
           method: "PUT",

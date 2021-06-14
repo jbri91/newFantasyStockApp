@@ -8,8 +8,14 @@ function ReportPage(props) {
   const { userId } = props;
   const [buyingPower, setBuyingPower] = useState("");
   const { fetchBuyingPower } = props;
+
   
+
   useEffect(() => {
+    const abortController = new AbortController()
+    const signal = abortController.signal
+    
+
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => setAllSymbols(data))
@@ -18,7 +24,7 @@ function ReportPage(props) {
       .then((res) => res.json())
       .then((data) => setNumberShares(data))
       .catch((error) => console.log(error));
-    fetch(`/api/totalPortfolio/${userId}`)
+    fetch(`/api/totalPortfolio/${userId}`, { signal:signal })
       .then((res) => res.json())
       .then((data) => setTotalPortfolioSum(data))
       .catch((error) => console.log(error));
@@ -38,7 +44,11 @@ function ReportPage(props) {
       .then((res) => res.json())
       .then((data) => setBuyingPower(data))
       .catch((error) => console.log(error));
-  }, [buyingPower]);
+
+      return function cleanup() {
+        abortController.abort()
+      }
+  }, []);
 
   function handleDelete(e) {
     const requestOptions = {
@@ -84,7 +94,7 @@ function ReportPage(props) {
             userId: parseInt(userId),
             boughtStock: updatedBalance,
           })
-        })
+        }).catch(error => console.log(error))
        
 
         
