@@ -111,7 +111,6 @@ function NavigationBar(props) {
         }),
       }))
         .then((data) => setUsernameCredential(data)) 
-        .then( setModal('modal')  )
         .catch((error) => console.log(error))
         
         
