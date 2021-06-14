@@ -97,7 +97,7 @@ function SummaryPage(props) {
      
       
 
-  }, [accountValue, ]);
+  }, []);
 
 
   function handleSearch(e) {
