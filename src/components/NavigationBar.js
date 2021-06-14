@@ -68,7 +68,14 @@ function NavigationBar(props) {
       }),
     })
       .then((res) => res.json())
-      .then((data) => (data[1] ? setLoginError(data[1]) : setLoginError(false)))
+      .then((data) => {
+      if(data[1]) {
+        setModal('modal')
+        setLoginError(data[1])
+        
+      } else {setLoginError(false)}
+    }
+      )
        
     if (loginError)  {
       
@@ -89,7 +96,6 @@ function NavigationBar(props) {
             (localStorage.id = data[0])
         )
         .then(
-
       fetch("/api/foundusername", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -97,44 +103,15 @@ function NavigationBar(props) {
           userId: parseInt(userId),
         }),
       }))
-        .then((data) => setUsernameCredential(data))
-        .then(setModal('modal')) 
-        .catch((error) => console.log(error));
+        .then((data) => setUsernameCredential(data)) 
+        .then( setModal('modal')  )
+        .catch((error) => console.log(error))
+        
         
     } else {
       return setModal("");
     }
-    
-    // fetch("/api/username", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     usernameCredential: usernameCredential,
-    //     password: password,
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then(
-    //     (data) =>
-    //       console.log(data) &
-    //       setAuthentication(data[1]) &
-    //       setUserId(data[0]) &
-    //       setFetchBuyingPower(data[2]) &
-    //       (localStorage.id = data[0]),
-
-    //   )
-    //   .catch((error) => console.log(error))
-
-    // fetch("/api/foundusername", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({
-    //     userId: parseInt(userId),
-    //   }),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => setUsernameCredential(data))
-    //   .catch((error) => console.log(error));
+   
   };
 
   let handleLogOut = () => {
@@ -143,7 +120,12 @@ function NavigationBar(props) {
     localStorage.clear();
   };
 
+
+
+
   authentication ? history.push("/summary") : console.log("Please Login");
+
+
 
   return (
     <div style={{ marginBottom: "70px" }}>
