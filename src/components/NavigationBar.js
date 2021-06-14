@@ -56,7 +56,14 @@ function NavigationBar(props) {
         .then((data) => setUsernameCredential(data))
         .catch((error) => console.log(error));
     }
-  }, [userId]);
+
+    if(loginError) {
+      setModal("modal")
+    } else {
+      setModal("")
+    }
+
+  }, [userId, modal] );
 
   let handleCredentials = () => {
     fetch("/api/username", {
