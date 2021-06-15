@@ -115,9 +115,10 @@ function NavigationBar(props) {
         
         
     } else {
-      return setModal("");
+      resetInputFields();
+      setModal("");
     }
-   
+  
   };
 
   let handleLogOut = () => {
@@ -228,9 +229,9 @@ function NavigationBar(props) {
                 Create Account
               </NavLink>
               {loginError ? null : (
-                <p style={{ fontSize: "13px", color: "red" }}>
+                <div style={{ fontSize: "13px", color: "red" }}>
                   The username or password is incorrect
-                </p>
+                </div>
               )}
               <button
                 type="button"

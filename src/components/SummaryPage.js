@@ -23,6 +23,8 @@ function SummaryPage(props) {
   const { userId } = props;
 
   useEffect(() => {
+
+    if(userId) {
     fetch("/api/tesla")
       .then((res) => res.json())
       .then((data) => setTesla(data))
@@ -97,7 +99,7 @@ function SummaryPage(props) {
             );
         }
       }).catch(error => console.log(error));
-      
+    }
   }, []);
 
   function handleSearch(e) {
