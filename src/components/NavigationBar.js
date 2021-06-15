@@ -1,9 +1,9 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
-import { Link, NavLink, useHistory } from "react-router-dom";
-import { Modal } from "bootstrap";
+import {  NavLink, useHistory } from "react-router-dom";
+
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -60,10 +60,10 @@ function NavigationBar(props) {
     if(loginError) {
       setModal("modal")
     } else {
-      setModal("")
+      setModal(null)
     }
 
-  }, [userId, modal] );
+  }, [userId, modal, createPassword, createUsername, loginError] );
 
   let handleCredentials = () => {
     fetch("/api/username", {
@@ -80,7 +80,8 @@ function NavigationBar(props) {
         setModal('modal')
         setLoginError(data[1])
         
-      } else {setLoginError(false)}
+      } else {setLoginError(false) 
+        console.log('Nothing here')}
     }
       )
        
@@ -120,7 +121,7 @@ function NavigationBar(props) {
     }
   
   };
-
+console.log('Login Error', loginError)
   let handleLogOut = () => {
     setAuthentication(false);
     resetInputFields();

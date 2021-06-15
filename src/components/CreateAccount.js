@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import React, { useDebugValue, useEffect, useImperativeHandle, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 function CreateAccount(props) {
- 
   let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -11,6 +10,7 @@ function CreateAccount(props) {
   const [copyPassword, setCopyPassword] = useState("");
   const [noMatch, setNoMatch] = useState("");
   const [fieldsCheck, setFieldsCheck] = useState("");
+
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -47,8 +47,14 @@ function CreateAccount(props) {
         setPasswordRequirements("");
         if (copyPassword === password) {
           setNoMatch("");
-          fetch("api/createaccount", requestOptions);
-          
+
+          fetch("api/createaccount", requestOptions)
+            .catch((error) => {
+              if (error) {
+                setError(error);
+              }
+            });
+
             fetch("/api/username", {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -61,11 +67,11 @@ function CreateAccount(props) {
               .then(
                 (data) =>
                   props.setAuthentication(data[1]) &
-                  props.setUserId(data[0]) & (localStorage.id = data[0]) 
-              );
-          
-
-          history.push("/summary");
+                  props.setUserId(data[0]) &
+                  (localStorage.id = data[0])
+              ).catch(error => console.log(error))
+            
+          // history.push("/summary");
         } else {
           setNoMatch(
             <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
