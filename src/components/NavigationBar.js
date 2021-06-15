@@ -236,7 +236,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={isCredentialValid ? "" : "modal"}
+                data-dismiss={modal}
               >
                 Submit
               </button>
