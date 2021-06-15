@@ -1,16 +1,17 @@
-import React, { useDebugValue, useEffect, useImperativeHandle, useState } from "react";
+import React, {
+  useState,
+} from "react";
 import { useHistory } from "react-router-dom";
 
 function CreateAccount(props) {
   let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [credentialError, setCredentialError] = useState("");
   const [passwordRequirements, setPasswordRequirements] = useState("");
   const [copyPassword, setCopyPassword] = useState("");
   const [noMatch, setNoMatch] = useState("");
   const [fieldsCheck, setFieldsCheck] = useState("");
-
 
   function handleUsername(e) {
     setUsername(e.target.value);
@@ -39,7 +40,6 @@ function CreateAccount(props) {
     let regex = new RegExp(/[A-Z]/ && /[0-9]/);
     let result = regex.test(checkPassword);
 
-    console.log(result);
     if (username && password) {
       setFieldsCheck("");
       if ((password.length > 8, result)) {
@@ -49,11 +49,9 @@ function CreateAccount(props) {
           setNoMatch("");
 
           fetch("api/createaccount", requestOptions)
-            .catch((error) => {
-              if (error) {
-                setError(error);
-              }
-            });
+            .then((res) => res.json())
+            .catch((error) => setCredentialError(error));
+
 
             fetch("/api/username", {
               method: "POST",
@@ -69,8 +67,9 @@ function CreateAccount(props) {
                   props.setAuthentication(data[1]) &
                   props.setUserId(data[0]) &
                   (localStorage.id = data[0])
-              ).catch(error => console.log(error))
-            
+              )
+              .catch((error) => console.log(error));
+          
           // history.push("/summary");
         } else {
           setNoMatch(
@@ -97,6 +96,7 @@ function CreateAccount(props) {
     }
   }
 
+  console.log(credentialError);
   return (
     <div
       style={{
@@ -119,7 +119,7 @@ function CreateAccount(props) {
             style={{ marginBottom: "20px" }}
             placeholder="Username"
           />
-          {error ? (
+          {credentialError ? (
             <p style={{ fontSize: "15px", color: "red" }}>
               Username is already taken
             </p>
