@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
-import {  NavLink, useHistory } from "react-router-dom";
-
+import { NavLink, useHistory } from "react-router-dom";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -16,7 +15,7 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [loginError, setLoginError] = useState(true);
+  const [isCredentialValid, setIsCredentialValid] = useState(true);
   const [modal, setModal] = useState("");
 
   const handleUsername = (event) => {
@@ -57,15 +56,15 @@ function NavigationBar(props) {
         .catch((error) => console.log(error));
     }
 
-    if(loginError) {
-      setModal("modal")
+    if (isCredentialValid) {
+      setModal("modal");
     } else {
-      setModal(null)
+      setModal("");
     }
-
-  }, [userId, modal, createPassword, createUsername, loginError] );
+  }, [userId, modal, createPassword, createUsername, isCredentialValid]);
 
   let handleCredentials = () => {
+
     fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -76,17 +75,18 @@ function NavigationBar(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-      if(data[1]) {
-        setModal('modal')
-        setLoginError(data[1])
-        
-      } else {setLoginError(false) 
-        console.log('Nothing here')}
-    }
-      )
-       
-    if (loginError)  {
-      
+        if (data[1]) {
+          setModal("modal")
+          setIsCredentialValid(data[1])
+        } else {
+          setIsCredentialValid(false);
+          setModal("");
+          resetInputFields();
+        }
+      })
+      .catch((error) => console.log(error));
+
+    if (isCredentialValid) {
       fetch("/api/username", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -104,36 +104,29 @@ function NavigationBar(props) {
             (localStorage.id = data[0])
         )
         .then(
-      fetch("/api/foundusername", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: parseInt(userId),
-        }),
-      }))
-        .then((data) => setUsernameCredential(data)) 
-        .catch((error) => console.log(error))
-        
-        
+          fetch("/api/foundusername", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              userId: parseInt(userId),
+            }),
+          })
+        )
+        .then((data) => setUsernameCredential(data))
+        .catch((error) => console.log(error));
     } else {
       resetInputFields();
       setModal("");
     }
-  
   };
-console.log('Login Error', loginError)
+
   let handleLogOut = () => {
     setAuthentication(false);
     resetInputFields();
     localStorage.clear();
   };
 
-
-
-
   authentication ? history.push("/summary") : console.log("Please Login");
-
-
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -229,7 +222,7 @@ console.log('Login Error', loginError)
               >
                 Create Account
               </NavLink>
-              {loginError ? null : (
+              {isCredentialValid ? null : (
                 <div style={{ fontSize: "13px", color: "red" }}>
                   The username or password is incorrect
                 </div>
@@ -243,7 +236,7 @@ console.log('Login Error', loginError)
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={modal}
+                data-dismiss={isCredentialValid ? "" : "modal"}
               >
                 Submit
               </button>
