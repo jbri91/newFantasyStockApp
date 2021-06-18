@@ -16,7 +16,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
-  let [modal, setModal] = useState("modal");
+  const [modal, setModal] = useState("modal");
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
