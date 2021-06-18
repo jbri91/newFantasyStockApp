@@ -56,12 +56,12 @@ function NavigationBar(props) {
         .catch((error) => console.log(error));
     }
 
-    if (isCredentialValid) {
-      setModal("modal");
-    } else {
-      setModal("");
-    }
-  }, [userId, modal, createPassword, createUsername, isCredentialValid]);
+    // if (isCredentialValid) {
+    //   setModal("modal");
+    // } else {
+    //   setModal("");
+    // }
+  }, [userId, createPassword, createUsername]);
 
   let handleCredentials = () => {
     fetch("/api/username", {
@@ -75,7 +75,8 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then((data) => {
         if (data[1]) {
-          setModal("modal")
+          console.log('Data[1]', data[1])
+          setModal(data[1])
           setIsCredentialValid(data[1])
           fetch("/api/username", {
             method: "POST",
@@ -87,7 +88,7 @@ function NavigationBar(props) {
           })
             .then((res) => res.json())
             .then(
-              (data) =>
+              (data) => 
                 setAuthentication(data[1]) &
                 setUserId(data[0]) &
                 setFetchBuyingPower(data[2]) &
@@ -103,12 +104,13 @@ function NavigationBar(props) {
               })
             )
             .then((data) => setUsernameCredential(data))
-            .then(setModal(""))
             .catch((error) => console.log(error));
+           
         } 
         else {
-          setIsCredentialValid(false);
+          console.log('else statement in handleCredentials')
           setModal("");
+          setIsCredentialValid(false);
           resetInputFields();
         }
       })
@@ -231,7 +233,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={modal}
+                data-dismiss={modal ? " " : "modal"}
               >
                 Submit
               </button>
