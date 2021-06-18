@@ -16,7 +16,7 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
-  const [modal, setModal] = useState("");
+  let [modal, setModal] = useState("modal");
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -56,11 +56,6 @@ function NavigationBar(props) {
         .catch((error) => console.log(error));
     }
 
-    // if (isCredentialValid) {
-    //   setModal("modal");
-    // } else {
-    //   setModal("");
-    // }
   }, [userId, createPassword, createUsername]);
 
   let handleCredentials = () => {
@@ -75,8 +70,8 @@ function NavigationBar(props) {
       .then((res) => res.json())
       .then((data) => {
         if (data[1]) {
-          console.log('Data[1]', data[1])
-          setModal(data[1])
+          console.log('If Statement in the handleCredentials function')
+          setModal("modal")
           setIsCredentialValid(data[1])
           fetch("/api/username", {
             method: "POST",
@@ -105,7 +100,7 @@ function NavigationBar(props) {
             )
             .then((data) => setUsernameCredential(data))
             .catch((error) => console.log(error));
-           
+            
         } 
         else {
           console.log('else statement in handleCredentials')
@@ -233,7 +228,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={modal ? " " : "modal"}
+                data-dismiss={modal}
               >
                 Submit
               </button>
