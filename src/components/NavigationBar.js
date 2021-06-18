@@ -64,7 +64,6 @@ function NavigationBar(props) {
   }, [userId, modal, createPassword, createUsername, isCredentialValid]);
 
   let handleCredentials = () => {
-
     fetch("/api/username", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -78,46 +77,42 @@ function NavigationBar(props) {
         if (data[1]) {
           setModal("modal")
           setIsCredentialValid(data[1])
-        } else {
+          fetch("/api/username", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              usernameCredential: usernameCredential,
+              password: password,
+            }),
+          })
+            .then((res) => res.json())
+            .then(
+              (data) =>
+                setAuthentication(data[1]) &
+                setUserId(data[0]) &
+                setFetchBuyingPower(data[2]) &
+                (localStorage.id = data[0])
+            )
+            .then(
+              fetch("/api/foundusername", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  userId: parseInt(userId),
+                }),
+              })
+            )
+            .then((data) => setUsernameCredential(data))
+            .then(setModal(""))
+            .catch((error) => console.log(error));
+        } 
+        else {
           setIsCredentialValid(false);
           setModal("");
           resetInputFields();
         }
       })
-      .catch((error) => console.log(error));
-
-    if (isCredentialValid) {
-      fetch("/api/username", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          usernameCredential: usernameCredential,
-          password: password,
-        }),
-      })
-        .then((res) => res.json())
-        .then(
-          (data) =>
-            setAuthentication(data[1]) &
-            setUserId(data[0]) &
-            setFetchBuyingPower(data[2]) &
-            (localStorage.id = data[0])
-        )
-        .then(
-          fetch("/api/foundusername", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: parseInt(userId),
-            }),
-          })
-        )
-        .then((data) => setUsernameCredential(data))
-        .catch((error) => console.log(error));
-    } else {
-      resetInputFields();
-      setModal("");
-    }
+      .catch((error) => console.log(error))
   };
 
   let handleLogOut = () => {

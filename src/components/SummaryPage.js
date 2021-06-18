@@ -100,7 +100,7 @@ function SummaryPage(props) {
         }
       }).catch(error => console.log(error));
     }
-  }, []);
+  }, [userId]);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
