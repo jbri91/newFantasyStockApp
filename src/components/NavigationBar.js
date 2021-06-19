@@ -67,9 +67,9 @@ function NavigationBar(props) {
         password: password,
       }),
     }).then((res) => {
-      res.json();
+      res = res.json();
       console.log(res);
-      if (res.ok) {
+      if (res) {
         console.log("If Statement in the handleCredentials function");
         // setModal("modal")
         setShowModal((showModal) => {
