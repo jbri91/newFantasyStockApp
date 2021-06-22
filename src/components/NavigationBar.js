@@ -73,11 +73,9 @@ function NavigationBar(props) {
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
         setShowModal(toggle);
-
-        setIsCredentialValid((isCredentialValid) => {
-          isCredentialValid = true;
-          return isCredentialValid;
-        });
+        setIsCredentialValid(true);
+        setShowModal(false);
+        // history.push("/summary")
         fetch("/api/username", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -126,7 +124,7 @@ function NavigationBar(props) {
     localStorage.clear();
   };
 
-  authentication ? history.push("/summary") : console.log("Please Login");
+  // authentication ? history.push("/summary") : console.log("Please Login");
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -200,7 +198,7 @@ function NavigationBar(props) {
                   data-dismiss="modal"
                   style={{
                     color: "black",
-                    fontWeight: 'bold'                
+                    fontWeight: "bold",
                   }}
                 >
                   &times;
@@ -246,16 +244,17 @@ function NavigationBar(props) {
                   </div>
                 )}
                 <Button
-                  type="button"
+                  // to= {userId ? "/summary" : null}
+                  // href= {userId  ? "summary" : null}
                   className="btn btn-default"
                   style={{
-                    color: 'black',
+                    color: "black",
                     backgroundColor: "lightblue",
                     border: "solid",
                     borderColor: "skyblue",
                   }}
                   onClick={handleCredentials}
-                  isOpen={showModal}
+                  // isOpen={showModal}
                   // data-dismiss={showModal}
                 >
                   Submit
