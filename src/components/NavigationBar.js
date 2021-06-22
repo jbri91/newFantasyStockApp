@@ -17,7 +17,7 @@ function NavigationBar(props) {
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
   // const [modal, setModal] = useState("modal");
-  const [ showModal, setShowModal ] = useState(false)
+  const [showModal, setShowModal] = useState(false);
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -56,7 +56,6 @@ function NavigationBar(props) {
         .then((data) => setUsernameCredential(data))
         .catch((error) => console.log(error));
     }
-
   }, [userId, createPassword, createUsername]);
 
   let handleCredentials = () => {
@@ -67,51 +66,61 @@ function NavigationBar(props) {
         usernameCredential: usernameCredential,
         password: password,
       }),
-    })
-      .then((res) => {  
-      res.json()
-        if (res.ok) {
-          console.log('If Statement in the handleCredentials function')
-          // setModal("modal")
-          setShowModal(true)
-          setIsCredentialValid(true)
-          fetch("/api/username", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              usernameCredential: usernameCredential,
-              password: password,
-            }),
-          })
-            .then((res) => res.json())
-            .then(
-              (data) => 
-                setAuthentication(data[1]) &
-                setUserId(data[0]) &
-                setFetchBuyingPower(data[2]) &
-                (localStorage.id = data[0])
-            )
-            .then(
-              fetch("/api/foundusername", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                  userId: parseInt(userId),
-                }),
-              })
-            )
-            .then((data) => setUsernameCredential(data))
-            .catch((error) => console.log(error));
-            
-        } else if (!res.ok) {
-          console.log('else statement in handleCredentials')
-          // setModal("");
-          setShowModal(false)
-          setIsCredentialValid(false);
-          resetInputFields();
-        }
-      })
-      .catch((error) => console.log(error))
+    }).then((res) => {
+      res.json();
+      console.log(res)
+      if (res.ok) {
+        console.log("If Statement in the handleCredentials function");
+        // setModal("modal")
+        setShowModal((showModal) => {
+          showModal = true;
+          return showModal;
+        });
+        setIsCredentialValid((isCredentialValid) => {
+          isCredentialValid = true;
+          return isCredentialValid;
+        });
+        fetch("/api/username", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            usernameCredential: usernameCredential,
+            password: password,
+          }),
+        })
+          .then((res) => res.json())
+          .then(
+            (data) =>
+              setAuthentication(data[1]) &
+              setUserId(data[0] > 0 ? data[0] : null) &
+              setFetchBuyingPower(data[2]) &
+              (data[0] > 0 ? (localStorage.id = data[0]) : null)
+          )
+          .then(
+            fetch("/api/foundusername", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+              }),
+            })
+          )
+          .then((data) => setUsernameCredential(data))
+          .catch((error) => console.log(error));
+      } else {
+        console.log("else statement in handleCredentials");
+        // setModal("");
+        resetInputFields();
+        setShowModal((showModal) => {
+          showModal = false;
+          return showModal;
+        });
+        setIsCredentialValid((isCredentialValid) => {
+          isCredentialValid = false;
+          return isCredentialValid;
+        });
+      }
+    });
   };
 
   let handleLogOut = () => {
@@ -230,7 +239,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={showModal ? " " : "modal"}
+                data-dismiss={!showModal ? "modal" : ""}
               >
                 Submit
               </button>

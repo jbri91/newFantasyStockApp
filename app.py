@@ -410,10 +410,10 @@ class ValidateCredentials(Resource):
         conn.commit()
         cur.close()
         conn.close()
-        if account:
-            return jsonify(account, True)
+        if account is None:
+            return jsonify('Something went wrong'), 500
         else:
-            return False
+            return jsonify(account, True)
 
 
 api.add_resource(ValidateCredentials, '/api/username')
