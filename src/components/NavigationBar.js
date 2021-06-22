@@ -68,7 +68,7 @@ function NavigationBar(props) {
       }),
     }).then((res) => {
       res.json();
-      console.log(res)
+      console.log(res.ok)
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
         // setModal("modal")
@@ -110,11 +110,12 @@ function NavigationBar(props) {
       } else {
         console.log("else statement in handleCredentials");
         // setModal("");
-        resetInputFields();
+        
         setShowModal((showModal) => {
           showModal = false;
           return showModal;
         });
+        resetInputFields();
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = false;
           return isCredentialValid;
