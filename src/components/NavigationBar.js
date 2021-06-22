@@ -3,7 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink, useHistory } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -18,7 +18,7 @@ function NavigationBar(props) {
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  // const toggle = () => setShowModal(!showModal);
+  const toggle = () => setShowModal(!showModal);
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -72,7 +72,7 @@ function NavigationBar(props) {
       console.log(res);
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
-        setShowModal("modal");
+        setShowModal(toggle);
 
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = true;
@@ -109,7 +109,7 @@ function NavigationBar(props) {
         console.log("else statement in handleCredentials");
         // setModal("");
 
-        setShowModal("");
+        // setShowModal(false);
 
         resetInputFields();
         setIsCredentialValid((isCredentialValid) => {
@@ -169,6 +169,7 @@ function NavigationBar(props) {
           </button>
         ) : (
           <button
+            onClick={toggle}
             style={{ color: "black" }}
             className="btn btn-info btn-lg"
             data-toggle="modal"
@@ -179,70 +180,90 @@ function NavigationBar(props) {
           </button>
         )}
       </Navbar>
-
-      <div
-        id="myModal"
-        className="modal fade"
-        role="dialog"
-        style={{ color: "black" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title"> Log in to your account</h4>
-              <button type="button" className="close" data-dismiss="modal">
-                &times;
-              </button>
-            </div>
-            <div className="modal-body">
-              <div>
-                <input
-                  placeholder="User ID"
-                  onChange={handleUsername}
-                  value={usernameCredential}
-                />
-                <input
-                  placeholder="Password"
-                  value={password}
-                  onChange={handlePassword}
-                  type="password"
-                />
+      <div>
+        <Modal
+          isOpen={showModal}
+          toggle={toggle}
+          id="myModal"
+          className="modal fade"
+          role="dialog"
+          style={{ color: "black" }}
+        >
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div toggle={toggle} className="modal-header">
+                <h4 className="modal-title"> Log in to your account</h4>
+                <Button
+                  type="button"
+                  className="close"
+                  onClick={toggle}
+                  data-dismiss="modal"
+                  style={{
+                    color: "black",
+                    fontWeight: 'bold'                
+                  }}
+                >
+                  &times;
+                </Button>
               </div>
-            </div>
-            <div
-              className="modal-footer"
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <NavLink
-                to="/createAccount"
-                href="createAccount"
-                className="btn btn-link"
-                data-dismiss="modal"
-                onClick={() => history.push("/createAccount")}
-              >
-                Create Account
-              </NavLink>
-              {isCredentialValid ? null : (
-                <div style={{ fontSize: "13px", color: "red" }}>
-                  The username or password is incorrect
+              <ModalBody className="modal-body">
+                <div>
+                  <input
+                    placeholder="User ID"
+                    onChange={handleUsername}
+                    value={usernameCredential}
+                  />
+                  <input
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePassword}
+                    type="password"
+                  />
                 </div>
-              )}
-              <button
-                type="button"
-                className="btn btn-default"
-                style={{
-                  backgroundColor: "lightblue",
-                  border: "solid",
-                  borderColor: "skyblue",
-                }}
-                onClick={handleCredentials}
-                data-dismiss={showModal}
+              </ModalBody>
+              <ModalFooter
+                className="modal-footer"
+                style={{ display: "flex", justifyContent: "space-between" }}
               >
-                Submit
-              </button>
+                <Button
+                  onClick={toggle}
+                  to="/createAccount"
+                  href="createAccount"
+                  className="btn btn-default"
+                  style={{
+                    color: "black",
+                    backgroundColor: "lightblue",
+                    border: "solid",
+                    borderColor: "skyblue",
+                  }}
+                  // data-dismiss="modal"
+                >
+                  Create Account
+                </Button>
+                {isCredentialValid ? null : (
+                  <div style={{ fontSize: "13px", color: "red" }}>
+                    The username or password is incorrect
+                  </div>
+                )}
+                <Button
+                  type="button"
+                  className="btn btn-default"
+                  style={{
+                    color: 'black',
+                    backgroundColor: "lightblue",
+                    border: "solid",
+                    borderColor: "skyblue",
+                  }}
+                  onClick={handleCredentials}
+                  isOpen={showModal}
+                  // data-dismiss={showModal}
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
             </div>
           </div>
-        </div>
+        </Modal>
       </div>
     </div>
   );
