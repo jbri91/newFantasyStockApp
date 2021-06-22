@@ -3,6 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink, useHistory } from "react-router-dom";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -16,8 +17,8 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
-  // const [modal, setModal] = useState("modal");
   const [showModal, setShowModal] = useState(false);
+  // const toggle = () => setShowModal(!showModal);
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -68,14 +69,11 @@ function NavigationBar(props) {
       }),
     }).then((res) => {
       res.json();
-      console.log(res.ok)
+      console.log(res);
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
-        // setModal("modal")
-        setShowModal((showModal) => {
-          showModal = true;
-          return showModal;
-        });
+        setShowModal("modal");
+
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = true;
           return isCredentialValid;
@@ -110,11 +108,9 @@ function NavigationBar(props) {
       } else {
         console.log("else statement in handleCredentials");
         // setModal("");
-        
-        setShowModal((showModal) => {
-          showModal = false;
-          return showModal;
-        });
+
+        setShowModal("");
+
         resetInputFields();
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = false;
@@ -240,7 +236,7 @@ function NavigationBar(props) {
                   borderColor: "skyblue",
                 }}
                 onClick={handleCredentials}
-                data-dismiss={!showModal ? "modal" : ""}
+                data-dismiss={showModal}
               >
                 Submit
               </button>
