@@ -72,11 +72,7 @@ function NavigationBar(props) {
       console.log(res);
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
-        // setShowModal(toggle);
         setIsCredentialValid(true);
-        
-        // setShowModal(false);
-        // history.push("/summary")
         fetch("/api/username", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -125,7 +121,7 @@ function NavigationBar(props) {
     localStorage.clear();
   };
 
-  // authentication ? history.push("/summary") : console.log("Please Login");
+  authentication ? history.push("/summary") : console.log("Please Login");
 
   return (
     <div style={{ marginBottom: "70px" }}>
@@ -171,8 +167,6 @@ function NavigationBar(props) {
             onClick={toggle}
             style={{ color: "black" }}
             className="btn btn-info btn-lg"
-            data-toggle="modal"
-            data-target="#myModal"
             href="#login"
           >
             Login/Register
@@ -182,16 +176,15 @@ function NavigationBar(props) {
       <div>
         <Modal
           isOpen={showModal}
-          toggle={toggle}
           id="myModal"
-          className="modal fade"
+          data-dismiss = "modal"
           role="dialog"
           style={{ color: "black" }}
         >
-          <div className="modal-dialog">
+          <div >
             <div className="modal-content">
-              <div toggle={toggle} className="modal-header">
-                <h4 className="modal-title"> Log in to your account</h4>
+              <div className="modal-header">
+                <h4> Log in to your account</h4>
                 <Button
                   type="button"
                   className="close"
@@ -205,7 +198,7 @@ function NavigationBar(props) {
                   &times;
                 </Button>
               </div>
-              <ModalBody className="modal-body">
+              <ModalBody >
                 <div>
                   <input
                     placeholder="User ID"
@@ -221,21 +214,18 @@ function NavigationBar(props) {
                 </div>
               </ModalBody>
               <ModalFooter
-                className="modal-footer"
                 style={{ display: "flex", justifyContent: "space-between" }}
               >
                 <Button
                   onClick={toggle}
                   to="/createAccount"
                   href="createAccount"
-                  className="btn btn-default"
                   style={{
                     color: "black",
                     backgroundColor: "lightblue",
                     border: "solid",
                     borderColor: "skyblue",
                   }}
-                  // data-dismiss="modal"
                 >
                   Create Account
                 </Button>
@@ -245,9 +235,6 @@ function NavigationBar(props) {
                   </div>
                 )}
                 <Button
-                  // to= {userId ? "/summary" : null}
-                  // href= {userId  ? "summary" : null}
-                  className="btn btn-default"
                   style={{
                     color: "black",
                     backgroundColor: "lightblue",
@@ -255,9 +242,6 @@ function NavigationBar(props) {
                     borderColor: "skyblue",
                   }}
                   onClick={handleCredentials}
-                  // isOpen={showModal}
-                  // data-dismiss={showModal}
-
                 >
                   Submit
                 </Button>
