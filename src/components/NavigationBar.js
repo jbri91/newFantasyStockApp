@@ -3,6 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink, useHistory } from "react-router-dom";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -16,8 +17,8 @@ function NavigationBar(props) {
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
   const [isCredentialValid, setIsCredentialValid] = useState(true);
-  // const [modal, setModal] = useState("modal");
   const [showModal, setShowModal] = useState(false);
+  const toggle = () => setShowModal(!showModal);
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
@@ -68,18 +69,10 @@ function NavigationBar(props) {
       }),
     }).then((res) => {
       res.json();
-      console.log(res)
+      console.log(res);
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
-        // setModal("modal")
-        setShowModal((showModal) => {
-          showModal = true;
-          return showModal;
-        });
-        setIsCredentialValid((isCredentialValid) => {
-          isCredentialValid = true;
-          return isCredentialValid;
-        });
+        setIsCredentialValid(true);
         fetch("/api/username", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -105,16 +98,15 @@ function NavigationBar(props) {
               }),
             })
           )
-          .then((data) => setUsernameCredential(data))
+          .then((data) => setUsernameCredential(data), toggle())
           .catch((error) => console.log(error));
       } else {
         console.log("else statement in handleCredentials");
         // setModal("");
+
+        // setShowModal(false);
+
         resetInputFields();
-        setShowModal((showModal) => {
-          showModal = false;
-          return showModal;
-        });
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = false;
           return isCredentialValid;
@@ -172,80 +164,88 @@ function NavigationBar(props) {
           </button>
         ) : (
           <button
+            onClick={toggle}
             style={{ color: "black" }}
             className="btn btn-info btn-lg"
-            data-toggle="modal"
-            data-target="#myModal"
             href="#login"
           >
             Login/Register
           </button>
         )}
       </Navbar>
-
-      <div
-        id="myModal"
-        className="modal fade"
-        role="dialog"
-        style={{ color: "black" }}
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h4 className="modal-title"> Log in to your account</h4>
-              <button type="button" className="close" data-dismiss="modal">
-                &times;
-              </button>
-            </div>
-            <div className="modal-body">
-              <div>
-                <input
-                  placeholder="User ID"
-                  onChange={handleUsername}
-                  value={usernameCredential}
-                />
-                <input
-                  placeholder="Password"
-                  value={password}
-                  onChange={handlePassword}
-                  type="password"
-                />
+      <div>
+        <Modal
+          isOpen={showModal}
+          style={{ color: "black" }}
+        >
+          <div >
+            <div className="modal-content">
+              <div className="modal-header">
+                <h4> Log in to your account</h4>
+                <Button
+                  type="button"
+                  className="close"
+                  onClick={toggle}
+                  data-dismiss="modal"
+                  style={{
+                    color: "black",
+                    fontWeight: "bold",
+                  }}
+                >
+                  &times;
+                </Button>
               </div>
-            </div>
-            <div
-              className="modal-footer"
-              style={{ display: "flex", justifyContent: "space-between" }}
-            >
-              <NavLink
-                to="/createAccount"
-                href="createAccount"
-                className="btn btn-link"
-                data-dismiss="modal"
-                onClick={() => history.push("/createAccount")}
-              >
-                Create Account
-              </NavLink>
-              {isCredentialValid ? null : (
-                <div style={{ fontSize: "13px", color: "red" }}>
-                  The username or password is incorrect
+              <ModalBody >
+                <div>
+                  <input
+                    placeholder="User ID"
+                    onChange={handleUsername}
+                    value={usernameCredential}
+                  />
+                  <input
+                    placeholder="Password"
+                    value={password}
+                    onChange={handlePassword}
+                    type="password"
+                  />
                 </div>
-              )}
-              <button
-                type="button"
-                className="btn btn-default"
-                style={{
-                  backgroundColor: "lightblue",
-                  border: "solid",
-                  borderColor: "skyblue",
-                }}
-                onClick={handleCredentials}
-                data-dismiss={!showModal ? "modal" : ""}
+              </ModalBody>
+              <ModalFooter
+                style={{ display: "flex", justifyContent: "space-between" }}
               >
-                Submit
-              </button>
+                <Button
+                  onClick={toggle}
+                  to="/createAccount"
+                  href="createAccount"
+                  style={{
+                    color: "black",
+                    backgroundColor: "lightblue",
+                    border: "solid",
+                    borderColor: "skyblue",
+                  }}
+                >
+                  Create Account
+                </Button>
+                {isCredentialValid ? null : (
+                  <div style={{ fontSize: "13px", color: "red" }}>
+                    The username or password is incorrect
+                  </div>
+                )}
+                <Button
+                  style={{
+                    color: "black",
+                    backgroundColor: "lightblue",
+                    border: "solid",
+                    borderColor: "skyblue",
+                  }}
+                  onClick={handleCredentials}
+                >
+                  Submit
+                </Button>
+              </ModalFooter>
             </div>
           </div>
-        </div>
+        </Modal>
       </div>
     </div>
   );
