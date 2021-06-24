@@ -72,9 +72,10 @@ function NavigationBar(props) {
       console.log(res);
       if (res.ok) {
         console.log("If Statement in the handleCredentials function");
-        setShowModal(toggle);
+        // setShowModal(toggle);
         setIsCredentialValid(true);
-        setShowModal(false);
+        
+        // setShowModal(false);
         // history.push("/summary")
         fetch("/api/username", {
           method: "POST",
@@ -101,7 +102,7 @@ function NavigationBar(props) {
               }),
             })
           )
-          .then((data) => setUsernameCredential(data))
+          .then((data) => setUsernameCredential(data), toggle())
           .catch((error) => console.log(error));
       } else {
         console.log("else statement in handleCredentials");
@@ -256,6 +257,7 @@ function NavigationBar(props) {
                   onClick={handleCredentials}
                   // isOpen={showModal}
                   // data-dismiss={showModal}
+
                 >
                   Submit
                 </Button>
