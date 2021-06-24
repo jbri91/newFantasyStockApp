@@ -176,9 +176,6 @@ function NavigationBar(props) {
       <div>
         <Modal
           isOpen={showModal}
-          id="myModal"
-          data-dismiss = "modal"
-          role="dialog"
           style={{ color: "black" }}
         >
           <div >
