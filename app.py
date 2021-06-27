@@ -1,14 +1,20 @@
+from boto.connection import HTTPResponse
 from flask import Flask, jsonify, request
 import requests
 from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import config
+import os
 # # import boto3
 # from boto3 import S3Connection
-# import os
 
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
+
+# def index(request):
+#     key = int(os.environ.get('DATABASE_URL'))
+#     print(key)
+#     return HTTPResponse(key)
 
 app = Flask(__name__)
 api = Api(app)
