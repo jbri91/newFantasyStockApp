@@ -1,4 +1,3 @@
-from boto.connection import HTTPResponse
 from flask import Flask, jsonify, request
 import requests
 from flask_restful import Api, Resource
