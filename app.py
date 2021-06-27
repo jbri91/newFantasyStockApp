@@ -4,7 +4,11 @@ from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import config
+# # import boto3
+# from boto3 import S3Connection
+# import os
 
+# s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 app = Flask(__name__)
 api = Api(app)
