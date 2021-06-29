@@ -15,6 +15,9 @@ api = Api(app)
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
+port = os.getenv('PORT')
+print(port)
+
 DATABASE_URL = os.environ['DATABASE_URL']
 
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
