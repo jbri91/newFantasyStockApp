@@ -15,6 +15,11 @@ api = Api(app)
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
+conn = psycopg2.connect(dbname='d8klhiv55gj2tm',
+                                user='zcvdtiuinsbmyj',
+                                password='7c1845cc82be0e3408a94a94558917615559071e1ea1efe87ec7c197ef6f8485',
+                                host='ec2-54-158-232-223.compute-1.amazonaws.com')
+
 
 class SearchStock(Resource):
     def get(self, stock):
@@ -73,10 +78,6 @@ api.add_resource(Microsoft, '/api/microsoft')
 
 class PurchasedStock(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s',
                     (userId, ))
@@ -92,10 +93,6 @@ api.add_resource(PurchasedStock, '/api/purchased/<userId>')
 
 class SumOfPurchasedStock(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             'SELECT SUM(price) FROM purchased_stock WHERE user_id = %s',
@@ -112,10 +109,6 @@ api.add_resource(SumOfPurchasedStock, '/api/sum/<userId>')
 
 class UserCredentials(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         username = json_data['username']
@@ -134,10 +127,6 @@ api.add_resource(UserCredentials, '/api/createaccount')
 
 class AddStocksToTable(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         symbol = json_data['symbol']
@@ -165,10 +154,6 @@ api.add_resource(AddStocksToTable, '/api/buystock')
 
 class DeleteRow(Resource):
     def delete(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         stock_id = json_data['stock_id']
@@ -186,10 +171,6 @@ api.add_resource(DeleteRow, '/api/deleterow')
 
 class AllSymbols(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             'SELECT symbol FROM (SELECT symbol, SUM(shares) FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price) AS symbol_name',
@@ -206,10 +187,6 @@ api.add_resource(AllSymbols, '/api/allsymbols/<userId>')
 
 class StockReport(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             'SELECT symbol, SUM(shares), price FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price, user_id;',
@@ -226,10 +203,6 @@ api.add_resource(StockReport, '/api/stockreport/<userId>')
 
 class NumberOfShares(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             "SELECT SUM(shares), symbol FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price",
@@ -246,10 +219,6 @@ api.add_resource(NumberOfShares, '/api/shares/<userId>')
 
 class TotalInvested(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             "SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY price",
@@ -266,10 +235,6 @@ api.add_resource(TotalInvested, '/api/invested/<userId>')
 
 class SumOfAllStocksPurchased(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             "SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x",
@@ -287,10 +252,6 @@ api.add_resource(SumOfAllStocksPurchased,
 
 class AccountValue(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         user_id = json_data['userId']
@@ -309,10 +270,6 @@ api.add_resource(AccountValue, '/api/accountvalue')
 
 class TotalPortfolio(Resource):
     def get(self, userId):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         cur.execute(
             "SELECT SUM(price * shares) FROM purchased_stock WHERE user_id = %s",
@@ -329,10 +286,6 @@ api.add_resource(TotalPortfolio, '/api/totalPortfolio/<userId>')
 
 class DeleteAllStocks(Resource):
     def delete(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         stock_symbol = json_data['stock_symbol']
@@ -351,10 +304,6 @@ api.add_resource(DeleteAllStocks, '/api/deleteall')
 
 class UpdateStocks(Resource):
     def put(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         shares = json_data['shares']
@@ -372,10 +321,6 @@ api.add_resource(UpdateStocks, '/api/updatestocks')
 
 class UpdateLatestStockPrices(Resource):
     def put(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         symbol = json_data['symbol']
@@ -396,10 +341,6 @@ api.add_resource(UpdateLatestStockPrices, '/api/lateststocks')
 
 class ValidateCredentials(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         usernameCredential = json_data['usernameCredential']
@@ -425,10 +366,6 @@ api.add_resource(ValidateCredentials, '/api/username')
 
 class FindUsername(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         user_id = json_data['userId']
@@ -446,10 +383,6 @@ api.add_resource(FindUsername, '/api/foundusername')
 
 class UserBalance(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         userId = json_data['userId']
@@ -468,10 +401,6 @@ api.add_resource(UserBalance, '/api/userbalance')
 
 class UpdateBalance(Resource):
     def put(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         userId = json_data['userId']
@@ -489,10 +418,6 @@ api.add_resource(UpdateBalance, '/api/boughtstock')
 
 class UserAndPassword(Resource):
     def post(self):
-        conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
         cur = conn.cursor()
         json_data = request.get_json()
         userId = json_data['userId']
