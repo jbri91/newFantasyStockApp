@@ -4,7 +4,7 @@ from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
 import app
-import config
+# import config
 import os
 # from boto.s3.connection import S3Connection
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
@@ -440,7 +440,7 @@ class UserAndPassword(Resource):
 api.add_resource(UserAndPassword, '/api/credentials')
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
+    port = os.environ.get("PORT", 5000)
     app.run(debug=True, port=port)
 
 # app.run(debug=True, port = 5000)
