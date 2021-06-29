@@ -3,6 +3,7 @@ import requests
 from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
+import app
 import config
 import os
 # from boto.s3.connection import S3Connection
@@ -15,8 +16,7 @@ api = Api(app)
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-port = os.getenv('PORT')
-print(port)
+
 
 DATABASE_URL = os.environ['DATABASE_URL']
 
@@ -439,4 +439,4 @@ class UserAndPassword(Resource):
 
 api.add_resource(UserAndPassword, '/api/credentials')
 
-app.run(debug=True)
+app.run(debug=True, port = os.getenv('PORT'))
