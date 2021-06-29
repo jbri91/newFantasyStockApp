@@ -5,20 +5,14 @@ import psycopg2
 import simplejson as json
 import config
 import os
-# # import boto3
-# from boto3 import S3Connection
-
+# from boto.s3.connection import S3Connection
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
-# def index(request):
-#     key = int(os.environ.get('DATABASE_URL'))
-#     print(key)
-#     return HTTPResponse(key)
-
+# print(s3)
 app = Flask(__name__)
 api = Api(app)
 
-SECRET_TOKEN = config.SECRET_TOKEN
+SECRET_TOKEN = os.environ.get.SECRET_TOKEN
 DB_PASSWORD = config.DB_PASSWORD
 
 
