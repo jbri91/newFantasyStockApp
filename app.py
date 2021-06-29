@@ -3,7 +3,6 @@ import requests
 from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
-import app
 # import config
 import os
 # from boto.s3.connection import S3Connection
@@ -19,7 +18,7 @@ SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 
 
 DATABASE_URL = os.environ['DATABASE_URL']
-
+print(DATABASE_URL)
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # conn = psycopg2.connect(dbname='stock_application',
