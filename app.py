@@ -15,10 +15,14 @@ api = Api(app)
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-conn = psycopg2.connect(dbname='stock_application',
-                                user='postgres',
-                                password=DB_PASSWORD,
-                                host='localhost')
+DATABASE_URL = os.environ['DATABASE_URL']
+
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
+# conn = psycopg2.connect(dbname='stock_application',
+#                                 user='postgres',
+#                                 password=DB_PASSWORD,
+#                                 host='localhost')
 
 
 class SearchStock(Resource):
