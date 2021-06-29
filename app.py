@@ -14,7 +14,7 @@ app = Flask(__name__)
 api = Api(app)
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
+# DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 
 
