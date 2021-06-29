@@ -12,8 +12,8 @@ import os
 app = Flask(__name__)
 api = Api(app)
 
-SECRET_TOKEN = config.SECRET_TOKEN
-DB_PASSWORD = config.DB_PASSWORD
+SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
+DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 conn = psycopg2.connect(dbname='stock_application',
                                 user='postgres',
