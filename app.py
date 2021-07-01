@@ -12,11 +12,9 @@ import os
 app = Flask(__name__, static_folder='./build', static_url_path="/")
 api = Api(app)
 
-
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
-
 
 @app.route('/')
 def index():
@@ -27,10 +25,8 @@ SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
-print('Test', DATABASE_URL, SECRET_TOKEN)
-conn = psycopg2.connect(dbname='d8klhiv55gj2tm', user='zcvdtiuinsbmyj', password='7c1845cc82be0e3408a94a94558917615559071e1ea1efe87ec7c197ef6f8485',
-                        host='ec2-54-158-232-223.compute-1.amazonaws.com', sslmode='allow')
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 # conn = psycopg2.connect(dbname='stock_application',
 #                                 user='postgres',
