@@ -9,12 +9,9 @@ import os
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 # print(s3)
-app = Flask(__name__)
+app = Flask(__name__, static_url_path="")
 api = Api(app)
 
-@app.route('/')
-def home():
-    return 'Hello, World!'
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
