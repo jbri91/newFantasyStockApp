@@ -27,7 +27,7 @@ SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 
 DATABASE_URL = os.environ['DATABASE_URL']
 print(DATABASE_URL)
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+conn = psycopg2.connect(DATABASE_URL, sslmode='allow')
 
 # conn = psycopg2.connect(dbname='stock_application',
 #                                 user='postgres',
