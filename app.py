@@ -12,6 +12,14 @@ import os
 app = Flask(__name__, static_folder='fantasyStockApp/build', static_url_path="/")
 api = Api(app)
 
+@app.error_handler(404)
+def not_found(e):
+    return app.send_static_file('index.html')
+
+@app.route('/')
+def index():
+    return app.send_static_file('index')
+
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
