@@ -12,6 +12,10 @@ import os
 app = Flask(__name__)
 api = Api(app)
 
+@app.route('/')
+def home():
+    return 'Hello, World!'
+
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
