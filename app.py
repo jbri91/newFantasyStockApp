@@ -23,7 +23,7 @@ def index():
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
-
+os.environ['DATABASE_URL'] = "postgres://zcvdtiuinsbmyj:7c1845cc82be0e3408a94a94558917615559071e1ea1efe87ec7c197ef6f8485@ec2-54-158-232-223.compute-1.amazonaws.com:5432/d8klhiv55gj2tm"
 
 DATABASE_URL = os.environ['DATABASE_URL']
 print(DATABASE_URL)
