@@ -27,7 +27,7 @@ SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 
 DATABASE_URL = os.environ.get('DATABASE_URL')
 print(DATABASE_URL)
-conn = psycopg2.connect(DATABASE_URL, sslmode='disable')
+conn = psycopg2.connect(DATABASE_URL, host='ec2-54-158-232-223.compute-1.amazonaws.com', sslmode='disable')
 
 # conn = psycopg2.connect(dbname='stock_application',
 #                                 user='postgres',
