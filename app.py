@@ -12,7 +12,7 @@ import os
 app = Flask(__name__, static_folder='fantasyStockApp/build', static_url_path="/")
 api = Api(app)
 
-@app.error_handler(404)
+@app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
 
