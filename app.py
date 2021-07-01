@@ -9,7 +9,7 @@ import os
 # s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
 # print(s3)
-app = Flask(__name__, static_folder='./fantasyStockApp/build', static_url_path="/")
+app = Flask(__name__, static_folder='fantasyStockApp/build', static_url_path="/")
 api = Api(app)
 
 
