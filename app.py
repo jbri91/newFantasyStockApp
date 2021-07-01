@@ -3,12 +3,8 @@ import requests
 from flask_restful import Api, Resource
 import psycopg2
 import simplejson as json
-# import config
 import os
-# from boto.s3.connection import S3Connection
-# s3 = S3Connection(os.environ['S3_KEY'], os.environ['S3_SECRET'])
 
-# print(s3)
 app = Flask(__name__, static_folder='./build', static_url_path="/")
 api = Api(app)
 
@@ -20,13 +16,14 @@ def not_found(e):
 def index():
     return app.send_static_file('index')
 
+DATABASE_URL = os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 
-DATABASE_URL = os.environ['DATABASE_URL']
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+
 
 # conn = psycopg2.connect(dbname='stock_application',
 #                                 user='postgres',
