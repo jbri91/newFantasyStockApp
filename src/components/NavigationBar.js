@@ -3,7 +3,7 @@ import { Navbar, Nav } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import bullMarketIcon from "../images/bullMarketIcon.png";
 import { NavLink, useHistory } from "react-router-dom";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 
 function NavigationBar(props) {
   let history = useHistory();
@@ -101,11 +101,6 @@ function NavigationBar(props) {
           .then((data) => setUsernameCredential(data), toggle())
           .catch((error) => console.log(error));
       } else {
-        console.log("else statement in handleCredentials");
-        // setModal("");
-
-        // setShowModal(false);
-
         resetInputFields();
         setIsCredentialValid((isCredentialValid) => {
           isCredentialValid = false;
@@ -174,11 +169,8 @@ function NavigationBar(props) {
         )}
       </Navbar>
       <div>
-        <Modal
-          isOpen={showModal}
-          style={{ color: "black" }}
-        >
-          <div >
+        <Modal isOpen={showModal} style={{ color: "black" }}>
+          <div>
             <div className="modal-content">
               <div className="modal-header">
                 <h4> Log in to your account</h4>
@@ -195,7 +187,7 @@ function NavigationBar(props) {
                   &times;
                 </Button>
               </div>
-              <ModalBody >
+              <ModalBody>
                 <div>
                   <input
                     placeholder="User ID"
