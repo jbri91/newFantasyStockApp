@@ -8,22 +8,21 @@ import os
 app = Flask(__name__, static_folder='./build', static_url_path="/")
 api = Api(app)
 
-
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
-
 
 @app.route('/')
 def index():
     return app.send_static_file('index')
 
-
-DATABASE_URL = os.environ['DATABASE_URL']
+DATABASE_URL = os.environ.get('DATABASE_URL')
 conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
+
+
 
 
 # conn = psycopg2.connect(dbname='stock_application',
@@ -356,15 +355,14 @@ class ValidateCredentials(Resource):
         json_data = request.get_json()
         usernameCredential = json_data['usernameCredential']
         password = json_data['password']
-        try:
-            cur.execute(
-                "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
-                (
-                    usernameCredential,
-                    password,
-                ))
-        except psycopg2.InterfaceError as err:
-            account = cur.fetchone()
+        
+        cur.execute(
+            "SELECT user_id FROM user_credentials WHERE username = %s AND password = %s",
+            (
+                usernameCredential,
+                password,
+            ))
+        account = cur.fetchone()
         conn.commit()
         cur.close()
         conn.close()
