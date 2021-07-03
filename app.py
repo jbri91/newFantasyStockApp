@@ -16,7 +16,7 @@ def not_found(e):
 def index():
     return app.send_static_file('index')
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+
 
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
@@ -88,6 +88,7 @@ api.add_resource(Microsoft, '/api/microsoft')
 
 class PurchasedStock(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute('SELECT * FROM purchased_stock WHERE user_id = %s',
@@ -104,6 +105,7 @@ api.add_resource(PurchasedStock, '/api/purchased/<userId>')
 
 class SumOfPurchasedStock(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -121,6 +123,7 @@ api.add_resource(SumOfPurchasedStock, '/api/sum/<userId>')
 
 class UserCredentials(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -140,6 +143,7 @@ api.add_resource(UserCredentials, '/api/createaccount')
 
 class AddStocksToTable(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -168,6 +172,7 @@ api.add_resource(AddStocksToTable, '/api/buystock')
 
 class DeleteRow(Resource):
     def delete(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -186,6 +191,7 @@ api.add_resource(DeleteRow, '/api/deleterow')
 
 class AllSymbols(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -203,6 +209,7 @@ api.add_resource(AllSymbols, '/api/allsymbols/<userId>')
 
 class StockReport(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -220,6 +227,7 @@ api.add_resource(StockReport, '/api/stockreport/<userId>')
 
 class NumberOfShares(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -237,6 +245,7 @@ api.add_resource(NumberOfShares, '/api/shares/<userId>')
 
 class TotalInvested(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -254,6 +263,7 @@ api.add_resource(TotalInvested, '/api/invested/<userId>')
 
 class SumOfAllStocksPurchased(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -272,6 +282,7 @@ api.add_resource(SumOfAllStocksPurchased,
 
 class AccountValue(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -291,6 +302,7 @@ api.add_resource(AccountValue, '/api/accountvalue')
 
 class TotalPortfolio(Resource):
     def get(self, userId):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         cur.execute(
@@ -308,6 +320,7 @@ api.add_resource(TotalPortfolio, '/api/totalPortfolio/<userId>')
 
 class DeleteAllStocks(Resource):
     def delete(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -327,6 +340,7 @@ api.add_resource(DeleteAllStocks, '/api/deleteall')
 
 class UpdateStocks(Resource):
     def put(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -345,6 +359,7 @@ api.add_resource(UpdateStocks, '/api/updatestocks')
 
 class UpdateLatestStockPrices(Resource):
     def put(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -366,6 +381,7 @@ api.add_resource(UpdateLatestStockPrices, '/api/lateststocks')
 
 class ValidateCredentials(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -393,6 +409,7 @@ api.add_resource(ValidateCredentials, '/api/username')
 
 class FindUsername(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -411,6 +428,7 @@ api.add_resource(FindUsername, '/api/foundusername')
 
 class UserBalance(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -430,6 +448,7 @@ api.add_resource(UserBalance, '/api/userbalance')
 
 class UpdateBalance(Resource):
     def put(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
@@ -448,6 +467,7 @@ api.add_resource(UpdateBalance, '/api/boughtstock')
 
 class UserAndPassword(Resource):
     def post(self):
+        DATABASE_URL = os.environ.get('DATABASE_URL')
         conn = psycopg2.connect(DATABASE_URL, sslmode='require')
         cur = conn.cursor()
         json_data = request.get_json()
