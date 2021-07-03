@@ -86,7 +86,7 @@ function NavigationBar(props) {
             (data) =>
               setAuthentication(data[1]) &
               setUserId(data[0] > 0 ? data[0] : null) &
-              console.log(data[2]) &
+              setFetchBuyingPower(data[2]) &
               (data[0] > 0 ? (localStorage.id = data[0]) : null)
           )
           .then(
