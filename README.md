@@ -8,7 +8,7 @@
 
 Click [here](https://fantasy-stock-app.herokuapp.com/) to invest with no regrets!
 
-![Fantasy Stock App](.\src\images\readMePicture.png)
+![Fantasy Stock App](../images/readMePicture.png)
 
 # Summary
 
