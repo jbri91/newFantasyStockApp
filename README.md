@@ -4,7 +4,7 @@
 1) Install postgres
 2) Run backup.sql script in sql_backup directory -->
 
-# Fantasy Stock App Created with React, Flask, Postgres, IEX Cloud API
+<!-- # Fantasy Stock App Created with React, Flask, Postgres, IEX Cloud API
 
 Click [here](https://fantasy-stock-app.herokuapp.com/) to invest with no regrets!
 
@@ -18,7 +18,7 @@ I got to play around with different SQL queries to get the data needed to displa
 
 When it came time to deploy the application on Heroku, I had a few troubles. I reverted back to the Heroku documentation many times in order to get the application deployed. I got a better handle reading the logs to find out what the issue was. Once I managed to deploy it, I found that the database was not connecting. I read the Heroku Postgres documentation to figure out that I had to import the psycopg2-binary package vs just psycopg2. Once I did that, everything worked as expected. I made use of the different documentations at my disposal to put the stock app together.
 
-The fantasy stock app really put me to the test. I enjoyed every minute of it. Even the times I was stuck trying to figure out different errors for hours at a time. I feel great satisfaction having completed this full stack application. I am looking forward to the next challenge!
+The fantasy stock app really put me to the test. I enjoyed every minute of it. Even the times I was stuck trying to figure out different errors for hours at a time. I feel great satisfaction having completed this full stack application. I am looking forward to the next challenge! -->
 
 # Author
 * Johnny Redry Briones Jr. - *Programmer*
