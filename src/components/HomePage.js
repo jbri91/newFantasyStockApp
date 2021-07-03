@@ -19,7 +19,7 @@ function HomePage() {
             before you risk your hard earned cash. 
           </h4>
           <img
-            style={{ borderRadius: "50%", margin: "40px" }}
+            style={{ borderRadius: "50%", margin: "40px", width: '100%', height: 'auto' }}
             src={homepageCoinImage}
             alt="Homepage Coins"
           />

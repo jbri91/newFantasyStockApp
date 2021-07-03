@@ -8,12 +8,14 @@ import ReportPage from "./components/ReportPage";
 import SummaryPage from "./components/SummaryPage";
 import CreateAccount from "./components/CreateAccount";
 
+
 function App() {
   let [authentication, setAuthentication] = useState("");
   const [userId, setUserId] = useState("");
   const [createUsername, setCreateUsername] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
+
 
   useEffect(() => {
     if (localStorage.getItem("id") > 0) {
