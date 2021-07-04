@@ -49,9 +49,9 @@ function SummaryPage(props) {
 
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
-        .then((data) => setPurchasedStocks(data))
+        .then((data) => console.log(data))
         .catch((error) => console.log(error));
-console.log(purchasedStocks)
+
       fetch("/api/userbalance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
