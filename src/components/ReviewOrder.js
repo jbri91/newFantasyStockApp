@@ -80,17 +80,16 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
-      
+      console.log(soldStock)
       if (soldStock >= 1) {
-        const requestOptions = {
+        fetch("/api/updatestocks", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             shares: soldStock,
             stock_id: stockId,
           }),
-        };
-        fetch("/api/updatestocks", requestOptions)
+        })
           .then((res) => res.json())
           .then(
             fetch(`/api/purchased/${userId}`)
