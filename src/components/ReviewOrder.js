@@ -21,11 +21,11 @@ function ReviewOrder(props) {
     if (userId) {
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
-        .then((data) => console.log(data))
+        .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
    
-  }, [shares]);
+  }, []);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;
