@@ -14,7 +14,7 @@ function ReviewOrder(props) {
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
       if (stockId === purchasedStocks[i][0]) {
-        setShares(purchasedStocks[i][7]);
+        console.log(purchasedStocks[i][7]);
       }
     }
 
