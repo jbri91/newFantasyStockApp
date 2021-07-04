@@ -73,7 +73,6 @@ function SummaryPage(props) {
               userId: parseInt(userId),
             }),
           })
-        
         .then((res) => res.json())
         .then((data) => setAccountValue(data == 0 ? 20000 : data)))
         .then(
