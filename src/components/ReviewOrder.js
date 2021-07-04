@@ -9,9 +9,7 @@ function ReviewOrder(props) {
   const { userId } = props;
   const { buyingPower } = props;
   const { setBuyingPower } = props;
-  const [shares, setShares] = useState([]);
-  
-  // console.log(shares)
+  const [shares, setShares] = useState([]); 
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
@@ -117,14 +115,14 @@ function ReviewOrder(props) {
             .catch((error) => console.log(error))
         );
       } else {
-        const deleteStocks = {
+        console.log('I am getting called to delete the whole row')
+        fetch("/api/deleterow", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             stock_id: stockId,
           }),
-        };
-        fetch("/api/deleterow", deleteStocks).then(
+        }).then(
           fetch(`/api/purchased/${userId}`)
             .then((res) => res.json())
             .then((data) => props.setPurchasedStocks(data))
