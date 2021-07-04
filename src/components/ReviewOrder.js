@@ -13,8 +13,8 @@ function ReviewOrder(props) {
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
-      if (stockId == purchasedStocks[i][0]) {
-        console.log(purchasedStocks[i][7]);
+      if (stockId === purchasedStocks[i][0]) {
+        setShares(purchasedStocks[i][7]);
       }
     }
 
@@ -24,7 +24,6 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
-   
   }, [shares]);
 
   function handlePlaceOrder() {
@@ -49,12 +48,13 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             initialPrice: props.stockPrice,
           }),
-        }).then(
-          fetch(`/api/purchased/${userId}`)
-            .then((res) => res.json())
-            .then((data) => props.setPurchasedStocks(data))
-            .catch((error) => console.log(error))
-        );
+        });
+
+        fetch(`/api/purchased/${userId}`)
+          .then((res) => res.json())
+          .then((data) => props.setPurchasedStocks(data))
+          .catch((error) => console.log(error));
+
         fetch("/api/boughtstock", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -62,23 +62,22 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             boughtStock: boughtStock.toFixed(2),
           }),
-        }).then(
-          fetch("/api/userbalance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: parseInt(userId),
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => setBuyingPower(data))
-            .catch((error) => console.log(error))
-        );
+        });
+
+        fetch("/api/userbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => setBuyingPower(data))
+          .catch((error) => console.log(error));
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
-      console.log("shares", shares, "quantity", quantity);
-      console.log(soldStock);
+
       if (soldStock >= 1) {
         console.log("Or am I being called first");
         fetch("/api/updatestocks", {
@@ -88,14 +87,13 @@ function ReviewOrder(props) {
             shares: soldStock,
             stock_id: stockId,
           }),
-        })
+        }).then((res) => res.json());
+
+        fetch(`/api/purchased/${userId}`)
           .then((res) => res.json())
-          .then(
-            fetch(`/api/purchased/${userId}`)
-              .then((res) => res.json())
-              .then((data) => props.setPurchasedStocks(data))
-              .catch((error) => console.log(error))
-          );
+          .then((data) => props.setPurchasedStocks(data))
+          .catch((error) => console.log(error));
+
         fetch("/api/boughtstock", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -103,18 +101,17 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             boughtStock: sellingStock,
           }),
-        }).then(
-          fetch("/api/userbalance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: parseInt(userId),
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => setBuyingPower(data))
-            .catch((error) => console.log(error))
-        );
+        });
+        fetch("/api/userbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => setBuyingPower(data))
+          .catch((error) => console.log(error));
       } else {
         console.log("I am getting called to delete the whole row");
         fetch("/api/deleterow", {
@@ -136,17 +133,16 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             boughtStock: sellingStock,
           }),
-        }).then(
-          fetch("/api/userbalance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: userId,
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => setBuyingPower(data))
-        );
+        });
+        fetch("/api/userbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: userId,
+          }),
+        })
+          .then((res) => res.json())
+          .then((data) => setBuyingPower(data));
       }
     }
   }
