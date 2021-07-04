@@ -24,7 +24,7 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
-    console.log(purchasedStocks)
+    console.log(purchasedStocks);
   }, [shares]);
 
   function handlePlaceOrder() {
@@ -77,10 +77,10 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
-      console.log('shares', shares, 'quantity', quantity)
+      console.log("shares", shares, "quantity", quantity);
       console.log(soldStock);
       if (soldStock >= 1) {
-        console.log('Or am I being called first')
+        console.log("Or am I being called first");
         fetch("/api/updatestocks", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -115,8 +115,7 @@ function ReviewOrder(props) {
             .then((data) => setBuyingPower(data))
             .catch((error) => console.log(error))
         );
-      } 
-      else {
+      } else {
         console.log("I am getting called to delete the whole row");
         fetch("/api/deleterow", {
           method: "DELETE",
