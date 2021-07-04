@@ -78,6 +78,7 @@ function ReviewOrder(props) {
       let soldStock = shares - quantity;
       console.log(soldStock);
       if (soldStock >= 1) {
+        console.log('Or am I being called first')
         fetch("/api/updatestocks", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
