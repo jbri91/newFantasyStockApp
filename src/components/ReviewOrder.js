@@ -76,6 +76,7 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
+      console.log('shares', shares, 'quantity', quantity)
       console.log(soldStock);
       if (soldStock >= 1) {
         console.log('Or am I being called first')
