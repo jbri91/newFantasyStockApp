@@ -150,6 +150,7 @@ function ReviewOrder(props) {
 
   let boughtStock = buyingPower - props.stockSum;
   let sellingStock = Number(buyingPower) + Number(props.stockSum);
+  console.log('Selling Stock', sellingStock, 'Buying Stock', boughtStock)
   return (
     <div>
       <div
