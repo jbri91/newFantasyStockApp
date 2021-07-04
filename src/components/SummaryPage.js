@@ -52,53 +52,50 @@ function SummaryPage(props) {
             .then((res) => res.json())
             .then((data) => setPurchasedStocks(data))
         )
-        .catch((error) => console.log(error))
-        .then(
-          fetch("/api/userbalance", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: parseInt(userId),
-            }),
-          })
-            .then((res) => res.json())
-            .then((data) => setBuyingPower(data))
-            .catch((error) => console.log(error))
-        )
-        
-          fetch("/api/accountvalue", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              userId: parseInt(userId),
-            }),
-          })
+        .catch((error) => console.log(error));
+
+      fetch("/api/userbalance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
         .then((res) => res.json())
-        .then((data) => setAccountValue(data == 0 ? 20000 : data))
-        .then(
-          fetch(`/api/allsymbols/${userId}`)
-            .then((res) => res.json())
-            .then((data) => {
-              for (let i = 0; i < data.length; i++) {
-                fetch(`/api/searchStock/${data[i]}`)
-                  .then((res) => res.json())
-                  .then((data) =>
-                    fetch("/api/lateststocks", {
-                      method: "PUT",
-                      headers: { "Content-Type": "application/json" },
-                      body: JSON.stringify({
-                        symbol: data.symbol,
-                        stockPrice: data.latestPrice,
-                        dayChange: data.change,
-                        percentageChange: data.changePercent,
-                        userId: parseInt(userId),
-                      }),
-                    })
-                  );
-              }
-            })
-            .catch((error) => console.log(error))
-        );
+        .then((data) => setBuyingPower(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/accountvalue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setAccountValue(data == 0 ? 20000 : data));
+      fetch(`/api/allsymbols/${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          for (let i = 0; i < data.length; i++) {
+            fetch(`/api/searchStock/${data[i]}`)
+              .then((res) => res.json())
+              .then((data) =>
+                fetch("/api/lateststocks", {
+                  method: "PUT",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    symbol: data.symbol,
+                    stockPrice: data.latestPrice,
+                    dayChange: data.change,
+                    percentageChange: data.changePercent,
+                    userId: parseInt(userId),
+                  }),
+                })
+              );
+          }
+        })
+        .catch((error) => console.log(error));
     }
   }, [userId]);
 
