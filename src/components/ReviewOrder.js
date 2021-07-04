@@ -9,7 +9,7 @@ function ReviewOrder(props) {
   const { userId } = props;
   const { buyingPower } = props;
   const { setBuyingPower } = props;
-  const [shares, setShares] = useState([]); 
+  const [shares, setShares] = useState([]);
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
@@ -18,24 +18,22 @@ function ReviewOrder(props) {
       }
     }
 
-    if(userId) {
-    fetch(`/api/purchased/${userId}`)
-      .then((res) => res.json())
-      .then((data) => setPurchasedStocks(data))
-      .catch((error) => console.log(error));
+    if (userId) {
+      fetch(`/api/purchased/${userId}`)
+        .then((res) => res.json())
+        .then((data) => setPurchasedStocks(data))
+        .catch((error) => console.log(error));
     }
-  }, [shares, ]);
+  }, [shares]);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;
     let sellingStock = Number(buyingPower) + props.stockSum;
-   
 
     if (selected === "Buy") {
       if (props.stockSum > buyingPower) {
         alert("You do not have enough buy power!");
       } else {
-       
         fetch("/api/buystock", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -78,7 +76,7 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
-      console.log(soldStock)
+      console.log(soldStock);
       if (soldStock >= 1) {
         fetch("/api/updatestocks", {
           method: "PUT",
@@ -102,7 +100,7 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             boughtStock: sellingStock,
           }),
-        }).then((data) =>
+        }).then(
           fetch("/api/userbalance", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -115,7 +113,7 @@ function ReviewOrder(props) {
             .catch((error) => console.log(error))
         );
       } else {
-        console.log('I am getting called to delete the whole row')
+        console.log("I am getting called to delete the whole row");
         fetch("/api/deleterow", {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
@@ -152,7 +150,7 @@ function ReviewOrder(props) {
 
   let boughtStock = buyingPower - props.stockSum;
   let sellingStock = Number(buyingPower) + Number(props.stockSum);
- 
+
   return (
     <div>
       <div
