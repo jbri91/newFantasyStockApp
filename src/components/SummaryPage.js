@@ -65,7 +65,7 @@ function SummaryPage(props) {
         .then((data) => setBuyingPower(data))
         .catch((error) => console.log(error));
 
-      fetch("/api/accountvalue", {
+      fetch ("/api/accountvalue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -75,7 +75,7 @@ function SummaryPage(props) {
         .then((res) => res.json())
         .then((data) => setAccountValue(data == 0 ? 20000 : data))
         .catch(error => console.log(error))
-        
+
       fetch(`/api/allsymbols/${userId}`)
         .then((res) => res.json())
         .then((data) => {
