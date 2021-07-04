@@ -27,8 +27,8 @@ function ReviewOrder(props) {
   }, [shares]);
 
   function handlePlaceOrder() {
-    let boughtStock = buyingPower - props.stockSum;
-    let sellingStock = Number(buyingPower) + props.stockSum;
+    // let boughtStock = buyingPower - props.stockSum;
+    // let sellingStock = Number(buyingPower) + props.stockSum;
 
     // if (selected === "Buy") {
     //   if (props.stockSum > buyingPower) {
@@ -147,7 +147,7 @@ function ReviewOrder(props) {
       //       .then((data) => setBuyingPower(data))
       //   );
       // }
-    }
+  //   }
   }
 
   let boughtStock = buyingPower - props.stockSum;
