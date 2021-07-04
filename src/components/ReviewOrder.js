@@ -13,7 +13,7 @@ function ReviewOrder(props) {
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
-      if (stockId === purchasedStocks[i][0]) {
+      if (stockId == purchasedStocks[i][0]) {
         console.log(purchasedStocks[i][7]);
       }
     }
