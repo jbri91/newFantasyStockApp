@@ -24,6 +24,7 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
+    console.log(purchasedStocks)
   }, [shares]);
 
   function handlePlaceOrder() {
