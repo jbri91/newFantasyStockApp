@@ -48,13 +48,12 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             initialPrice: props.stockPrice,
           }),
-        });
-
+        }).then(
         fetch(`/api/purchased/${userId}`)
           .then((res) => res.json())
           .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error));
-
+          .catch((error) => console.log(error))
+          ).then(
         fetch("/api/boughtstock", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -62,7 +61,7 @@ function ReviewOrder(props) {
             userId: parseInt(userId),
             boughtStock: boughtStock.toFixed(2),
           }),
-        });
+        })).then(
 
         fetch("/api/userbalance", {
           method: "POST",
@@ -73,7 +72,8 @@ function ReviewOrder(props) {
         })
           .then((res) => res.json())
           .then((data) => setBuyingPower(data))
-          .catch((error) => console.log(error));
+          .catch((error) => console.log(error))
+          )
       }
     } else if (selected === "Sell") {
       let soldStock = shares - quantity;
