@@ -101,7 +101,6 @@ function StockModal(props) {
         quantity={quantity}
         setQuantity={setQuantity}
         selected={selected}
-        sumOfAllStocksPurchased={props.sumOfAllStocksPurchased}
         purchasedStocks={props.purchasedStocks}
         setPurchasedStocks={props.setPurchasedStocks}
         buyingPower = {props.buyingPower}

@@ -61,7 +61,7 @@ function ReviewOrder(props) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: parseInt(userId),
-            boughtStock: boughtStock.toFixed(2),
+            boughtStock: buyingPower - props.stockSum,
           }),
         }).then(
           fetch("/api/userbalance", {
@@ -84,7 +84,7 @@ function ReviewOrder(props) {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            shares: soldStock,
+            shares: shares - quantity,
             stock_id: stockId,
           }),
         })
@@ -95,7 +95,7 @@ function ReviewOrder(props) {
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
                 userId: parseInt(userId),
-                boughtStock: sellingStock,
+                boughtStock: Number(buyingPower) + props.stockSum,
               }),
             }).then(
               fetch("/api/userbalance", {
@@ -128,7 +128,7 @@ function ReviewOrder(props) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userId: parseInt(userId),
-            boughtStock: sellingStock,
+            boughtStock: Number(buyingPower) + props.stockSum,
           }),
         }).then(
           fetch("/api/userbalance", {
