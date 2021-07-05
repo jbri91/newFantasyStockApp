@@ -93,7 +93,7 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
-  }, [userId, countRef.buyingPower ]);
+  }, [userId, ]);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);

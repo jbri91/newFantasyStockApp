@@ -27,7 +27,16 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
-  }, [shares, buyingPower, stockId, userId, quantity, setPurchasedStocks, countRef.purchasedStocks]);
+  }, [
+    shares,
+    buyingPower,
+    stockId,
+    userId,
+    quantity,
+    setPurchasedStocks,
+    countRef.purchasedStocks,
+    quantity
+  ]);
 
   function handlePlaceOrder() {
     // let boughtStock = buyingPower - props.stockSum;
@@ -88,30 +97,26 @@ function ReviewOrder(props) {
             shares: shares - quantity,
             stock_id: stockId,
           }),
+        });
+
+        fetch("/api/boughtstock", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+            boughtStock: Number(buyingPower) + props.stockSum,
+          }),
+        });
+        fetch("/api/userbalance", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: parseInt(userId),
+          }),
         })
           .then((res) => res.json())
-          .then(
-            fetch("/api/boughtstock", {
-              method: "PUT",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userId: parseInt(userId),
-                boughtStock: Number(buyingPower) + props.stockSum,
-              }),
-            })
-          )
-          .then(
-            fetch("/api/userbalance", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                userId: parseInt(userId),
-              }),
-            })
-              .then((res) => res.json())
-              .then((data) => setBuyingPower(data))
-              .catch((error) => console.log(error))
-          );
+          .then((data) => setBuyingPower(data))
+          .catch((error) => console.log(error));
       } else {
         fetch("/api/deleterow", {
           method: "DELETE",
