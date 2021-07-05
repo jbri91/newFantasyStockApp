@@ -90,31 +90,35 @@ function ReviewOrder(props) {
             shares: soldStock,
             stock_id: stockId,
           }),
-        }).then((res) => res.json());
-
-        fetch(`/api/purchased/${userId}`)
-          .then((res) => res.json())
-          .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error));
-
-        fetch("/api/boughtstock", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-            boughtStock: sellingStock,
-          }),
-        });
-        fetch("/api/userbalance", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-          }),
         })
-          .then((res) => res.json())
-          .then((data) => setBuyingPower(data))
-          .catch((error) => console.log(error));
+          .then(
+            fetch(`/api/purchased/${userId}`)
+              .then((res) => res.json())
+              .then((data) => props.setPurchasedStocks(data))
+              .catch((error) => console.log(error))
+          )
+          .then(
+            fetch("/api/boughtstock", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                boughtStock: sellingStock,
+              }),
+            })
+          )
+          .then(
+            fetch("/api/userbalance", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => setBuyingPower(data))
+              .catch((error) => console.log(error))
+          );
       } else {
         console.log("I am getting called to delete the whole row");
         fetch("/api/deleterow", {
@@ -123,30 +127,35 @@ function ReviewOrder(props) {
           body: JSON.stringify({
             stock_id: stockId,
           }),
-        });
-        fetch(`/api/purchased/${userId}`)
-          .then((res) => res.json())
-          .then((data) => props.setPurchasedStocks(data))
-          .catch((error) => console.log(error));
-
-        fetch("/api/boughtstock", {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: parseInt(userId),
-            boughtStock: sellingStock,
-          }),
-        });
-        fetch("/api/userbalance", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            userId: userId,
-          }),
         })
-          .then((res) => res.json())
-          .then((data) => setBuyingPower(data))
-          .catch((error) => console.log(error));
+          .then(
+            fetch(`/api/purchased/${userId}`)
+              .then((res) => res.json())
+              .then((data) => props.setPurchasedStocks(data))
+              .catch((error) => console.log(error))
+          )
+          .then(
+            fetch("/api/boughtstock", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                boughtStock: sellingStock,
+              }),
+            })
+          )
+          .then(
+            fetch("/api/userbalance", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: userId,
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => setBuyingPower(data))
+              .catch((error) => console.log(error))
+          );
       }
     }
   }
