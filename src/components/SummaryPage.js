@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
@@ -19,34 +19,34 @@ function SummaryPage(props) {
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const { userId } = props;
+  const countRef = useRef(0);
 
   useEffect(() => {
     if (userId) {
       fetch("/api/tesla")
         .then((res) => res.json())
         .then((data) => setTesla(data))
-        .catch(error => console.log(error))
+        .catch((error) => console.log(error));
 
-          fetch("/api/amazon")
-            .then((res) => res.json())
-            .then((data) => setAmazon(data))
-            .catch(error => console.log(error))
-        
-        
-          fetch("/api/microsoft")
-            .then((res) => res.json())
-            .then((data) => setMicrosoft(data))
-            .catch(error => console.log(error))
-       
-          fetch("/api/apple")
-            .then((res) => res.json())
-            .then((data) => setApple(data))
-            .catch(error => console.log(error))
-        
-          fetch(`/api/purchased/${userId}`)
-            .then((res) => res.json())
-            .then((data) => setPurchasedStocks(data))
-            .catch((error) => console.log(error));
+      fetch("/api/amazon")
+        .then((res) => res.json())
+        .then((data) => setAmazon(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/microsoft")
+        .then((res) => res.json())
+        .then((data) => setMicrosoft(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/apple")
+        .then((res) => res.json())
+        .then((data) => setApple(data))
+        .catch((error) => console.log(error));
+
+      fetch(`/api/purchased/${userId}`)
+        .then((res) => res.json())
+        .then((data) => setPurchasedStocks(data))
+        .catch((error) => console.log(error));
 
       fetch("/api/userbalance", {
         method: "POST",
@@ -67,7 +67,7 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setAccountValue(data == 0 ? 20000 : data))
+        .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)
@@ -93,7 +93,7 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
-  }, []);
+  }, [userId, countRef.buyingPower ]);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);

@@ -48,7 +48,7 @@ function ReportPage(props) {
       return function cleanup() {
         abortController.abort()
       }
-  }, []);
+  }, [userId]);
 
   function handleDelete(e) {
     const requestOptions = {
@@ -80,7 +80,7 @@ function ReportPage(props) {
 
         let amountInvested = -1;
         for(let i =0; i < stockReport.length; i++){
-          if(stockReport[i][0] == e.target.id) {
+          if(stockReport[i][0] === e.target.id) {
             amountInvested = stockReport[i][2] * stockReport[i][1];
             break;
           }
