@@ -26,7 +26,7 @@ function ReviewOrder(props) {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
     }
-  }, [shares, ]);
+  }, [shares, buyingPower, stockId, userId, setBuyingPower ]);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;
@@ -68,13 +68,13 @@ function ReviewOrder(props) {
             initialPrice: props.stockPrice,
           }),
         };
-        fetch("/api/buystock", requestOptions).then((data) =>
+        fetch("/api/buystock", requestOptions).then(
           fetch(`/api/purchased/${userId}`)
             .then((res) => res.json())
             .then((data) => props.setPurchasedStocks(data))
             .catch((error) => console.log(error))
         );
-        fetch("/api/boughtstock", buyStock).then((data) =>
+        fetch("/api/boughtstock", buyStock).then(
           fetch("/api/userbalance", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -101,13 +101,13 @@ function ReviewOrder(props) {
         };
         fetch("/api/updatestocks", requestOptions)
           .then((res) => res.json())
-          .then((data) =>
+          .then(
             fetch(`/api/purchased/${userId}`)
               .then((res) => res.json())
               .then((data) => props.setPurchasedStocks(data))
               .catch((error) => console.log(error))
-          );
-        fetch("/api/boughtstock", sellStock).then((data) =>
+          ).then(
+        fetch("/api/boughtstock", sellStock).then(
           fetch("/api/userbalance", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -118,7 +118,7 @@ function ReviewOrder(props) {
             .then((res) => res.json())
             .then((data) => setBuyingPower(data))
             .catch((error) => console.log(error))
-        );
+        ))
       } else {
         const deleteStocks = {
           method: "DELETE",
@@ -127,18 +127,18 @@ function ReviewOrder(props) {
             stock_id: stockId,
           }),
         };
-        fetch("/api/deleterow", deleteStocks).then((data) =>
+        fetch("/api/deleterow", deleteStocks).then(
           fetch(`/api/purchased/${userId}`)
             .then((res) => res.json())
             .then((data) => props.setPurchasedStocks(data))
             .catch((error) => console.log(error))
         );
-        fetch("/api/boughtstock", sellStock).then((data) =>
+        fetch("/api/boughtstock", sellStock).then(
           fetch("/api/userbalance", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              userId: userId,
+              userId: parseInt(userId),
             }),
           })
             .then((res) => res.json())
