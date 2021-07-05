@@ -151,10 +151,7 @@ function SummaryPage(props) {
           left: "-10px",
         }}
       >
-        <h3>
-          Buying Power: $
-          {Number(buyingPower).toFixed(2)}
-        </h3>
+        <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
       <form onSubmit={handleSubmit}>
