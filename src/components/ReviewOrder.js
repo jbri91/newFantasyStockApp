@@ -26,7 +26,7 @@ function ReviewOrder(props) {
       .then((data) => setPurchasedStocks(data))
       .catch((error) => console.log(error));
     }
-  }, [shares, buyingPower, stockId, userId, setBuyingPower ]);
+  }, [shares, buyingPower, stockId, userId, quantity ]);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;
@@ -73,7 +73,7 @@ function ReviewOrder(props) {
             .then((res) => res.json())
             .then((data) => props.setPurchasedStocks(data))
             .catch((error) => console.log(error))
-        );
+        )
         fetch("/api/boughtstock", buyStock).then(
           fetch("/api/userbalance", {
             method: "POST",
