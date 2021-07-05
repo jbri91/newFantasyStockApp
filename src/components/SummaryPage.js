@@ -98,7 +98,7 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
-  }, [userId]);
+  }, [userId, buyingPower]);
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
