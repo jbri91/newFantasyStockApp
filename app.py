@@ -146,14 +146,23 @@ class AddStocksToTable(Resource):
         userId = json_data['userId']
         initial_price = json_data['initialPrice']
         cur.execute(
-            "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id, initial_price) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
-            (symbol, stockName, price, day_change, percentage_change, date,
-             shares, userId, initial_price))
-        conn.commit()
-        cur.close()
-        conn.close()
-        return jsonify(symbol, stockName, price, day_change, percentage_change,
-                       date, shares, userId, initial_price)
+            'SELECT * FROM purchased_stock WHERE symbol = %s AND user_id = %s', (symbol, userId))
+        symbolExists = cur.fetchone()
+        if symbolExists is None:
+            cur.execute(
+                "INSERT INTO purchased_stock (symbol, stock_name, price, day_change, percentage_change, date, shares, user_id, initial_price) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+                (symbol, stockName, price, day_change, percentage_change, date, shares, userId, initial_price))
+            conn.commit()
+            cur.close()
+            conn.close()
+            return jsonify(symbol, stockName, price, day_change, percentage_change, date, shares, userId, initial_price)
+        else:
+            cur.execute(" UPDATE purchased_stock SET shares = shares + %s, price = %s, initial_price = ((%s + initial_price)/2) WHERE user_id = %s AND symbol = %s ",
+                        (shares, price, price, userId, symbol))
+            conn.commit()
+            cur.close()
+            conn.close()
+            return jsonify(shares, price, price, userId, symbol)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')

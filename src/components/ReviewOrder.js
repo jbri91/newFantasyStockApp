@@ -56,7 +56,7 @@ function ReviewOrder(props) {
             day_change: props.dayChange,
             percentage_change: props.percentageChange,
             date: props.date,
-            shares: quantity,
+            shares: parseInt(quantity),
             userId: parseInt(userId),
             initialPrice: props.stockPrice,
           }),
