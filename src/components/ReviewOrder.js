@@ -9,6 +9,7 @@ function ReviewOrder(props) {
   const { userId } = props;
   const { buyingPower } = props;
   const { setBuyingPower } = props;
+  const { setAccountValue } = props;
   const { setReviewOrderErrors } = props;
   const [shares, setShares] = useState([]);
   const countRef = useRef(0);
@@ -28,6 +29,17 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
+
+    fetch("/api/accountvalue", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: parseInt(userId),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
+      .catch((error) => console.log(error));
   }, [
     shares,
     buyingPower,
@@ -45,9 +57,9 @@ function ReviewOrder(props) {
 
     if (selected === "Buy") {
       if (props.stockSum > buyingPower) {
-        setReviewOrderErrors('"You do not have enough buying power!"')
+        setReviewOrderErrors('"You do not have enough buying power!"');
       } else {
-        setReviewOrderErrors("")
+        setReviewOrderErrors("");
         await fetch("/api/buystock", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -94,14 +106,14 @@ function ReviewOrder(props) {
       }
     } else if (selected === "Sell") {
       // let soldStock = shares - quantity;
-      if (shares <= 0) {
-        setReviewOrderErrors("You do not own this stock!")
+      if (shares == 0) {
+        setReviewOrderErrors("You do not own this stock!");
       } else {
-        setReviewOrderErrors("")
+        setReviewOrderErrors("");
         if (quantity > shares) {
-          setReviewOrderErrors("You do not have that many shares to sell!")
+          setReviewOrderErrors("You do not have that many shares to sell!");
         } else {
-          setReviewOrderErrors("")
+          setReviewOrderErrors("");
           if (shares - quantity >= 1) {
             fetch("/api/updatestocks", {
               method: "PUT",
@@ -131,7 +143,7 @@ function ReviewOrder(props) {
               .then((data) => setBuyingPower(data))
               .catch((error) => console.log(error));
           } else {
-            setReviewOrderErrors("")
+            setReviewOrderErrors("");
             fetch("/api/deleterow", {
               method: "DELETE",
               headers: { "Content-Type": "application/json" },

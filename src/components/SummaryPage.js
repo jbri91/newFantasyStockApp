@@ -21,6 +21,7 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors} = props;
+  const [displayPurchasedStocks, setDisplayPurchasedStocks ] = useState("") 
 
   const countRef = useRef(0);
 
@@ -98,14 +99,15 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
     }
 
-    // for(let i=0; i < purchasedStocks.length; i++) { 
-    //   fetch(`/api/searchStock/${purchasedStocks[i][1]}`)
-    //   .then(res => res.json())
-    //   .then(data => console.log(data.low))
-    //   }
-      
+    for(let i=0; i < purchasedStocks.length; i++) { 
+      fetch(`/api/searchStock/${purchasedStocks[i][1]}`)
+      .then(res => res.json())
+      .then(data => setDisplayPurchasedStocks(data))
+      }
+      console.log(displayPurchasedStocks)
+      console.log(purchasedStocks)
 
-  }, [userId, countRef.purchasedStocks, countRef.buyingPower]);
+  }, [userId, countRef.purchasedStocks, countRef.buyingPower, countRef.accountValue]);
 
 
   
@@ -281,6 +283,7 @@ function SummaryPage(props) {
           stockId={stockId}
           buyingPower={buyingPower}
           setBuyingPower={setBuyingPower}
+          setAccountValue={setAccountValue}
           userId={userId}
           setReviewOrderErrors={setReviewOrderErrors}
         />
