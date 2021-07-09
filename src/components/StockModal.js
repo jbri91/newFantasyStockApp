@@ -6,6 +6,7 @@ function StockModal(props) {
   const [quantity, setQuantity] = useState("");
   const [stockSum, setStockSum] = useState([]);
   const { userId } = props; 
+  const { setReviewOrderErrors } = props;
 
   function handleStockSum() {
     if (quantity <= 0 || selected === "" || selected === 'Select') {
@@ -106,6 +107,7 @@ function StockModal(props) {
         buyingPower = {props.buyingPower}
         setBuyingPower = {props.setBuyingPower}
         userId={userId}
+        setReviewOrderErrors={setReviewOrderErrors}
       />
     </div>
   );

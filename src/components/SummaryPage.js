@@ -19,9 +19,13 @@ function SummaryPage(props) {
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
   const { userId } = props;
+  const { reviewOrderErrors } = props;
+  const { setReviewOrderErrors} = props;
+
   const countRef = useRef(0);
 
   useEffect(() => {
+   
     if (userId) {
       fetch("/api/tesla")
         .then((res) => res.json())
@@ -93,8 +97,19 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
+
+    // for(let i=0; i < purchasedStocks.length; i++) { 
+    //   fetch(`/api/searchStock/${purchasedStocks[i][1]}`)
+    //   .then(res => res.json())
+    //   .then(data => console.log(data.low))
+    //   }
+      
+
   }, [userId, countRef.purchasedStocks, countRef.buyingPower]);
 
+
+  
+  
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
@@ -149,6 +164,7 @@ function SummaryPage(props) {
         <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
+      <p style={{color: 'red'}}>{reviewOrderErrors}</p>      
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
@@ -266,6 +282,7 @@ function SummaryPage(props) {
           buyingPower={buyingPower}
           setBuyingPower={setBuyingPower}
           userId={userId}
+          setReviewOrderErrors={setReviewOrderErrors}
         />
       </div>
     </div>

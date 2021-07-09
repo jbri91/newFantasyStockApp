@@ -86,6 +86,7 @@ class PurchasedStock(Resource):
 api.add_resource(PurchasedStock, '/api/purchased/<userId>')
 
 
+
 class SumOfPurchasedStock(Resource):
     def get(self, userId):
         conn = psycopg2.connect(dbname='stock_application',
