@@ -69,9 +69,7 @@ function NavigationBar(props) {
       }),
     }).then((res) => {
       res.json();
-      console.log(res);
       if (res.ok) {
-        console.log("If Statement in the handleCredentials function");
         setIsCredentialValid(true);
         fetch("/api/username", {
           method: "POST",

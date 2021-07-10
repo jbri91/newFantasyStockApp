@@ -14,7 +14,6 @@ function ReviewOrder(props) {
   const [shares, setShares] = useState([]);
   const countRef = useRef(0);
 
-  // console.log(shares)
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
