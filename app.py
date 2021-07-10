@@ -13,16 +13,17 @@ api = Api(app)
 # DB_PASSWORD = config.DB_PASSWORD
 
 
-
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
+
 
 @app.route('/')
 def index():
     return app.send_static_file('index')
 
-DATABASE_URL = os.environ['DATABASE_URL']
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
@@ -129,7 +130,6 @@ class PurchasedStock(Resource):
 
 
 api.add_resource(PurchasedStock, '/api/purchased/<userId>')
-
 
 
 class SumOfPurchasedStock(Resource):
