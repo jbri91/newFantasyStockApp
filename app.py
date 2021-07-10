@@ -27,7 +27,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
-DB_PASSWORD = os.environ.get('DB_PASSWORD')
+# DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
