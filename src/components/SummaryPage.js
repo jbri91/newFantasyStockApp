@@ -20,12 +20,11 @@ function SummaryPage(props) {
   const [accountValue, setAccountValue] = useState(0);
   const { userId } = props;
   const { reviewOrderErrors } = props;
-  const { setReviewOrderErrors} = props;
+  const { setReviewOrderErrors } = props;
 
   const countRef = useRef(0);
 
   useEffect(() => {
-   
     if (userId) {
       fetch("/api/tesla")
         .then((res) => res.json())
@@ -96,11 +95,14 @@ function SummaryPage(props) {
           }
         })
         .catch((error) => console.log(error));
-    } 
-  }, [userId, countRef.purchasedStocks, countRef.buyingPower, countRef.accountValue]);
+    }
+  }, [
+    userId,
+    countRef.purchasedStocks,
+    countRef.buyingPower,
+    countRef.accountValue,
+  ]);
 
-  
-  
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
@@ -155,7 +157,7 @@ function SummaryPage(props) {
         <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
-      <p style={{color: 'red'}}>{reviewOrderErrors}</p>      
+      <p style={{ color: "red" }}>{reviewOrderErrors}</p>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
