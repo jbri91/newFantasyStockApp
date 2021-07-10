@@ -1,4 +1,4 @@
-<!-- ![Under Construction](src/stockAppUnderConstructionReadMe.png)
+<!-- ![Under Construction](src/stockAppUnderConstructionReadMe.png) --> 
 
 # Fantasy Stock App Created with React, Flask, Postgres, IEX Cloud API
 
