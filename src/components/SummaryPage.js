@@ -21,7 +21,6 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors} = props;
-  const [displayPurchasedStocks, setDisplayPurchasedStocks ] = useState("") 
 
   const countRef = useRef(0);
 
@@ -97,18 +96,8 @@ function SummaryPage(props) {
           }
         })
         .catch((error) => console.log(error));
-    }
-
-    for(let i=0; i < purchasedStocks.length; i++) { 
-      fetch(`/api/searchStock/${purchasedStocks[i][1]}`)
-      .then(res => res.json())
-      .then(data => setDisplayPurchasedStocks(data))
-      }
-      console.log(displayPurchasedStocks)
-      console.log(purchasedStocks)
-
+    } 
   }, [userId, countRef.purchasedStocks, countRef.buyingPower, countRef.accountValue]);
-
 
   
   
@@ -137,7 +126,7 @@ function SummaryPage(props) {
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
         shares={purchasedStocks[i][7]}
-        initialPrice={purchasedStocks[i][9]}
+        initialPrice={purchasedStocks[i][9].toFixed(2)}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
