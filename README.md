@@ -1,9 +1,5 @@
 <!-- ![Under Construction](src/stockAppUnderConstructionReadMe.png)
 
-<!-- Installation Instructions
-1) Install postgres
-2) Run backup.sql script in sql_backup directory --> -->
-
 # Fantasy Stock App Created with React, Flask, Postgres, IEX Cloud API
 
 Click [here](https://fantasy-stock-app.herokuapp.com/) to invest with no regrets!
