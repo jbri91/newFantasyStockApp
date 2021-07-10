@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
@@ -18,15 +18,18 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-
-  const [sumOfAllStocksPurchased, setSumOfAllStocksPurchased] = useState(0);
   const { userId } = props;
+  const { reviewOrderErrors } = props;
+  const { setReviewOrderErrors } = props;
+
+  const countRef = useRef(0);
 
   useEffect(() => {
     if (userId) {
       fetch("/api/tesla")
         .then((res) => res.json())
         .then((data) => setTesla(data))
+<<<<<<< HEAD
         .then(
           fetch("/api/amazon")
             .then((res) => res.json())
@@ -64,6 +67,41 @@ function SummaryPage(props) {
         .then((data) => setBuyingPower(data))
         .catch((error) => console.log(error));
 
+=======
+        .catch((error) => console.log(error));
+
+      fetch("/api/amazon")
+        .then((res) => res.json())
+        .then((data) => setAmazon(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/microsoft")
+        .then((res) => res.json())
+        .then((data) => setMicrosoft(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/apple")
+        .then((res) => res.json())
+        .then((data) => setApple(data))
+        .catch((error) => console.log(error));
+
+      fetch(`/api/purchased/${userId}`)
+        .then((res) => res.json())
+        .then((data) => setPurchasedStocks(data))
+        .catch((error) => console.log(error));
+
+      fetch("/api/userbalance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => setBuyingPower(data))
+        .catch((error) => console.log(error));
+
+>>>>>>> toggleModal
       fetch("/api/accountvalue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -72,7 +110,11 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
+<<<<<<< HEAD
         .then((data) => setAccountValue(data == 0 ? 20000 : data))
+=======
+        .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
+>>>>>>> toggleModal
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)
@@ -98,7 +140,16 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
+<<<<<<< HEAD
   }, []);
+=======
+  }, [
+    userId,
+    countRef.purchasedStocks,
+    countRef.buyingPower,
+    countRef.accountValue,
+  ]);
+>>>>>>> toggleModal
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -125,7 +176,7 @@ function SummaryPage(props) {
         percentChange={purchasedStocks[i][5]}
         time={purchasedStocks[i][6]}
         shares={purchasedStocks[i][7]}
-        initialPrice={purchasedStocks[i][9]}
+        initialPrice={purchasedStocks[i][9].toFixed(2)}
         setPrice={setStockPrice}
         setStockName={setStockName}
         setSymbol={setSymbol}
@@ -154,6 +205,7 @@ function SummaryPage(props) {
         <h3>Buying Power: ${Number(buyingPower).toFixed(2)}</h3>
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
+      <p style={{ color: "red" }}>{reviewOrderErrors}</p>
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
@@ -265,13 +317,14 @@ function SummaryPage(props) {
           dayChange={dayChange}
           date={date}
           percentageChange={percentageChange}
-          sumOfAllStocksPurchased={sumOfAllStocksPurchased}
           purchasedStocks={purchasedStocks}
           setPurchasedStocks={setPurchasedStocks}
           stockId={stockId}
           buyingPower={buyingPower}
           setBuyingPower={setBuyingPower}
+          setAccountValue={setAccountValue}
           userId={userId}
+          setReviewOrderErrors={setReviewOrderErrors}
         />
       </div>
     </div>

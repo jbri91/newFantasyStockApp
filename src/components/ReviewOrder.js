@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 function ReviewOrder(props) {
   const { selected } = props;
@@ -9,7 +9,15 @@ function ReviewOrder(props) {
   const { userId } = props;
   const { buyingPower } = props;
   const { setBuyingPower } = props;
+  const { setAccountValue } = props;
+  const { setReviewOrderErrors } = props;
   const [shares, setShares] = useState([]);
+<<<<<<< HEAD
+=======
+  const countRef = useRef(0);
+
+  // console.log(shares)
+>>>>>>> toggleModal
 
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
@@ -24,17 +32,50 @@ function ReviewOrder(props) {
         .then((data) => setPurchasedStocks(data))
         .catch((error) => console.log(error));
     }
+<<<<<<< HEAD
   }, [shares, buyingPower, purchasedStocks]);
 
   function handlePlaceOrder() {
     let boughtStock = buyingPower - props.stockSum;
     let sellingStock = Number(buyingPower) + props.stockSum;
+=======
+
+    fetch("/api/accountvalue", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: parseInt(userId),
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
+      .catch((error) => console.log(error));
+  }, [
+    shares,
+    buyingPower,
+    stockId,
+    userId,
+    quantity,
+    setPurchasedStocks,
+    countRef.purchasedStocks,
+    quantity,
+  ]);
+
+  async function handlePlaceOrder() {
+    let boughtStock = buyingPower - props.stockSum;
+    // let sellingStock = Number(buyingPower) + props.stockSum;
+>>>>>>> toggleModal
 
     if (selected === "Buy") {
       if (props.stockSum > buyingPower) {
-        alert("You do not have enough buy power!");
+        setReviewOrderErrors('"You do not have enough buying power!"');
       } else {
+<<<<<<< HEAD
         fetch("/api/buystock", {
+=======
+        setReviewOrderErrors("");
+        await fetch("/api/buystock", {
+>>>>>>> toggleModal
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
@@ -44,10 +85,11 @@ function ReviewOrder(props) {
             day_change: props.dayChange,
             percentage_change: props.percentageChange,
             date: props.date,
-            shares: quantity,
+            shares: parseInt(quantity),
             userId: parseInt(userId),
             initialPrice: props.stockPrice,
           }),
+<<<<<<< HEAD
         }).then(
         fetch(`/api/purchased/${userId}`)
           .then((res) => res.json())
@@ -143,6 +185,110 @@ function ReviewOrder(props) {
           .then((res) => res.json())
           .then((data) => setBuyingPower(data))
           .catch((error) => console.log(error));
+=======
+        })
+          .then(
+            await fetch(`/api/purchased/${userId}`)
+              .then((res) => res.json())
+              .then((data) => props.setPurchasedStocks(data))
+              .catch((error) => console.log(error))
+          )
+          .then(
+            await fetch("/api/boughtstock", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                boughtStock: boughtStock,
+              }),
+            })
+          )
+          .then(
+            await fetch("/api/userbalance", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => setBuyingPower(data))
+              .catch((error) => console.log(error))
+          );
+      }
+    } else if (selected === "Sell") {
+      // let soldStock = shares - quantity;
+      if (shares == 0) {
+        setReviewOrderErrors("You do not own this stock!");
+      } else {
+        setReviewOrderErrors("");
+        if (quantity > shares) {
+          setReviewOrderErrors("You do not have that many shares to sell!");
+        } else {
+          setReviewOrderErrors("");
+          if (shares - quantity >= 1) {
+            fetch("/api/updatestocks", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                shares: shares - quantity,
+                stock_id: stockId,
+              }),
+            });
+
+            fetch("/api/boughtstock", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                boughtStock: Number(buyingPower) + props.stockSum,
+              }),
+            });
+            fetch("/api/userbalance", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+              }),
+            })
+              .then((res) => res.json())
+              .then((data) => setBuyingPower(data))
+              .catch((error) => console.log(error));
+          } else {
+            setReviewOrderErrors("");
+            fetch("/api/deleterow", {
+              method: "DELETE",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                stock_id: stockId,
+              }),
+            }).then(
+              fetch(`/api/purchased/${userId}`)
+                .then((res) => res.json())
+                .then((data) => props.setPurchasedStocks(data))
+                .catch((error) => console.log(error))
+            );
+            fetch("/api/boughtstock", {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                userId: parseInt(userId),
+                boughtStock: Number(buyingPower) + props.stockSum,
+              }),
+            }).then(
+              fetch("/api/userbalance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  userId: parseInt(userId),
+                }),
+              })
+                .then((res) => res.json())
+                .then((data) => setBuyingPower(data))
+            );
+          }
+        }
+>>>>>>> toggleModal
       }
     }
   }

@@ -15,6 +15,7 @@ function App() {
   const [createUsername, setCreateUsername] = useState("");
   const [createPassword, setCreatePassword] = useState("");
   const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
+  const [reviewOrderErrors, setReviewOrderErrors] = useState("");
 
 
   useEffect(() => {
@@ -94,6 +95,8 @@ function App() {
               <SummaryPage
                 userId={userId}
                 fetchBuyingPower={fetchBuyingPower}
+                reviewOrderErrors={reviewOrderErrors}
+                setReviewOrderErrors={setReviewOrderErrors}
               />
             </PrivateRoute>
             <Route
