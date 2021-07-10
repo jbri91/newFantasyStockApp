@@ -5,7 +5,6 @@ import psycopg2
 import simplejson as json
 import os
 # import config
-import os
 
 app = Flask(__name__, static_folder='./build', static_url_path="/")
 api = Api(app)
