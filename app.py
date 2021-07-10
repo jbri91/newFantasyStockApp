@@ -5,13 +5,9 @@ import psycopg2
 import simplejson as json
 import os
 import config
-<<<<<<< HEAD
-app = Flask(__name__)
-=======
 import os
 
 app = Flask(__name__, static_folder='./build', static_url_path="/")
->>>>>>> toggleModal
 api = Api(app)
 
 # SECRET_TOKEN = config.SECRET_TOKEN

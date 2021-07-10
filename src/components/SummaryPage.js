@@ -29,45 +29,6 @@ function SummaryPage(props) {
       fetch("/api/tesla")
         .then((res) => res.json())
         .then((data) => setTesla(data))
-<<<<<<< HEAD
-        .then(
-          fetch("/api/amazon")
-            .then((res) => res.json())
-            .then((data) => setAmazon(data))
-        )
-        .then(
-          fetch("/api/microsoft")
-            .then((res) => res.json())
-            .then((data) => setMicrosoft(data))
-        )
-        .then(
-          fetch("/api/apple")
-            .then((res) => res.json())
-            .then((data) => setApple(data))
-        );
-
-      fetch(`/api/sumofallstockspurchased/${userId}`)
-        .then((res) => res.json())
-        .then((data) => setSumOfAllStocksPurchased(data))
-        .catch((error) => console.log(error));
-
-      fetch(`/api/purchased/${userId}`)
-        .then((res) => res.json())
-        .then((data) => setPurchasedStocks(data))
-        .catch((error) => console.log(error));
-
-      fetch("/api/userbalance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: parseInt(userId),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => setBuyingPower(data))
-        .catch((error) => console.log(error));
-
-=======
         .catch((error) => console.log(error));
 
       fetch("/api/amazon")
@@ -101,7 +62,6 @@ function SummaryPage(props) {
         .then((data) => setBuyingPower(data))
         .catch((error) => console.log(error));
 
->>>>>>> toggleModal
       fetch("/api/accountvalue", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -110,11 +70,7 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-<<<<<<< HEAD
-        .then((data) => setAccountValue(data == 0 ? 20000 : data))
-=======
         .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
->>>>>>> toggleModal
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)
@@ -140,16 +96,12 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
-<<<<<<< HEAD
-  }, []);
-=======
   }, [
     userId,
     countRef.purchasedStocks,
     countRef.buyingPower,
     countRef.accountValue,
   ]);
->>>>>>> toggleModal
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
