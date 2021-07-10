@@ -27,29 +27,7 @@ DATABASE_URL = os.environ['DATABASE_URL']
 
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
-# DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
-# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
-
-
-# conn = psycopg2.connect(dbname='stock_application',
-#                         user='postgres',
-#                         password=DB_PASSWORD,
-#                         host='localhost')
-
-# , static_folder='./build', static_url_path="/"
-# @app.errorhandler(404)
-# def not_found(e):
-#     return app.send_static_file('index.html')
-
-# @app.route('/')
-# def index():
-#     return app.send_static_file('index')
-
-# DATABASE_URL = os.environ['DATABASE_URL']
-
-
-# SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 # DB_PASSWORD = os.environ.get('DB_PASSWORD')
 
 # conn = psycopg2.connect(DATABASE_URL, sslmode='require')
