@@ -1,10 +1,6 @@
-import React, {
-  useState,
-} from "react";
-import { useHistory } from "react-router-dom";
+import React, { useState } from "react";
 
 function CreateAccount(props) {
-  let history = useHistory();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [credentialError, setCredentialError] = useState("");
@@ -52,24 +48,23 @@ function CreateAccount(props) {
             .then((res) => res.json())
             .catch((error) => setCredentialError(error));
 
+          fetch("/api/username", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              usernameCredential: username,
+              password: password,
+            }),
+          })
+            .then((res) => res.json())
+            .then(
+              (data) =>
+                props.setAuthentication(data[1]) &
+                props.setUserId(data[0]) &
+                (localStorage.id = data[0])
+            )
+            .catch((error) => console.log(error));
 
-            fetch("/api/username", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                usernameCredential: username,
-                password: password,
-              }),
-            })
-              .then((res) => res.json())
-              .then(
-                (data) =>
-                  props.setAuthentication(data[1]) &
-                  props.setUserId(data[0]) &
-                  (localStorage.id = data[0])
-              )
-              .catch((error) => console.log(error));
-          
           // history.push("/summary");
         } else {
           setNoMatch(
@@ -96,7 +91,6 @@ function CreateAccount(props) {
     }
   }
 
-  console.log(credentialError);
   return (
     <div
       style={{
