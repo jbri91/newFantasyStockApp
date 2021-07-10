@@ -23,7 +23,7 @@ def index():
     return app.send_static_file('index')
 
 
-DATABASE_URL = os.environ.get['DATABASE_URL']
+DATABASE_URL = os.environ['DATABASE_URL']
 
 
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
