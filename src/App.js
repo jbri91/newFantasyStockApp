@@ -7,42 +7,50 @@ import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import ReportPage from "./components/ReportPage";
 import SummaryPage from "./components/SummaryPage";
 import CreateAccount from "./components/CreateAccount";
+import axios from 'axios';
 
 
 function App() {
-  let [authentication, setAuthentication] = useState("");
-  const [userId, setUserId] = useState("");
-  const [createUsername, setCreateUsername] = useState("");
-  const [createPassword, setCreatePassword] = useState("");
+  const [authentication, setAuthentication] = useState("");
   const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
   const [reviewOrderErrors, setReviewOrderErrors] = useState("");
 
+  const [user, setUser] = useState({
+    username: "",
+    password: "",
+    buyingPower: 0,
+    id: "",
+  });
 
+  const { id } = user;
+ 
   useEffect(() => {
-    if (localStorage.getItem("id") > 0) {
-      fetch("/api/credentials", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: localStorage.getItem("id"),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) =>
-          setCreateUsername(
-            data[1],
-            setCreatePassword(
-              data[2],
-              setUserId(data[0]),
-              setFetchBuyingPower(data[3])
-            )
-          )
-        )
-        .catch((error) => console.log(error));
+    getUserCredentials()
 
-      setAuthentication(true);
+  }, [id]);
+
+  const getUserCredentials = async () => {
+    const user = localStorage.getItem('id');
+    const body = {userId: user};
+    console.log(user, body)
+    
+    if (user) {
+      const response = await axios.post('/api/credentials', body)
+      const { data } = response;
+
+      console.log(data)
+      
+      setUser({
+        id: data[0],
+        username: data[1],
+        password: data[2],
+        buyingPower: data[3],
+      })
     }
-  }, [userId]);
+
+  }
+
+
 
   const userAuthorization = {
     isAuthenticated: authentication,
@@ -76,24 +84,21 @@ function App() {
       <header className="App-header">
         <BrowserRouter>
           <NavigationBar
+            user={user}
             setAuthentication={setAuthentication}
             authentication={authentication}
-            setUserId={setUserId}
-            userId={userId}
-            createUsername={createUsername}
-            createPassword={createPassword}
             setFetchBuyingPower={setFetchBuyingPower}
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">
               <ReportPage 
-              userId={userId} 
+              userId={id} 
               fetchBuyingPower={fetchBuyingPower} />
             </PrivateRoute>
             <PrivateRoute path="/summary">
               <SummaryPage
-                userId={userId}
+                userId={id}
                 fetchBuyingPower={fetchBuyingPower}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
@@ -104,10 +109,7 @@ function App() {
               render={(props) => (
                 <CreateAccount
                   setAuthentication={setAuthentication}
-                  setUserId={setUserId}
                   authentication={authentication}
-                  setCreateUsername={setCreateUsername}
-                  setCreatePassword={setCreatePassword}
                 />
               )}
             />

@@ -23,28 +23,11 @@ function SummaryPage(props) {
   const { setReviewOrderErrors } = props;
 
   const countRef = useRef(0);
-
+  
   useEffect(() => {
+   
+    console.log('User ID', userId)
     if (userId) {
-      fetch("/api/tesla")
-        .then((res) => res.json())
-        .then((data) => setTesla(data))
-        .catch((error) => console.log(error));
-
-      fetch("/api/amazon")
-        .then((res) => res.json())
-        .then((data) => setAmazon(data))
-        .catch((error) => console.log(error));
-
-      fetch("/api/microsoft")
-        .then((res) => res.json())
-        .then((data) => setMicrosoft(data))
-        .catch((error) => console.log(error));
-
-      fetch("/api/apple")
-        .then((res) => res.json())
-        .then((data) => setApple(data))
-        .catch((error) => console.log(error));
 
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
@@ -95,14 +78,27 @@ function SummaryPage(props) {
           }
         })
         .catch((error) => console.log(error));
-    }
-  }, [
+      }
+      getInitialStocks();
+    }, [
     userId,
     countRef.purchasedStocks,
     countRef.buyingPower,
     countRef.accountValue,
   ]);
 
+  function getInitialStocks() {
+    fetch('/api/stocks')
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      setTesla(data[0])
+      setAmazon(data[1])
+      setMicrosoft(data[2])
+      setApple(data[3])
+    });
+  }
+  
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
