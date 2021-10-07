@@ -23,7 +23,7 @@ function NavigationBar(props) {
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
   };
-
+ console.log(props)
   const handlePassword = (event) => {
     setPassword(event.target.value);
   };

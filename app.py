@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from db import DB, ConnectionPool
 
 DB.init()
+
 load_dotenv() 
 
 
@@ -26,7 +27,7 @@ def index():
     return app.send_static_file('index')
 
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+# DATABASE_URL = os.environ.get('DATABASE_URL')
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 URL = os.environ.get('URL')
 
@@ -48,11 +49,9 @@ class Stocks(Resource):
         result = []
         for stock in stocks:
             response = requests.get(
-                f'{URL}/{stock}/quote?token={SECRET_TOKEN}&period=annual')
-            print('Response', response)
+                f'{URL}/{stock}/quote?token={SECRET_TOKEN}&period=annual') 
             data = response.json()
             result.append(data)
-        print(result)
         return jsonify(result)
 
 api.add_resource(Stocks, '/api/stocks')
@@ -357,7 +356,6 @@ class UserAndPassword(Resource):
                 'SELECT * FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             credentials = cursor.fetchone()
-            print(credentials)
             return jsonify(credentials)
  
 

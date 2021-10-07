@@ -23,10 +23,8 @@ function SummaryPage(props) {
   const { setReviewOrderErrors } = props;
 
   const countRef = useRef(0);
-  
+
   useEffect(() => {
-   
-    console.log('User ID', userId)
     if (userId) {
 
       fetch(`/api/purchased/${userId}`)
@@ -91,7 +89,6 @@ function SummaryPage(props) {
     fetch('/api/stocks')
     .then(res => res.json())
     .then(data => {
-      console.log(data)
       setTesla(data[0])
       setAmazon(data[1])
       setMicrosoft(data[2])

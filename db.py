@@ -2,9 +2,9 @@ from psycopg2 import pool
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+load_dotenv()
+DATABASE_URL = os.getenv("DATABASE_URL")
 
 # print(type(DATABASE_URL))
 class DB :
