@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from db import DB, ConnectionPool
 
 DB.init()
-# load_dotenv() 
+load_dotenv() 
 
 
 app = Flask(__name__, static_folder='./build', static_url_path="/")
