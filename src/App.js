@@ -34,11 +34,12 @@ function App() {
   const getUserCredentials = async () => {
     const user = localStorage.getItem('id');
     const body = {userId: user};
-    
+    console.log(body)
     if (user) {
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
-      
+      console.log('response', response)
+      console.log('data', data)
       
       setUser({
         id: data[0],
@@ -85,7 +86,6 @@ function App() {
         <BrowserRouter>
           <NavigationBar
             user={user}
-            userId={id}
             setAuthentication={setAuthentication}
             authentication={authentication}
             setFetchBuyingPower={setFetchBuyingPower}

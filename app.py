@@ -61,8 +61,8 @@ class PurchasedStock(Resource):
         with ConnectionPool() as cursor:
             cursor.execute('SELECT * FROM purchased_stock WHERE user_id = %s', 
             (userId, ))
-            purchasedStock = cursor.fetchall()
-            return jsonify(purchasedStock)
+            purchased_stock = cursor.fetchall()
+            return jsonify(purchased_stock)
     
 
 
