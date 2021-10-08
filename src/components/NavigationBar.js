@@ -80,13 +80,14 @@ function NavigationBar(props) {
           }),
         })
           .then((res) => res.json())
-          .then(
-            (data) =>
-              setAuthentication(data[1]) &
-              setUserId(data[0] > 0 ? data[0] : null) &
-              setFetchBuyingPower(data[2]) &
+          .then((data) => {
+              console.log(data)
+              setAuthentication(data[1]) 
+              setUserId(data[0] > 0 ? data[0] : null) 
+              setFetchBuyingPower(data[2]) 
               (data[0] > 0 ? (localStorage.id = data[0]) : null)
-          )
+            })
+          
           .then(
             fetch("/api/foundusername", {
               method: "POST",
