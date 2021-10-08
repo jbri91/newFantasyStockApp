@@ -30,6 +30,7 @@ def index():
 # DATABASE_URL = os.environ.get('DATABASE_URL')
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 URL = os.environ.get('URL')
+print(SECRET_TOKEN, URL)
 
 
 
@@ -356,6 +357,7 @@ class UserAndPassword(Resource):
                 'SELECT * FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             credentials = cursor.fetchone()
+            print(credentials)
             return jsonify(credentials)
  
 

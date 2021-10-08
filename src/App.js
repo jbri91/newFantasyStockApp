@@ -14,7 +14,6 @@ function App() {
   const [authentication, setAuthentication] = useState("");
   const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
   const [reviewOrderErrors, setReviewOrderErrors] = useState("");
-
   const [user, setUser] = useState({
     id: "",
     username: "",
@@ -23,24 +22,23 @@ function App() {
   });
 
   const { id } = user;
+
   console.log(id)
 
   useEffect(() => {
     getUserCredentials()
-
   }, [id]);
-
-
+  
+ 
   const getUserCredentials = async () => {
     const user = localStorage.getItem('id');
     const body = {userId: user};
-    console.log(body)
+    console.log('user', body)
+
     if (user) {
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
-      console.log('response', response)
-      console.log('data', data)
-      
+      console.log( data )
       setUser({
         id: data[0],
         username: data[1],
@@ -50,7 +48,6 @@ function App() {
     }
 
   }
-
 
 
   const userAuthorization = {
@@ -85,7 +82,8 @@ function App() {
       <header className="App-header">
         <BrowserRouter>
           <NavigationBar
-            user={user}
+            user={user} 
+            setUserId ={setUser}
             setAuthentication={setAuthentication}
             authentication={authentication}
             setFetchBuyingPower={setFetchBuyingPower}
