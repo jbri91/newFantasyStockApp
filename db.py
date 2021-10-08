@@ -4,8 +4,8 @@ from dotenv import load_dotenv
 
 
 load_dotenv()
-DATABASE_URL = os.environ.get("DATABASE_URL")
-print(DATABASE_URL)
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 
 class DB :
     __connection_pool = None

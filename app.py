@@ -30,7 +30,6 @@ def index():
 # DATABASE_URL = os.environ.get('DATABASE_URL')
 SECRET_TOKEN = os.environ.get('SECRET_TOKEN')
 URL = os.environ.get('URL')
-print(SECRET_TOKEN, URL)
 
 
 
