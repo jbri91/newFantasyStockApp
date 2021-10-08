@@ -7,7 +7,6 @@ function ReportPage(props) {
   const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
   const [buyingPower, setBuyingPower] = useState("");
-  const { fetchBuyingPower } = props;
 
   
 

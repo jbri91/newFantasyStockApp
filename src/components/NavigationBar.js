@@ -9,7 +9,6 @@ function NavigationBar(props) {
   let history = useHistory();
   let { setAuthentication } = props;
   let { authentication } = props;
-  const { setFetchBuyingPower } = props;
   const { createPassword } = props;
   const { createUsername } = props;
   const { setUserId } = props;
@@ -23,7 +22,7 @@ function NavigationBar(props) {
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
   };
- console.log(props)
+
   const handlePassword = (event) => {
     setPassword(event.target.value);
   };
@@ -80,12 +79,11 @@ function NavigationBar(props) {
           }),
         })
           .then((res) => res.json())
-          .then((data) => {
-              console.log(data)
+          .then((data) => { 
+            console.log('data in NavBar', data)
               setAuthentication(data[1]) 
-              setUserId(data[0] > 0 ? data[0] : null) 
-              setFetchBuyingPower(data[2]) 
-              (data[0] > 0 ? (localStorage.id = data[0]) : null)
+              setUserId(data[0] > 0 ? data[0] : null)  
+              (data[0] > 0 ? localStorage.id = data[0] : null)
             })
           
           .then(

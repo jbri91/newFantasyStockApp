@@ -352,12 +352,13 @@ class UserAndPassword(Resource):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
             userId = json_data['userId']
+            print('userid', userId)
             cursor.execute(
                 'SELECT * FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             credentials = cursor.fetchone()
             print(credentials)
-            return jsonify(credentials)
+        return jsonify(credentials)
  
 
 

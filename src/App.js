@@ -12,7 +12,6 @@ import axios from 'axios';
 
 function App() {
   const [authentication, setAuthentication] = useState("");
-  const [fetchBuyingPower, setFetchBuyingPower] = useState(0);
   const [reviewOrderErrors, setReviewOrderErrors] = useState("");
   const [user, setUser] = useState({
     id: "",
@@ -32,19 +31,21 @@ function App() {
  
   const getUserCredentials = async () => {
     const user = localStorage.getItem('id');
-    const body = {userId: user};
-    console.log('user', body)
+    const body = {userId: user};  
+    console.log('user', user)
 
-    if (user) {
+    if (user) { 
+      console.log(body)
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
-      console.log( data )
+      console.log( 'data', data )
       setUser({
         id: data[0],
         username: data[1],
         password: data[2],
         buyingPower: data[3],
       })
+      setAuthentication(true)
     }
 
   }
@@ -86,19 +87,16 @@ function App() {
             setUserId ={setUser}
             setAuthentication={setAuthentication}
             authentication={authentication}
-            setFetchBuyingPower={setFetchBuyingPower}
           />
           <Switch>
             <Route path="/" component={HomePage} exact />
             <PrivateRoute path="/report">
               <ReportPage 
-              userId={id} 
-              fetchBuyingPower={fetchBuyingPower} />
+              userId={id}  />
             </PrivateRoute>
             <PrivateRoute path="/summary">
               <SummaryPage
                 userId={id}
-                fetchBuyingPower={fetchBuyingPower}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
               />
