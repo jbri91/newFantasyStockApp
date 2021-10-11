@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 function CreateAccount(props) {
   const [username, setUsername] = useState("");
@@ -9,85 +10,63 @@ function CreateAccount(props) {
   const [noMatch, setNoMatch] = useState("");
   const [fieldsCheck, setFieldsCheck] = useState("");
 
-  // function handleUsername(e) {
-  //   setUsername(e.target.value);
-  // }
 
-  // function handlePassword(e) {
-  //   setPassword(e.target.value);
-  // }
-
-  // function handleCopyPassword(e) {
-  //   setCopyPassword(e.target.value);
-  // }
-
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
-    const requestOptions = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    };
+    const validation = () => {
+      let checkPassword = password;
+      let regex = new RegExp(/[A-Z]/ && /[0-9]/);
+      let result = regex.test(checkPassword);
 
-    let checkPassword = password;
-    let regex = new RegExp(/[A-Z]/ && /[0-9]/);
-    let result = regex.test(checkPassword);
-
-    if (username && password) {
-      setFieldsCheck("");
-      if ((password.length > 8, result)) {
-        setNoMatch("");
-        setPasswordRequirements("");
-        if (copyPassword === password) {
+      if (username && password) {
+        setFieldsCheck("");
+        if ((password.length > 8, result)) {
           setNoMatch("");
-
-          fetch("api/createaccount", requestOptions)
-            .then((res) => res.json())
-            .catch((error) => setCredentialError(error));
-
-          fetch("/api/username", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              usernameCredential: username,
-              password: password,
-            }),
-          })
-            .then((res) => res.json())
-            .then(
-              (data) =>
-                props.setAuthentication(data[1]) &
-                props.setUserId(data[0]) &
-                (localStorage.id = data[0])
-            )
-            .catch((error) => console.log(error));
-
-          // history.push("/summary");
+          setPasswordRequirements("");
+          if (copyPassword === password) {
+            setNoMatch("");
+          } else {
+            setNoMatch(
+              <p
+                style={{ fontSize: "15px", color: "red", marginRight: "30px" }}
+              >
+                Password does not match
+              </p>
+            );
+          }
         } else {
-          setNoMatch(
-            <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
-              Password does not match
-            </p>
+          setPasswordRequirements(
+            <ul style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+              <li>Password must be 8 or more characters</li>
+              <li>Password must have atleast one uppercase letter</li>
+              <li>Password must have atleast one Number</li>
+            </ul>
           );
         }
       } else {
-        setPasswordRequirements(
-          <ul style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
-            <li>Password must be 8 or more characters</li>
-            <li>Password must have atleast one uppercase letter</li>
-            <li>Password must have atleast one Number</li>
-          </ul>
+        setFieldsCheck(
+          <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
+            Please Fill In All Fields
+          </p>
         );
       }
-    } else {
-      setFieldsCheck(
-        <p style={{ fontSize: "15px", color: "red", marginRight: "30px" }}>
-          Please Fill In All Fields
-        </p>
-      );
+    };
+
+    if (!username && !password) return;
+    validation();
+
+    try {
+      const body = {
+        username: username,
+        password: password,
+      };
+
+      const response = await axios.post("/api/createaccount", body);
+      const { data } = response;
+      console.log(data);
+      localStorage.setItem("id", data.id);
+    } catch (error) {
+      setCredentialError(error);
     }
   }
 
