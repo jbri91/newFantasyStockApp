@@ -25,6 +25,7 @@ function SummaryPage(props) {
   const countRef = useRef(0);
 
   useEffect(() => {
+  
     if (userId) {
 
       fetch(`/api/purchased/${userId}`)

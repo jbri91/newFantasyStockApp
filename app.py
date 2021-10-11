@@ -349,14 +349,14 @@ class UserAndPassword(Resource):
     def post(self):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
+            print('Json Data', json_data)
             userId = json_data['userId']
-            print('userid', userId)
+            print('USER ID', userId)
             cursor.execute(
                 'SELECT * FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             credentials = cursor.fetchone()
-            print(credentials)
-        return jsonify(credentials)
+        return json.dumps(credentials)
 
 
 api.add_resource(UserAndPassword, '/api/credentials')

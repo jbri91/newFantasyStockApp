@@ -19,10 +19,8 @@ function App() {
     password: "",
     buyingPower: 0,
   });
-
+  
   const { id } = user;
-
-  console.log(id)
 
   useEffect(() => {
     getUserCredentials()
@@ -38,7 +36,9 @@ function App() {
       console.log(body)
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
-      console.log( 'data', data )
+      
+      // Data comes back all string because of json.dumps() in server side. 
+      console.log(data.split(','))
       setUser({
         id: data[0],
         username: data[1],
@@ -97,6 +97,7 @@ function App() {
             <PrivateRoute path="/summary">
               <SummaryPage
                 userId={id}
+                user={user}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
               />
