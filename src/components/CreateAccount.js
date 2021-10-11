@@ -9,17 +9,17 @@ function CreateAccount(props) {
   const [noMatch, setNoMatch] = useState("");
   const [fieldsCheck, setFieldsCheck] = useState("");
 
-  function handleUsername(e) {
-    setUsername(e.target.value);
-  }
+  // function handleUsername(e) {
+  //   setUsername(e.target.value);
+  // }
 
-  function handlePassword(e) {
-    setPassword(e.target.value);
-  }
+  // function handlePassword(e) {
+  //   setPassword(e.target.value);
+  // }
 
-  function handleCopyPassword(e) {
-    setCopyPassword(e.target.value);
-  }
+  // function handleCopyPassword(e) {
+  //   setCopyPassword(e.target.value);
+  // }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -108,8 +108,9 @@ function CreateAccount(props) {
         <form onSubmit={handleSubmit}>
           {fieldsCheck}
           <input
+            required
             className="form-control"
-            onChange={handleUsername}
+            onChange={(e) => setUsername(e.target.value)}
             style={{ marginBottom: "20px" }}
             placeholder="Username"
           />
@@ -119,15 +120,17 @@ function CreateAccount(props) {
             </p>
           ) : null}
           <input
+            required
             className="form-control"
-            onChange={handlePassword}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             style={{ marginBottom: "20px" }}
             placeholder="Password"
           />
           <input
+            required
             className="form-control"
-            onChange={handleCopyPassword}
+            onChange={(e) => setCopyPassword(e.target.value)}
             type="password"
             style={{ marginBottom: "20px" }}
             placeholder={"Re-type Password"}

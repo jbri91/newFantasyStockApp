@@ -15,13 +15,13 @@ function NavigationBar(props) {
   const { userId } = props;
   const [usernameCredential, setUsernameCredential] = useState("");
   const [password, setPassword] = useState("");
-  const [isCredentialValid, setIsCredentialValid] = useState(true);
+  const [isCredentialValid, setIsCredentialValid] = useState(true); 
   const [showModal, setShowModal] = useState(false);
   const toggle = () => setShowModal(!showModal);
 
   const handleUsername = (event) => {
     setUsernameCredential(event.target.value);
-  };
+  };  
 
   const handlePassword = (event) => {
     setPassword(event.target.value);
