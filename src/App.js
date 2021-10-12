@@ -21,7 +21,7 @@ function App() {
   });
   
   const { id } = user;
-  const { buyingPower } = user
+  // const { buyingPower } = user
 
   useEffect(() => {
     getUserCredentials()
@@ -30,7 +30,7 @@ function App() {
  
   const getUserCredentials = async () => {
     const user = localStorage.getItem('id');
-    const body = {userId: parseInt(user)};  
+    const body = {userId: user};  
     console.log('user', user)
 
     if (user) { 

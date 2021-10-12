@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 function ReportPage(props) {
   const [allSymbols, setAllSymbols] = useState([]);
   const [numberShares, setNumberShares] = useState([]);
-  const [totalInvested, setTotalInvested] = useState([]);
+  // const [totalInvested, setTotalInvested] = useState([]);
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
   const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
@@ -64,7 +64,7 @@ function ReportPage(props) {
         .catch((error) => console.log(error));
       fetch(`/api/stockreport/${userId}`)
         .then((res) => res.json())
-        .then((data) => setStockReport(data))
+        .then((data) => setStockReport(JSON.parse(data)))
         .catch((error) => console.log(error));
       fetch(`/api/shares/${userId}`)
         .then((res) => res.json())
@@ -72,7 +72,7 @@ function ReportPage(props) {
         .catch((error) => console.log(error));
       fetch(`/api/totalPortfolio/${userId}`)
         .then((res) => res.json())
-        .then((data) => setTotalPortfolioSum(data))
+        .then((data) => setTotalPortfolioSum(JSON.parse(data)))
         .catch((error) => console.log(error));
 
 

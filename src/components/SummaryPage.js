@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
@@ -80,9 +80,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, [
-    userId, user,
-  ]);
+    }, [userId]);
 
   function getInitialStocks() {
     fetch('/api/stocks')

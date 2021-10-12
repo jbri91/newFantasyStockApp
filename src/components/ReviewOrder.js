@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 
 function ReviewOrder(props) {
   const { selected } = props;
@@ -12,7 +12,6 @@ function ReviewOrder(props) {
   const { setAccountValue } = props;
   const { setReviewOrderErrors } = props;
   const [shares, setShares] = useState([]);
-  const countRef = useRef(0);
 
 
   useEffect(() => {
@@ -47,7 +46,6 @@ function ReviewOrder(props) {
     userId,
     quantity,
     setPurchasedStocks,
-    countRef.purchasedStocks,
     quantity,
   ]);
 

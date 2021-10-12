@@ -97,7 +97,7 @@ class UserCredentials(Resource):
                 'password': new_user[2],
                 'buyingPower': new_user[3]
             }
-            return json.dumps(username, credentials)
+            return json.dumps(credentials)
 
 
 api.add_resource(UserCredentials, '/api/createaccount')
