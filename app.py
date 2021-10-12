@@ -63,7 +63,7 @@ class PurchasedStock(Resource):
             cursor.execute('SELECT * FROM purchased_stock WHERE user_id = %s',
                            (userId, ))
             purchased_stock = cursor.fetchall()
-            return jsonify(purchased_stock)
+            return json.dumps(purchased_stock)
 
 
 api.add_resource(PurchasedStock, '/api/purchased/<userId>')
@@ -166,7 +166,7 @@ class StockReport(Resource):
                 'SELECT symbol, SUM(shares), price FROM purchased_stock WHERE user_id = %s GROUP BY symbol, price, user_id;',
                 (userId, ))
             symbols = cursor.fetchall()
-            return jsonify(symbols)
+            return json.dumps(symbols)
 
 
 api.add_resource(StockReport, '/api/stockreport/<userId>')
@@ -218,7 +218,7 @@ class AccountValue(Resource):
                 "SELECT ((SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + (SELECT user_balance FROM user_Credentials WHERE user_id = %s)) AS account_value",
                 (user_id, user_id))
             accountValue = cursor.fetchall()
-            return jsonify(accountValue)
+            return json.dumps(accountValue)
 
 
 api.add_resource(AccountValue, '/api/accountvalue')
@@ -230,7 +230,7 @@ class TotalPortfolio(Resource):
             cursor.execute(
                 "SELECT SUM(price * shares) FROM purchased_stock WHERE user_id = %s", (userId, ))
             totalPortfolio = cursor.fetchall()
-            return jsonify(totalPortfolio)
+            return json.dumps(totalPortfolio)
 
 
 api.add_resource(TotalPortfolio, '/api/totalPortfolio/<userId>')
@@ -325,7 +325,7 @@ class UserBalance(Resource):
                 'SELECT user_balance FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             balance = cursor.fetchone()
-            return jsonify(balance)
+            return json.dumps(balance)
 
 
 api.add_resource(UserBalance, '/api/userbalance')
@@ -357,7 +357,6 @@ class UserAndPassword(Resource):
                 (userId, ))
             credentials = cursor.fetchone()
         return json.dumps(credentials)
-
 
 api.add_resource(UserAndPassword, '/api/credentials')
 

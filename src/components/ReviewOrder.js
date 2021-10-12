@@ -25,7 +25,7 @@ function ReviewOrder(props) {
     if (userId) {
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
-        .then((data) => setPurchasedStocks(data))
+        .then((data) => setPurchasedStocks(JSON.parse(data)))
         .catch((error) => console.log(error));
     }
 
@@ -37,7 +37,8 @@ function ReviewOrder(props) {
       }),
     })
       .then((res) => res.json())
-      .then((data) => setAccountValue(Number(data) === 0 ? 20000 : data))
+      .then((data) => {
+        setAccountValue(Number(JSON.parse(data)) === 0 ? 20000 : JSON.parse(data))})
       .catch((error) => console.log(error));
   }, [
     shares,

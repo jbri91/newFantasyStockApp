@@ -8,7 +8,6 @@ function ReportPage(props) {
   const { userId } = props;
   const [buyingPower, setBuyingPower] = useState("");
 
-  
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -25,12 +24,12 @@ function ReportPage(props) {
       .catch((error) => console.log(error));
     fetch(`/api/totalPortfolio/${userId}`, { signal:signal })
       .then((res) => res.json())
-      .then((data) => setTotalPortfolioSum(data))
+      .then((data) => setTotalPortfolioSum(JSON.parse(data)))
       .catch((error) => console.log(error));
 
     fetch(`/api/stockreport/${userId}`)
       .then((res) => res.json())
-      .then((data) => setStockReport(data))
+      .then((data) => setStockReport(JSON.parse(data)))
       .catch((error) => console.log(error));
 
     fetch("/api/userbalance", {

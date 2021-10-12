@@ -22,15 +22,16 @@ function SummaryPage(props) {
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
 
-  const countRef = useRef(0);
 
   useEffect(() => {
-  
+    const userId = localStorage.getItem('id');
     if (userId) {
 
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
-        .then((data) => setPurchasedStocks(data))
+        .then((data) => {
+        
+          setPurchasedStocks(JSON.parse(data))})
         .catch((error) => console.log(error));
 
       fetch("/api/userbalance", {
@@ -41,7 +42,7 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setBuyingPower(data))
+        .then((data) => setBuyingPower(JSON.parse(data)))
         .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
@@ -81,9 +82,6 @@ function SummaryPage(props) {
       getInitialStocks();
     }, [
     userId,
-    countRef.purchasedStocks,
-    countRef.buyingPower,
-    countRef.accountValue,
   ]);
 
   function getInitialStocks() {

@@ -21,6 +21,7 @@ function App() {
   });
   
   const { id } = user;
+  const { buyingPower } = user
 
   useEffect(() => {
     getUserCredentials()
@@ -29,28 +30,27 @@ function App() {
  
   const getUserCredentials = async () => {
     const user = localStorage.getItem('id');
-    const body = {userId: user};  
+    const body = {userId: parseInt(user)};  
     console.log('user', user)
 
     if (user) { 
       console.log(body)
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
-      
-      // Data comes back all string because of json.dumps() in server side. 
-      console.log(data.split(','))
+      const cred_data = JSON.parse(data)
+      console.log(cred_data)
       setUser({
-        id: data[0],
-        username: data[1],
-        password: data[2],
-        buyingPower: data[3],
+        id: cred_data[0],
+        username: cred_data[1],
+        password: cred_data[2],
+        buyingPower: cred_data[3],
       })
       setAuthentication(true)
     }
 
   }
 
-
+console.log(user)
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {
@@ -84,6 +84,7 @@ function App() {
         <BrowserRouter>
           <NavigationBar
             user={user} 
+            userId={id}
             setUserId ={setUser}
             setAuthentication={setAuthentication}
             authentication={authentication}
@@ -98,6 +99,7 @@ function App() {
               <SummaryPage
                 userId={id}
                 user={user}
+                buyingPower = {buyingPower}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
               />

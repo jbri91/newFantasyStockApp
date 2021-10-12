@@ -31,7 +31,7 @@ function NavigationBar(props) {
     setUsernameCredential("");
     setPassword("");
   };
-
+ 
   useEffect(() => {
     if (createUsername & createPassword) {
       const requestOptions = {
@@ -53,7 +53,8 @@ function NavigationBar(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setUsernameCredential(data))
+        .then((data) => 
+          setUsernameCredential(data))
         .catch((error) => console.log(error));
     }
   }, [userId, createPassword, createUsername]);
@@ -80,7 +81,7 @@ function NavigationBar(props) {
         })
           .then((res) => res.json())
           .then((data) => { 
-            console.log('data in NavBar', data)
+              console.log('line85 in NavBar', data)
               setAuthentication(data[1]) 
               setUserId(data[0] > 0 ? data[0] : null)  
               (data[0] > 0 ? localStorage.id = data[0] : null)
