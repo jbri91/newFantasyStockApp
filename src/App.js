@@ -99,7 +99,6 @@ console.log(user)
               <SummaryPage
                 userId={id}
                 user={user}
-                buyingPower = {buyingPower}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
               />

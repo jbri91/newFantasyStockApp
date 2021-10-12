@@ -63,8 +63,9 @@ function CreateAccount(props) {
 
       const response = await axios.post("/api/createaccount", body);
       const { data } = response;
+      const cred_data = JSON.parse(data)
       
-      localStorage.setItem("id", data.id);
+      localStorage.setItem("id", cred_data.id);
     } catch (error) {
       setCredentialError(error);
     }

@@ -97,7 +97,7 @@ class UserCredentials(Resource):
                 'password': new_user[2],
                 'buyingPower': new_user[3]
             }
-            return jsonify(username, credentials)
+            return json.dumps(username, credentials)
 
 
 api.add_resource(UserCredentials, '/api/createaccount')
@@ -325,6 +325,7 @@ class UserBalance(Resource):
                 'SELECT user_balance FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             balance = cursor.fetchone()
+            print('balance', balance)
             return json.dumps(balance)
 
 
