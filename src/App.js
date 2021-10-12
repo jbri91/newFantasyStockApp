@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     getUserCredentials()
-  }, [id]);
+  }, [user]);
   
  
   const getUserCredentials = async () => {
@@ -50,7 +50,6 @@ function App() {
 
   }
 
-console.log(user)
   const userAuthorization = {
     isAuthenticated: authentication,
     authenticate(cb) {

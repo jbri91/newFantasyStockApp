@@ -37,7 +37,7 @@ function ReviewOrder(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAccountValue(Number(JSON.parse(data)) === 0 ? 20000 : JSON.parse(data))})
+        setAccountValue(Number(parseFloat(data)) === 0 ? 20000 : parseFloat(data))})
       .catch((error) => console.log(error));
   }, [
     shares,

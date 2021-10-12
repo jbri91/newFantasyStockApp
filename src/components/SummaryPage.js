@@ -18,14 +18,14 @@ function SummaryPage(props) {
   const [stockId, setStockId] = useState("");
   const [searchStock, setSearchStock] = useState("");
   const [accountValue, setAccountValue] = useState(0);
-  // const { userId } = props;
+  const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
   const { user } = props
-  const userId = localStorage.getItem('id');
+  
 
   useEffect(() => {
-    
+    const userId = localStorage.getItem('id');
     if (user) {
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
@@ -42,7 +42,7 @@ function SummaryPage(props) {
       })
         .then((res) => res.json())
         .then((data) => {
-          setBuyingPower(JSON.parse(data))})
+          setBuyingPower(parseFloat(data))})
         .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
@@ -53,7 +53,7 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setAccountValue(Number(JSON.parse(data)) === 0 ? 20000 : JSON.parse(data)))
+        .then((data) => setAccountValue(Number(parseFloat(data)) === 0 ? 20000 : parseFloat(data)))
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)
@@ -80,7 +80,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, [userId]);
+    }, [user]);
 
   function getInitialStocks() {
     fetch('/api/stocks')
