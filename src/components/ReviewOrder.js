@@ -78,7 +78,7 @@ function ReviewOrder(props) {
           .then(
             await fetch(`/api/purchased/${userId}`)
               .then((res) => res.json())
-              .then((data) => props.setPurchasedStocks(data))
+              .then((data) => props.setPurchasedStocks(JSON.parse(data)))
               .catch((error) => console.log(error))
           )
           .then(
@@ -100,7 +100,7 @@ function ReviewOrder(props) {
               }),
             })
               .then((res) => res.json())
-              .then((data) => setBuyingPower(data))
+              .then((data) => setBuyingPower(JSON.parse(data)))
               .catch((error) => console.log(error))
           );
       }
@@ -140,7 +140,7 @@ function ReviewOrder(props) {
               }),
             })
               .then((res) => res.json())
-              .then((data) => setBuyingPower(data))
+              .then((data) => setBuyingPower(JSON.parse(data)))
               .catch((error) => console.log(error));
           } else {
             setReviewOrderErrors("");
@@ -153,7 +153,7 @@ function ReviewOrder(props) {
             }).then(
               fetch(`/api/purchased/${userId}`)
                 .then((res) => res.json())
-                .then((data) => props.setPurchasedStocks(data))
+                .then((data) => props.setPurchasedStocks(JSON.parse(data)))
                 .catch((error) => console.log(error))
             );
             fetch("/api/boughtstock", {
@@ -172,7 +172,7 @@ function ReviewOrder(props) {
                 }),
               })
                 .then((res) => res.json())
-                .then((data) => setBuyingPower(data))
+                .then((data) => setBuyingPower(JSON.parse(data)))
             );
           }
         }

@@ -127,7 +127,7 @@ class AddStocksToTable(Resource):
             else:
                 cursor.execute(" UPDATE purchased_stock SET shares = shares + %s, price = %s, initial_price = ((%s + initial_price)/2) WHERE user_id = %s AND symbol = %s ",
                                (shares, price, price, userId, symbol))
-                return jsonify(shares, price, price, userId, symbol)
+                return json.dumps(shares, price, price, userId, symbol)
 
 
 api.add_resource(AddStocksToTable, '/api/buystock')
@@ -325,7 +325,6 @@ class UserBalance(Resource):
                 'SELECT user_balance FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             balance = cursor.fetchone()
-            print('balance', balance)
             return json.dumps(balance)
 
 
@@ -350,9 +349,7 @@ class UserAndPassword(Resource):
     def post(self):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
-            print('Json Data', json_data)
             userId = json_data['userId']
-            print('USER ID', userId)
             cursor.execute(
                 'SELECT * FROM user_credentials WHERE user_id = %s',
                 (userId, ))

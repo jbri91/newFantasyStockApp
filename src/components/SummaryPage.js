@@ -81,7 +81,7 @@ function SummaryPage(props) {
       }
       getInitialStocks();
     }, [
-    userId,
+    userId, user,
   ]);
 
   function getInitialStocks() {
