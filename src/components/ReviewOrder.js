@@ -11,9 +11,12 @@ function ReviewOrder(props) {
   const { setBuyingPower } = props;
   const { setAccountValue } = props;
   const { setReviewOrderErrors } = props;
-  const [shares, setShares] = useState([]);
+  const [shares, setShares] = useState("");
+
+  console.log('ReviewOrder.js', 'Shares', shares,'Quantity', quantity)
 
 
+  
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
       if (stockId === purchasedStocks[i][0]) {
@@ -37,16 +40,15 @@ function ReviewOrder(props) {
     })
       .then((res) => res.json())
       .then((data) => {
-        setAccountValue(Number(parseFloat(data)) === 0 ? 20000 : parseFloat(data))})
+        setAccountValue(Number((data)) === 0 ? 20000 : (data))})
       .catch((error) => console.log(error));
   }, [
     shares,
     buyingPower,
     stockId,
-    userId,
+    userId, 
     quantity,
-    setPurchasedStocks,
-    quantity,
+    setPurchasedStocks
   ]);
 
   async function handlePlaceOrder() {

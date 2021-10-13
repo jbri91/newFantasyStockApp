@@ -30,23 +30,25 @@ function SummaryPage(props) {
     const userId = localStorage.getItem('id');
     if (userId) {
 
+      setBuyingPower(props.buyingPower)
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           setPurchasedStocks(JSON.parse(data))})
-        .catch((error) => console.log(error));
+        .catch((error) => console.log(error))
 
-      fetch("/api/userbalance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: parseInt(userId),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setBuyingPower(data)})
-        .catch((error) => console.log(error));
+      // fetch("/api/userbalance", {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({
+      //     userId: parseInt(userId),
+      //   }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     console.log(data)
+      //     setBuyingPower(data)})
+      //   .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
         method: "POST",
@@ -86,7 +88,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, [user, buyingPower]);
+    }, [user,]);
 
   function getInitialStocks() {
     fetch('/api/stocks')

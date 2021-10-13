@@ -21,6 +21,7 @@ function App() {
   });
   
   const { id } = user;
+  const { buyingPower } = user
   console.log('user', user.id)
 
   useEffect(() => {
@@ -96,6 +97,7 @@ function App() {
             </PrivateRoute>
             <PrivateRoute path="/summary">
               <SummaryPage
+              buyingPower ={buyingPower}
                 userId={id}
                 user={user}
                 reviewOrderErrors={reviewOrderErrors}
