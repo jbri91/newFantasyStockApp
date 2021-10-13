@@ -224,7 +224,7 @@ class AccountValue(Resource):
                 print('It is None')
                 return 0
             else:
-                return json.dumps(accountValue)
+                return json.dumps(accountValue[0][0])
 
 
 api.add_resource(AccountValue, '/api/accountvalue')
@@ -331,7 +331,8 @@ class UserBalance(Resource):
                 'SELECT user_balance FROM user_credentials WHERE user_id = %s',
                 (userId, ))
             balance = cursor.fetchone()
-            return json.dumps(balance)
+            # print(balance[0])
+            return json.dumps(balance[0])
 
 
 api.add_resource(UserBalance, '/api/userbalance')

@@ -41,8 +41,7 @@ function SummaryPage(props) {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log('line 44 summarypage', data)
-          setBuyingPower(JSON.parse(data))})
+          setBuyingPower(data)})
         .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
