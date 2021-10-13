@@ -33,7 +33,7 @@ function App() {
     const body = {userId: id};  
     console.log('user', user)
 
-    if (user) { 
+    if (id > 0) { 
       console.log(body)
       const response = await axios.post('/api/credentials', body)
       const { data } = response;

@@ -219,7 +219,12 @@ class AccountValue(Resource):
                 "SELECT ((SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + (SELECT user_balance FROM user_Credentials WHERE user_id = %s)) AS account_value",
                 (user_id, user_id))
             accountValue = cursor.fetchall()
-            return json.dumps(accountValue)
+            print('accountvalue', accountValue[0][0])
+            if accountValue[0][0] == None:
+                print('It is None')
+                return 0
+            else:
+                return json.dumps(accountValue)
 
 
 api.add_resource(AccountValue, '/api/accountvalue')

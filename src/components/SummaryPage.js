@@ -53,7 +53,10 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setAccountValue(Number(JSON.parse(data)) === 0 ? 20000 : Number(JSON.parse(data))))
+        .then((data) => 
+        {
+          setAccountValue(data)}
+        )
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)
