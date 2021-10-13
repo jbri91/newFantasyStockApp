@@ -318,7 +318,7 @@ api.add_resource(FindUsername, '/api/foundusername')
 
 
 class UserBalance(Resource):
-    def post(self, userId):
+    def post(self):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
             userId = json_data['userId']

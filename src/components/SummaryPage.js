@@ -25,7 +25,7 @@ function SummaryPage(props) {
 
   useEffect(() => {
     const userId = localStorage.getItem('id');
-    if (user) {
+    if (userId) {
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
         .then((data) => {
