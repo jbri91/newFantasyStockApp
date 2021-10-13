@@ -21,8 +21,7 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
-  const { user } = props
-  
+  const { user } = props 
 
   useEffect(() => {
     const userId = localStorage.getItem('id');
@@ -42,7 +41,8 @@ function SummaryPage(props) {
       })
         .then((res) => res.json())
         .then((data) => {
-          setBuyingPower(parseFloat(data))})
+          console.log('line 44 summarypage', data)
+          setBuyingPower(JSON.parse(data))})
         .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
@@ -53,7 +53,7 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => setAccountValue(Number(parseFloat(data)) === 0 ? 20000 : parseFloat(data)))
+        .then((data) => setAccountValue(Number(JSON.parse(data)) === 0 ? 20000 : Number(JSON.parse(data))))
         .catch((error) => console.log(error));
 
       fetch(`/api/allsymbols/${userId}`)

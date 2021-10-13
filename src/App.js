@@ -21,16 +21,16 @@ function App() {
   });
   
   const { id } = user;
-  // const { buyingPower } = user
+  console.log('user', user.id)
 
   useEffect(() => {
     getUserCredentials()
-  }, [user]);
+  }, [id]);
   
  
   const getUserCredentials = async () => {
-    const user = localStorage.getItem('id');
-    const body = {userId: user};  
+    const id = localStorage.getItem('id');
+    const body = {userId: id};  
     console.log('user', user)
 
     if (user) { 
@@ -38,7 +38,7 @@ function App() {
       const response = await axios.post('/api/credentials', body)
       const { data } = response;
       const cred_data = JSON.parse(data)
-      console.log(cred_data)
+      console.log('Credential Dats', cred_data)
       setUser({
         id: cred_data[0],
         username: cred_data[1],

@@ -97,6 +97,7 @@ class UserCredentials(Resource):
                 'password': new_user[2],
                 'buyingPower': new_user[3]
             }
+            print(credentials)
             return json.dumps(credentials)
 
 
@@ -184,29 +185,29 @@ class NumberOfShares(Resource):
 api.add_resource(NumberOfShares, '/api/shares/<userId>')
 
 
-class TotalInvested(Resource):
-    def get(self, userId):
-        with ConnectionPool() as cursor:
-            cursor.execute("SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY price",
-                           (userId, ))
-            invested = cursor.fetchall()
-            return jsonify(invested)
+# class TotalInvested(Resource):
+#     def get(self, userId):
+#         with ConnectionPool() as cursor:
+#             cursor.execute("SELECT SUM(shares), price FROM purchased_stock WHERE user_id = %s  GROUP BY price",
+#                            (userId, ))
+#             invested = cursor.fetchall()
+#             return jsonify(invested)
 
 
-api.add_resource(TotalInvested, '/api/invested/<userId>')
+# api.add_resource(TotalInvested, '/api/invested/<userId>')
 
 
-class SumOfAllStocksPurchased(Resource):
-    def get(self, userId):
-        with ConnectionPool() as cursor:
-            cursor.execute("SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x",
-                           (userId, ))
-            sum = cursor.fetchall()
-            return jsonify(sum)
+# class SumOfAllStocksPurchased(Resource):
+#     def get(self, userId):
+#         with ConnectionPool() as cursor:
+#             cursor.execute("SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x",
+#                            (userId, ))
+#             sum = cursor.fetchall()
+#             return json.dumps(sum)
 
 
-api.add_resource(SumOfAllStocksPurchased,
-                 '/api/sumofallstockspurchased/<userId>')
+# api.add_resource(SumOfAllStocksPurchased,
+#                  '/api/sumofallstockspurchased/<userId>')
 
 
 class AccountValue(Resource):
@@ -317,7 +318,7 @@ api.add_resource(FindUsername, '/api/foundusername')
 
 
 class UserBalance(Resource):
-    def post(self):
+    def post(self, userId):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
             userId = json_data['userId']
