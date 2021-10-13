@@ -248,10 +248,10 @@ class DeleteAllStocks(Resource):
             json_data = request.get_json()
             stock_symbol = json_data['stock_symbol']
             userId = json_data['userId']
-        cursor.execute(
-            'DELETE FROM purchased_stock WHERE symbol = %s AND user_id = %s',
-            (stock_symbol, userId))
-        return jsonify(stock_symbol, userId)
+            cursor.execute(
+                'DELETE FROM purchased_stock WHERE symbol = %s AND user_id = %s',
+                (stock_symbol, userId))
+            return jsonify(stock_symbol, userId)
 
 
 api.add_resource(DeleteAllStocks, '/api/deleteall')
@@ -263,9 +263,9 @@ class UpdateStocks(Resource):
             json_data = request.get_json()
             shares = json_data['shares']
             stock_id = json_data['stock_id']
-        cursor.execute(
-            'UPDATE purchased_stock SET shares = %s WHERE stock_id = %s',
-            (shares, stock_id))
+            cursor.execute(
+                'UPDATE purchased_stock SET shares = %s WHERE stock_id = %s',
+                (shares, stock_id))
 
 
 api.add_resource(UpdateStocks, '/api/updatestocks')

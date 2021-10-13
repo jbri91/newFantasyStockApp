@@ -16,11 +16,15 @@ function ReportPage(props) {
 
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
-      .then((data) => setAllSymbols(data))
+      .then((data) => {
+        console.log(data)
+        setAllSymbols(data)})
       .catch((error) => console.log(error));
     fetch(`/api/shares/${userId}`)
       .then((res) => res.json())
-      .then((data) => setNumberShares(data))
+      .then((data) => {
+        console.log(data)
+        setNumberShares(data)})
       .catch((error) => console.log(error));
     fetch(`/api/totalPortfolio/${userId}`, { signal:signal })
       .then((res) => res.json())
@@ -29,9 +33,11 @@ function ReportPage(props) {
 
     fetch(`/api/stockreport/${userId}`)
       .then((res) => res.json())
-      .then((data) => setStockReport(JSON.parse(data)))
+      .then((data) => {
+        console.log(JSON.parse(data))
+        setStockReport(JSON.parse(data))})
       .catch((error) => console.log(error));
-
+      console.log(userId)
     fetch("/api/userbalance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -49,6 +55,7 @@ function ReportPage(props) {
   }, [userId]);
 
   function handleDelete(e) {
+    console.log(e.target.id)
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -64,7 +71,9 @@ function ReportPage(props) {
         .catch((error) => console.log(error));
       fetch(`/api/stockreport/${userId}`)
         .then((res) => res.json())
-        .then((data) => setStockReport(JSON.parse(data)))
+        .then((data) => {
+          console.log(data)
+          setStockReport(JSON.parse(data))})
         .catch((error) => console.log(error));
       fetch(`/api/shares/${userId}`)
         .then((res) => res.json())

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
 
+
+
 function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState("");
   const [purchasedStocks, setPurchasedStocks] = useState([]);
@@ -22,10 +24,12 @@ function SummaryPage(props) {
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
   const { user } = props 
+  
 
   useEffect(() => {
     const userId = localStorage.getItem('id');
     if (userId) {
+
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
         .then((data) => {
@@ -54,7 +58,7 @@ function SummaryPage(props) {
         .then((res) => res.json())
         .then((data) => 
         {
-          setAccountValue(data)}
+          setAccountValue(data == 0 ? 20000 : data)}
         )
         .catch((error) => console.log(error));
 
@@ -82,7 +86,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, [user]);
+    }, [user, buyingPower]);
 
   function getInitialStocks() {
     fetch('/api/stocks')
