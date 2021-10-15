@@ -20,9 +20,9 @@ function App() {
     buyingPower: 0,
   });
   
-  const { id } = user;
+  const id = user.id;
   const { buyingPower } = user
-  console.log('user', user.id)
+
 
   useEffect(() => {
     getUserCredentials()
@@ -32,7 +32,6 @@ function App() {
   const getUserCredentials = async () => {
     const id = localStorage.getItem('id');
     const body = {userId: id};  
-    console.log('user', user)
 
     if (id > 0) { 
       console.log(body)
@@ -98,8 +97,10 @@ function App() {
             <PrivateRoute path="/summary">
               <SummaryPage
               buyingPower ={buyingPower}
+              authentication={authentication}
+              setUser={setUser}
                 userId={id}
-                user={user}
+                // user={user}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
               />

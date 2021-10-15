@@ -23,32 +23,36 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
-  const { user } = props 
-  
+  // const { user } = props;
+  const { setUser } = props;
+  const { authentication } = props;
+  console.log('ID in summary page', userId)
 
   useEffect(() => {
-    const userId = localStorage.getItem('id');
+    // const userId = localStorage.getItem('id');
+  
+
     if (userId) {
 
-      setBuyingPower(props.buyingPower)
+      // setBuyingPower(props.buyingPower)
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           setPurchasedStocks(JSON.parse(data))})
         .catch((error) => console.log(error))
 
-      // fetch("/api/userbalance", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify({
-      //     userId: parseInt(userId),
-      //   }),
-      // })
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     console.log(data)
-      //     setBuyingPower(data)})
-      //   .catch((error) => console.log(error));
+      fetch("/api/userbalance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data)
+          setBuyingPower(data)})
+        .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
         method: "POST",
@@ -88,7 +92,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, [user,]);
+    }, []);
 
   function getInitialStocks() {
     fetch('/api/stocks')

@@ -83,7 +83,7 @@ function NavigationBar(props) {
           .then((data) => { 
               console.log('line85 in NavBar', data)
               setAuthentication(data[1]) 
-              setUserId(data[0] > 0 ? data[0] : null)  
+              setUserId({id : data[0] > 0 ? data[0] : null})  
               (data[0] > 0 ? localStorage.id = data[0] : null)
             })
           
