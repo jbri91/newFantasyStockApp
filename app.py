@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request
+from flask.json import dumps
 import requests
 from flask_restful import Api, Resource
 import psycopg2
@@ -215,14 +216,17 @@ class AccountValue(Resource):
         with ConnectionPool() as cursor:
             json_data = request.get_json()
             user_id = json_data['userId']
+
             cursor.execute(
-                "SELECT ((SELECT SUM(x.total_invested) FROM (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + (SELECT user_balance FROM user_Credentials WHERE user_id = %s)) AS account_value",
+                """SELECT ((SELECT SUM(x.total_invested) FROM
+                (SELECT symbol, price * shares AS total_invested FROM purchased_stock WHERE user_id = %s) AS x) + 
+                (SELECT user_balance FROM user_credentials WHERE user_id = %s)) AS account_value""",
                 (user_id, user_id))
             accountValue = cursor.fetchall()
-            print('accountvalue', accountValue[0][0])
             if accountValue[0][0] == None:
-                print('It is None')
-                return 0
+                cursor.execute(" SELECT user_balance from user_credentials WHERE user_id = %s", (user_id, ))
+                accountValue = cursor.fetchall()  
+                return json.dumps(accountValue[0][0])
             else:
                 return json.dumps(accountValue[0][0])
 

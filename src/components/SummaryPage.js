@@ -64,7 +64,7 @@ function SummaryPage(props) {
         .then((res) => res.json())
         .then((data) => 
         {
-          setAccountValue(data == 0 ? 20000 : data)}
+          setAccountValue(data)}
         )
         .catch((error) => console.log(error));
 
@@ -92,7 +92,7 @@ function SummaryPage(props) {
         .catch((error) => console.log(error));
       }
       getInitialStocks();
-    }, []);
+    }, [buyingPower]);
 
   function getInitialStocks() {
     fetch('/api/stocks')
