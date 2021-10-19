@@ -9,7 +9,7 @@ function CreateAccount(props) {
   const [copyPassword, setCopyPassword] = useState("");
   const [noMatch, setNoMatch] = useState("");
   const [fieldsCheck, setFieldsCheck] = useState("");
-
+  const { setAuthentication } = props
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -66,6 +66,7 @@ function CreateAccount(props) {
       console.log("Credential data", cred_data)
       
       localStorage.setItem("id", cred_data.id);
+      setAuthentication(true)
     } catch (error) {
       setCredentialError(error);
     }

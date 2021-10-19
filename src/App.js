@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     getUserCredentials()
-  }, [id]);
+  }, [id, authentication]);
   
  
   const getUserCredentials = async () => {
