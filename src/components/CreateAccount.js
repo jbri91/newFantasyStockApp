@@ -52,8 +52,7 @@ function CreateAccount(props) {
       }
     };
 
-    if (!username && !password) return;
-    validation();
+    if (!username && !password) return validation();
 
     try {
       const body = {
@@ -64,6 +63,7 @@ function CreateAccount(props) {
       const response = await axios.post("/api/createaccount", body);
       const { data } = response;
       const cred_data = JSON.parse(data)
+      console.log("Credential data", cred_data)
       
       localStorage.setItem("id", cred_data.id);
     } catch (error) {

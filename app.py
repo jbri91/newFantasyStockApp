@@ -92,13 +92,13 @@ class UserCredentials(Resource):
                 'INSERT INTO user_credentials (username, password) VALUES(%s, %s) RETURNING *',
                 (username, password))
             new_user = cursor.fetchone()
+            print("Status: ",new_user)
             credentials = {
                 'id': new_user[0],
                 'username': new_user[1],
                 'password': new_user[2],
                 'buyingPower': new_user[3]
             }
-            print(credentials)
             return json.dumps(credentials)
 
 
@@ -184,7 +184,6 @@ class NumberOfShares(Resource):
 
 
 api.add_resource(NumberOfShares, '/api/shares/<userId>')
-
 
 # class TotalInvested(Resource):
 #     def get(self, userId):
