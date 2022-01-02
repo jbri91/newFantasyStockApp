@@ -34,47 +34,12 @@ function SummaryPage(props) {
 
   useEffect(() => {
     // setIsLoading(true)
-    // setTimeout(() => {setIsLoading(false)}, 2000)
     // const userId = localStorage.getItem('id');
-    
-   
+
+
     if (userId) {
 
-      // setBuyingPower(props.buyingPower)
-      fetch(`/api/purchased/${userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setPurchasedStocks(JSON.parse(data))
-        })
-        .catch((error) => console.log(error))
-
-      fetch("/api/userbalance", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: parseInt(userId),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          console.log(data)
-          setBuyingPower(data)
-        })
-        .catch((error) => console.log(error));
-
-      fetch("/api/accountvalue", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: parseInt(userId),
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          setAccountValue(data)
-        }
-        )
-        .catch((error) => console.log(error));
+      fetchData()
 
       fetch(`/api/allsymbols/${userId}`)
         .then((res) => res.json())
@@ -99,21 +64,53 @@ function SummaryPage(props) {
         })
         .catch((error) => console.log(error));
     }
-    getInitialStocks();
-    // setTimeout(() => {setIsLoading(false)}, 2000)
-  }, [buyingPower]);
+    
+  }, [buyingPower, setTesla]);
 
-  async function getInitialStocks() { 
-    // setIsLoading(true)
+  const getInitialStocks = async () => {
     const resp = await fetch('/api/stocks')
     const data = await resp.json()
     setTesla(data[0])
     setAmazon(data[1])
     setMicrosoft(data[2])
     setApple(data[3])
-    // setIsLoading(false) 
-    }; 
-    
+  };
+
+  const fetchData = async () => {
+    // setIsLoading(true)
+    try {
+      const purchased = await fetch(`/api/purchased/${userId}`);
+      const purchasedData = await purchased.json();
+      setPurchasedStocks(JSON.parse(purchasedData))
+
+
+      const userBalance = await fetch("/api/userbalance", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        })})
+
+      const userBalanceData = await userBalance.json()
+      setBuyingPower(userBalanceData)
+
+      const accountValue = await fetch("/api/accountvalue", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          userId: parseInt(userId),
+        }),
+      })
+      const accountValueData = await accountValue.json()
+      setAccountValue(accountValueData)
+
+      getInitialStocks();
+
+    } catch (error) {
+      console.log(error)
+    } 
+    // setIsLoading(false)
+  }
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -178,7 +175,7 @@ function SummaryPage(props) {
       </div>
       <p style={{ color: "red" }}>{reviewOrderErrors}</p>
 
-      
+
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
@@ -211,7 +208,7 @@ function SummaryPage(props) {
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
-        
+
 
         <StockCard
           symbol={tesla.symbol}
