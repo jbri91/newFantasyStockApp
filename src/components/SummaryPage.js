@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Fade } from "react-bootstrap";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
+// import Loading from "./Loading";
 
 
 
@@ -23,22 +25,27 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
+  const { setIsLoading } = props
+  const { isLoading } = props;
   // const { user } = props;
   const { setUser } = props;
   const { authentication } = props;
   console.log('ID in summary page', userId)
 
   useEffect(() => {
+    // setIsLoading(true)
+    // setTimeout(() => {setIsLoading(false)}, 2000)
     // const userId = localStorage.getItem('id');
-  
-
+    
+   
     if (userId) {
 
       // setBuyingPower(props.buyingPower)
       fetch(`/api/purchased/${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          setPurchasedStocks(JSON.parse(data))})
+          setPurchasedStocks(JSON.parse(data))
+        })
         .catch((error) => console.log(error))
 
       fetch("/api/userbalance", {
@@ -51,7 +58,8 @@ function SummaryPage(props) {
         .then((res) => res.json())
         .then((data) => {
           console.log(data)
-          setBuyingPower(data)})
+          setBuyingPower(data)
+        })
         .catch((error) => console.log(error));
 
       fetch("/api/accountvalue", {
@@ -62,9 +70,9 @@ function SummaryPage(props) {
         }),
       })
         .then((res) => res.json())
-        .then((data) => 
-        {
-          setAccountValue(data)}
+        .then((data) => {
+          setAccountValue(data)
+        }
         )
         .catch((error) => console.log(error));
 
@@ -73,7 +81,7 @@ function SummaryPage(props) {
         .then((data) => {
           for (let i = 0; i < data.length; i++) {
             fetch(`/api/searchStock/${data[i]}`)
-              .then((res) => res.json())
+              // .then((res) => res.json())
               .then((data) =>
                 fetch("/api/lateststocks", {
                   method: "PUT",
@@ -90,21 +98,23 @@ function SummaryPage(props) {
           }
         })
         .catch((error) => console.log(error));
-      }
-      getInitialStocks();
-    }, [buyingPower]);
+    }
+    getInitialStocks();
+    // setTimeout(() => {setIsLoading(false)}, 2000)
+  }, [buyingPower]);
 
-  function getInitialStocks() {
-    fetch('/api/stocks')
-    .then(res => res.json())
-    .then(data => {
-      setTesla(data[0])
-      setAmazon(data[1])
-      setMicrosoft(data[2])
-      setApple(data[3])
-    });
-  }
-  
+  async function getInitialStocks() { 
+    // setIsLoading(true)
+    const resp = await fetch('/api/stocks')
+    const data = await resp.json()
+    setTesla(data[0])
+    setAmazon(data[1])
+    setMicrosoft(data[2])
+    setApple(data[3])
+    // setIsLoading(false) 
+    }; 
+    
+
   function handleSearch(e) {
     setSearchStock(e.target.value);
   }
@@ -142,6 +152,13 @@ function SummaryPage(props) {
     );
   }
 
+
+  // function loadingScreen() {
+  //   if (isLoading) {
+  //     return <Loading type={'spokes'} color={'blue'} />
+  //   }
+  // }
+
   return (
     <div>
       <div
@@ -160,6 +177,8 @@ function SummaryPage(props) {
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
       <p style={{ color: "red" }}>{reviewOrderErrors}</p>
+
+      
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
       </form>
@@ -192,6 +211,8 @@ function SummaryPage(props) {
       <div
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
       >
+        
+
         <StockCard
           symbol={tesla.symbol}
           stockName={tesla.companyName}

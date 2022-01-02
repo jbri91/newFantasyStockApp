@@ -8,6 +8,7 @@ import ReportPage from "./components/ReportPage";
 import SummaryPage from "./components/SummaryPage";
 import CreateAccount from "./components/CreateAccount";
 import axios from 'axios';
+import Loading from "./components/Loading";
 
 
 function App() {
@@ -19,7 +20,7 @@ function App() {
     password: "",
     buyingPower: 0,
   });
-  
+  const [isLoading, setIsLoading] = useState(false)
   const id = user.id;
   const { buyingPower } = user
 
@@ -95,7 +96,10 @@ function App() {
               userId={id}  />
             </PrivateRoute>
             <PrivateRoute path="/summary">
+              {isLoading ? <Loading type={'spokes'} color={'blue'}/> :
               <SummaryPage
+              setIsLoading={setIsLoading}
+              isLoading={isLoading}
               buyingPower ={buyingPower}
               authentication={authentication}
               setUser={setUser}
@@ -103,7 +107,7 @@ function App() {
                 // user={user}
                 reviewOrderErrors={reviewOrderErrors}
                 setReviewOrderErrors={setReviewOrderErrors}
-              />
+              />}
             </PrivateRoute>
             <Route
               path="/createAccount"
