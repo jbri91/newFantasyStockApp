@@ -8,7 +8,8 @@ function StockModal(props) {
   const { userId } = props; 
   const { setReviewOrderErrors } = props;
   const { setAccountValue } = props;
-console.log('StockModal: Quantity', quantity, 'stocksum', stockSum, 'selected', selected)
+
+  
   function handleStockSum() {
     if (quantity <= 0 || selected === "" || selected === 'Select') {
     } else {

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
+
+
 function ReportPage(props) {
   const [allSymbols, setAllSymbols] = useState([]);
-  const [numberShares, setNumberShares] = useState([]);
-  // const [totalInvested, setTotalInvested] = useState([]);
+  const [numberShares, setNumberShares] = useState([]); 
   const [totalPortfolioSum, setTotalPortfolioSum] = useState([]);
   const [stockReport, setStockReport] = useState([]);
   const { userId } = props;
   const [buyingPower, setBuyingPower] = useState("");
-  console.log('User Id in ReportPage', userId)
 
   useEffect(() => {
     const abortController = new AbortController()
@@ -17,13 +17,11 @@ function ReportPage(props) {
     fetch(`/api/allsymbols/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setAllSymbols(data)})
       .catch((error) => console.log(error));
     fetch(`/api/shares/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         setNumberShares(data)})
       .catch((error) => console.log(error));
     fetch(`/api/totalPortfolio/${userId}`, { signal:signal })
@@ -34,10 +32,8 @@ function ReportPage(props) {
     fetch(`/api/stockreport/${userId}`)
       .then((res) => res.json())
       .then((data) => {
-        console.log(JSON.parse(data))
         setStockReport(JSON.parse(data))})
       .catch((error) => console.log(error));
-      console.log(userId)
     fetch("/api/userbalance", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -54,8 +50,7 @@ function ReportPage(props) {
       }
   }, [userId]);
 
-  function handleDelete(e) {
-    console.log(e.target.id)
+  function handleDelete(e) { 
     const requestOptions = {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
@@ -72,7 +67,7 @@ function ReportPage(props) {
       fetch(`/api/stockreport/${userId}`)
         .then((res) => res.json())
         .then((data) => {
-          console.log(data)
+
           setStockReport(JSON.parse(data))})
         .catch((error) => console.log(error));
       fetch(`/api/shares/${userId}`)

@@ -13,9 +13,6 @@ function ReviewOrder(props) {
   const { setReviewOrderErrors } = props;
   const [shares, setShares] = useState("");
 
-  console.log('ReviewOrder.js', 'Shares', shares,'Quantity', quantity)
-
-
   
   useEffect(() => {
     for (let i = 0; i < purchasedStocks.length; i++) {
@@ -105,7 +102,6 @@ function ReviewOrder(props) {
           );
       }
     } else if (selected === "Sell") {
-      // let soldStock = shares - quantity;
       if (shares == 0) {
         setReviewOrderErrors("You do not own this stock!");
       } else {

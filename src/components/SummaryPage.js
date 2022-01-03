@@ -1,10 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { Fade } from "react-bootstrap";
+import React, { useState, useEffect } from "react"; 
+import Loading from "./Loading";
 import StockCard from "./StockCard";
 import StockModal from "./StockModal";
-// import Loading from "./Loading";
-
-
 
 function SummaryPage(props) {
   const [buyingPower, setBuyingPower] = useState("");
@@ -25,74 +22,52 @@ function SummaryPage(props) {
   const { userId } = props;
   const { reviewOrderErrors } = props;
   const { setReviewOrderErrors } = props;
-  const { setIsLoading } = props
-  const { isLoading } = props;
-  // const { user } = props;
-  const { setUser } = props;
-  const { authentication } = props;
-  console.log('ID in summary page', userId)
+  const [isLoading, setIsLoading] = useState(true);
+  
 
   useEffect(() => {
-    // setIsLoading(true)
-    // const userId = localStorage.getItem('id');
-
-
     if (userId) {
-
-      fetchData()
-
-      fetch(`/api/allsymbols/${userId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          for (let i = 0; i < data.length; i++) {
-            fetch(`/api/searchStock/${data[i]}`)
-              // .then((res) => res.json())
-              .then((data) =>
-                fetch("/api/lateststocks", {
-                  method: "PUT",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    symbol: data.symbol,
-                    stockPrice: data.latestPrice,
-                    dayChange: data.change,
-                    percentageChange: data.changePercent,
-                    userId: parseInt(userId),
-                  }),
-                })
-              );
-          }
-        })
-        .catch((error) => console.log(error));
+      fetchData(userId);
     }
-    
-  }, [buyingPower, setTesla]);
+  }, [buyingPower]);
 
-  const getInitialStocks = async () => {
-    const resp = await fetch('/api/stocks')
-    const data = await resp.json()
-    setTesla(data[0])
-    setAmazon(data[1])
-    setMicrosoft(data[2])
-    setApple(data[3])
-  };
-
-  const fetchData = async () => {
-    // setIsLoading(true)
+  const fetchData = async (userId) => {
     try {
+      const allSymbols = await fetch(`/api/allsymbols/${userId}`);
+      const allSymbolsData = await allSymbols.json();
+      for (let i = 0; i < allSymbolsData.length; i++) {
+        const searchStock = await fetch(
+          `/api/searchStock/${allSymbolsData[i]}`
+        );
+        const searchStockData = await searchStock.json();
+
+        const lateststocks = await fetch("/api/lateststocks", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            symbol: searchStockData.symbol,
+            stockPrice: searchStockData.latestPrice,
+            dayChange: searchStockData.change,
+            percentageChange: searchStockData.changePercent,
+            userId: parseInt(userId),
+          }),
+        });
+      }
+
       const purchased = await fetch(`/api/purchased/${userId}`);
       const purchasedData = await purchased.json();
-      setPurchasedStocks(JSON.parse(purchasedData))
-
+      setPurchasedStocks(JSON.parse(purchasedData));
 
       const userBalance = await fetch("/api/userbalance", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           userId: parseInt(userId),
-        })})
+        }),
+      });
 
-      const userBalanceData = await userBalance.json()
-      setBuyingPower(userBalanceData)
+      const userBalanceData = await userBalance.json();
+      setBuyingPower(userBalanceData);
 
       const accountValue = await fetch("/api/accountvalue", {
         method: "POST",
@@ -100,17 +75,25 @@ function SummaryPage(props) {
         body: JSON.stringify({
           userId: parseInt(userId),
         }),
-      })
-      const accountValueData = await accountValue.json()
-      setAccountValue(accountValueData)
+      });
+      const accountValueData = await accountValue.json();
+      setAccountValue(accountValueData);
 
       getInitialStocks();
-
     } catch (error) {
-      console.log(error)
-    } 
-    // setIsLoading(false)
-  }
+      console.log(error);
+    }
+    setTimeout(() => {setIsLoading(false)}, 2000)
+  };
+
+  const getInitialStocks = async () => {
+    const resp = await fetch("/api/stocks");
+    const data = await resp.json();
+    setTesla(data[0]);
+    setAmazon(data[1]);
+    setMicrosoft(data[2]);
+    setApple(data[3]);
+  };
 
   function handleSearch(e) {
     setSearchStock(e.target.value);
@@ -149,15 +132,9 @@ function SummaryPage(props) {
     );
   }
 
-
-  // function loadingScreen() {
-  //   if (isLoading) {
-  //     return <Loading type={'spokes'} color={'blue'} />
-  //   }
-  // }
-
   return (
     <div>
+
       <div
         style={{
           display: "grid",
@@ -174,7 +151,6 @@ function SummaryPage(props) {
         <h3>Account Value: ${Number(accountValue).toFixed(2)}</h3>
       </div>
       <p style={{ color: "red" }}>{reviewOrderErrors}</p>
-
 
       <form onSubmit={handleSubmit}>
         <input onChange={handleSearch} placeholder="Search" />
@@ -198,106 +174,114 @@ function SummaryPage(props) {
           />
         ) : null}
       </div>
+
       <h1 style={{ fontSize: "30px", marginTop: "15px" }}> Positions Cards </h1>
       <header
         style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
+        >
         {stocksPurchased}
       </header>
       <h1 style={{ fontSize: "30px", marginTop: "15px" }}> Popular Stocks </h1>
       <div
-        style={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-      >
+        style={{ display: "flex", justifyContent: "center", paddingTop: '15px' }}
+        >
+        { !isLoading ? 
+          <container style={{display: 'flex'}}>
+            <StockCard
+              symbol={tesla.symbol}
+              stockName={tesla.companyName}
+              price={
+                tesla.latestPrice
+                  ? tesla.latestPrice.toFixed(2)
+                  : tesla.latestPrice
+              }
+              dayChange={tesla.change}
+              percentChange={tesla.changePercent}
+              time={tesla.latestTime}
+              setPrice={setStockPrice}
+              setStockName={setStockName}
+              setSymbol={setSymbol}
+              setDate={setDate}
+              setDayChange={setDayChange}
+              setPercentageChange={setPercentageChange}
+              setStockId={setStockId}
+            />
 
-
-        <StockCard
-          symbol={tesla.symbol}
-          stockName={tesla.companyName}
-          price={
-            tesla.latestPrice ? tesla.latestPrice.toFixed(2) : tesla.latestPrice
-          }
-          dayChange={tesla.change}
-          percentChange={tesla.changePercent}
-          time={tesla.latestTime}
-          setPrice={setStockPrice}
-          setStockName={setStockName}
-          setSymbol={setSymbol}
-          setDate={setDate}
-          setDayChange={setDayChange}
-          setPercentageChange={setPercentageChange}
-          setStockId={setStockId}
-        />
-        <StockCard
-          symbol={amazon.symbol}
-          stockName={amazon.companyName}
-          price={
-            amazon.latestPrice
-              ? amazon.latestPrice.toFixed(2)
-              : amazon.latestPrice
-          }
-          dayChange={amazon.change}
-          percentChange={amazon.changePercent}
-          time={amazon.latestTime}
-          setPrice={setStockPrice}
-          setStockName={setStockName}
-          setSymbol={setSymbol}
-          setDate={setDate}
-          setDayChange={setDayChange}
-          setPercentageChange={setPercentageChange}
-          setStockId={setStockId}
-        />
-        <StockCard
-          symbol={apple.symbol}
-          stockName={apple.companyName}
-          price={
-            apple.latestPrice ? apple.latestPrice.toFixed(2) : apple.latestPrice
-          }
-          dayChange={apple.change}
-          percentChange={apple.changePercent}
-          time={apple.latestTime}
-          setPrice={setStockPrice}
-          setStockName={setStockName}
-          setSymbol={setSymbol}
-          setDate={setDate}
-          setDayChange={setDayChange}
-          setPercentageChange={setPercentageChange}
-          setStockId={setStockId}
-        />
-        <StockCard
-          symbol={microsoft.symbol}
-          stockName={microsoft.companyName}
-          price={
-            microsoft.latestPrice
-              ? microsoft.latestPrice.toFixed(2)
-              : microsoft.latestPrice
-          }
-          dayChange={microsoft.change}
-          percentChange={microsoft.changePercent}
-          time={microsoft.latestTime}
-          setPrice={setStockPrice}
-          setStockName={setStockName}
-          setSymbol={setSymbol}
-          setDate={setDate}
-          setDayChange={setDayChange}
-          setPercentageChange={setPercentageChange}
-          setStockId={setStockId}
-        />
-        <StockModal
-          stockPrice={stockPrice}
-          stockName={stockName}
-          symbol={symbol}
-          dayChange={dayChange}
-          date={date}
-          percentageChange={percentageChange}
-          purchasedStocks={purchasedStocks}
-          setPurchasedStocks={setPurchasedStocks}
-          stockId={stockId}
-          buyingPower={buyingPower}
-          setBuyingPower={setBuyingPower}
-          setAccountValue={setAccountValue}
-          userId={userId}
-          setReviewOrderErrors={setReviewOrderErrors}
-        />
+            <StockCard
+              symbol={amazon.symbol}
+              stockName={amazon.companyName}
+              price={
+                amazon.latestPrice
+                  ? amazon.latestPrice.toFixed(2)
+                  : amazon.latestPrice
+              }
+              dayChange={amazon.change}
+              percentChange={amazon.changePercent}
+              time={amazon.latestTime}
+              setPrice={setStockPrice}
+              setStockName={setStockName}
+              setSymbol={setSymbol}
+              setDate={setDate}
+              setDayChange={setDayChange}
+              setPercentageChange={setPercentageChange}
+              setStockId={setStockId}
+            />
+            <StockCard
+              symbol={apple.symbol}
+              stockName={apple.companyName}
+              price={
+                apple.latestPrice
+                  ? apple.latestPrice.toFixed(2)
+                  : apple.latestPrice
+              }
+              dayChange={apple.change}
+              percentChange={apple.changePercent}
+              time={apple.latestTime}
+              setPrice={setStockPrice}
+              setStockName={setStockName}
+              setSymbol={setSymbol}
+              setDate={setDate}
+              setDayChange={setDayChange}
+              setPercentageChange={setPercentageChange}
+              setStockId={setStockId}
+            />
+            <StockCard
+              symbol={microsoft.symbol}
+              stockName={microsoft.companyName}
+              price={
+                microsoft.latestPrice
+                  ? microsoft.latestPrice.toFixed(2)
+                  : microsoft.latestPrice
+              }
+              dayChange={microsoft.change}
+              percentChange={microsoft.changePercent}
+              time={microsoft.latestTime}
+              setPrice={setStockPrice}
+              setStockName={setStockName}
+              setSymbol={setSymbol}
+              setDate={setDate}
+              setDayChange={setDayChange}
+              setPercentageChange={setPercentageChange}
+              setStockId={setStockId}
+            />
+            <StockModal
+              stockPrice={stockPrice}
+              stockName={stockName}
+              symbol={symbol}
+              dayChange={dayChange}
+              date={date}
+              percentageChange={percentageChange}
+              purchasedStocks={purchasedStocks}
+              setPurchasedStocks={setPurchasedStocks}
+              stockId={stockId}
+              buyingPower={buyingPower}
+              setBuyingPower={setBuyingPower}
+              setAccountValue={setAccountValue}
+              userId={userId}
+              setReviewOrderErrors={setReviewOrderErrors}
+            />
+          </container>
+        : <Loading color={'gray'} type={'spokes'} />}
       </div>
     </div>
   );

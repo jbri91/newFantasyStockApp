@@ -2,7 +2,6 @@ import React from "react";
 import homepageCoinImage from "../images/homepageCoinImage.jpg";
 
 function HomePage() {
-console.log('HomePage')
   return (
     <div className="App">
       <header className="App-header">
